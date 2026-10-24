@@ -136,10 +136,20 @@ window.NEGOCIO = {
     ]
   },
 
+  // AVISO EMERGENTE en la página Menú (borra este bloque si no quieres aviso)
+  novedad: {
+    etiqueta: { es: '¡Nuevo! · Temporada de invierno', en: 'New! · Winter season' },
+    titulo: { es: 'Desayunos ecuatorianos y platos calientes', en: 'Ecuadorian breakfast & hot plates' },
+    texto: { es: 'Para los días fríos: encebollado, corviche, arroz con pollo y empanadas recién hechas.', en: 'For cold days: encebollado, corviche, arroz con pollo and fresh empanadas.' },
+    items: ['Encebollado', 'Corviche', { es: 'Arroz con pollo', en: 'Arroz con pollo' }, { es: 'Empanadas', en: 'Empanadas' }],
+    boton: { es: 'Ver novedades', en: 'See what’s new' },
+    destino: 'desayuno'
+  },
+
   // DESAYUNO ECUATORIANO (abren 6 AM)
   desayuno: {
-    etiqueta: { es: 'Desde las 6 AM', en: 'From 6 AM' },
-    titulo: { es: 'Desayuno ecuatoriano', en: 'Ecuadorian breakfast' },
+    etiqueta: { es: 'Nuevo · desde las 6 AM', en: 'New · from 6 AM' },
+    titulo: { es: 'Desayunos y platos de invierno', en: 'Breakfast & winter plates' },
     texto: { es: 'Antes del helado, el pan recién hecho y los platos de casa.', en: 'Before the ice cream: fresh bread and home-style plates.' },
     platos: [
       { nombre: 'Bolón', precio: '$20.00', desc: { es: 'Verde majado con queso y chicharrón, 2 huevos fritos y seco de carne.', en: 'Mashed green plantain with cheese and chicharrón, 2 fried eggs and Ecuadorian beef stew.' } },
