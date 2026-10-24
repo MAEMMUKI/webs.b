@@ -20,12 +20,18 @@
       flipHint:'Toca una copa para ver qué lleva', turn:'Voltear', pairWith:'Combínalo con', orderThis:'Pídelo por WhatsApp',
       seeAll:'Ver todas en Google', leaveReview:'Déjanos tu reseña', reviewsOn:'reseñas en Google', soon:'Próximamente', notifyMe:'Avísame cuando abra',
       follow:'Síguenos', hoursT:'Horario', contact:'Contacto', rights:'Todos los derechos reservados.', flavors:'Nuestros sabores', viewMenu:'Ver el menú',
+      home:'Inicio', about:'Nosotros', readStory:'Leer la historia completa', explore:'Sigue explorando', exploreT:'¿Qué quieres ver?', go:'Ver',
+      pg_menu:'Desayuno ecuatoriano, copas con queso, café y más.', pg_nosotros:'La historia detrás de cada copa.', pg_visitanos:'Te esperamos con una copa lista.',
+      ex_menu:'Copas, desayunos, panes y café, con precios.', ex_nosotros:'Cómo un sueño migrante se convirtió en Oasis.', ex_visitanos:'Dirección, horario, mapa y WhatsApp.',
       demo:'Borrador de propuesta para', demo2:'· no es la página oficial', pend:'por confirmar', reviewPh:'Aquí va una reseña real de Google, elegida con el dueño.'},
     en:{menu:'Menu', favs:'Favorites', story:'Our story', visit:'Visit us', reviews:'Reviews', order:'Order', call:'Call', directions:'Directions', whatsapp:'WhatsApp',
       openNow:'Open now', closedNow:'Closed now', opensAt:'Opens at', closesAt:'Closes at', today:'Today', everyDay:'Every day',
       flipHint:'Tap a cup to see what’s inside', turn:'Flip', pairWith:'Pair it with', orderThis:'Order on WhatsApp',
       seeAll:'See all on Google', leaveReview:'Leave us a review', reviewsOn:'reviews on Google', soon:'Coming soon', notifyMe:'Tell me when it opens',
       follow:'Follow us', hoursT:'Hours', contact:'Contact', rights:'All rights reserved.', flavors:'Our flavors', viewMenu:'See the menu',
+      home:'Home', about:'About us', readStory:'Read the full story', explore:'Keep exploring', exploreT:'What would you like to see?', go:'See',
+      pg_menu:'Ecuadorian breakfast, cups with cheese, coffee and more.', pg_nosotros:'The story behind every cup.', pg_visitanos:'We’ll have a cup ready for you.',
+      ex_menu:'Cups, breakfast, bread and coffee, with prices.', ex_nosotros:'How an immigrant’s dream became Oasis.', ex_visitanos:'Address, hours, map and WhatsApp.',
       demo:'Draft proposal for', demo2:'· not the official website', pend:'to confirm', reviewPh:'A real Google review goes here, chosen with the owner.'}
   };
   const t = k => (T[lang] && T[lang][k]) || T.es[k] || k;
@@ -79,6 +85,16 @@
     return DAYS.map((d,i) => `${names[i]} ${hours[d] ? fmt(hours[d][0])+'–'+fmt(hours[d][1]) : '—'}`).join(' · ');
   }
 
+  // ---------- páginas (pestañas) ----------
+  const VIEWS = N.paginas || {
+    inicio:    ['hero','top5','first','storyTeaser','explore'],
+    menu:      ['pagehead','breakfast','menu'],
+    nosotros:  ['pagehead','story','reviews'],
+    visitanos: ['pagehead','visit']
+  };
+  const NAV = [['inicio','home'],['menu','menu'],['nosotros','about'],['visitanos','visit']].filter(([v]) => VIEWS[v]);
+  const viewNow = () => { const h = (location.hash || '').slice(1); return VIEWS[h] ? h : 'inicio'; };
+
   // ---------- secciones ----------
   const main = N.locales && N.locales[0] || {};
   const sec = {};
@@ -88,12 +104,12 @@
   sec.header = () => `
   <header class="top" id="top"><div class="wrap">
     <a class="logo" href="#inicio" aria-label="${esc(N.nombre)}">${N.logo ? `<span class="logo-badge"><img src="${esc(N.logo)}" alt="${esc(N.nombre)}" crossorigin="anonymous" data-fit="alpha" data-fill="0.86" onerror="this.closest('.logo').textContent=this.alt"></span>` : esc(N.nombre)}</a>
-    <nav class="nav" aria-label="Principal">
-      <a href="#favoritos">${t('favs')}</a><a href="#menu">${t('menu')}</a><a href="#historia">${t('story')}</a><a href="#visitanos">${t('visit')}</a>
-    </nav>
+    <nav class="nav" aria-label="Principal">${NAV.map(([v,k])=>`<a href="#${v}"${v===viewNow()?' aria-current="page"':''}>${t(k)}</a>`).join('')}</nav>
     ${(N.idiomas||[]).length > 1 ? `<div class="lang" role="group" aria-label="Idioma / Language">${N.idiomas.map(l=>`<button type="button" data-lang="${l}" aria-pressed="${l===lang}">${l.toUpperCase()}</button>`).join('')}</div>` : ''}
     ${wa() ? `<a class="btn btn-main" href="${esc(wa(L(C.mensajeWhatsapp)))}" target="_blank" rel="noopener">${ico('wa')}${t('order')}</a>` : ''}
-  </div></header>`;
+  </div>
+  <nav class="tabsbar" aria-label="Principal"><div class="wrap">${NAV.map(([v,k])=>`<a href="#${v}"${v===viewNow()?' aria-current="page"':''}>${t(k)}</a>`).join('')}</div></nav>
+  </header>`;
 
   sec.hero = () => {
     const P = N.portada || {};
@@ -115,7 +131,7 @@
         ${(() => { const st = status(main.horario); return st ? `<p class="hero-open"><span class="dot ${st.open?'open':''}"></span>${esc(st.text)}</p>` : ''; })()}
       </div>
       <svg class="arc" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true"><path d="M0 80V40C240 8 480 0 720 0s480 8 720 40v40z"/></svg>
-      <a class="cue" href="#favoritos" aria-label="${t('favs')}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
+      <a class="cue" href="#inicio" data-scroll="favoritos" aria-label="${t('favs')}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
     </section>`;
   };
 
@@ -186,6 +202,48 @@
     return `<div class="follow">${title ? `<p class="follow-t">${esc(title)}</p>` : ''}<div class="btns">${ks.map(k=>`<a class="btn btn-soc ${k}" href="${esc(S[k])}" target="_blank" rel="noopener">${ico(k)}${names[k]}${S[k+'Usuario'] ? `<small>${esc(S[k+'Usuario'])}</small>` : ''}</a>`).join('')}</div></div>`;
   }
 
+  sec.pagehead = () => {
+    const v = viewNow(); const label = (NAV.find(n=>n[0]===v)||[])[1];
+    const txt = (N.paginasTexto && L(N.paginasTexto[v])) || t('pg_'+v);
+    return `
+    <section class="pagehead"><div class="wrap">
+      <span class="eyebrow">${esc(N.nombre)}</span>
+      <h1>${esc(t(label))}</h1>
+      <p class="lead">${esc(txt)}</p>
+    </div><svg class="arc" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true"><path d="M0 80V40C240 8 480 0 720 0s480 8 720 40v40z"/></svg></section>`;
+  };
+
+  sec.storyTeaser = () => {
+    const H = N.historia; if (!H || !VIEWS.nosotros) return '';
+    const first = (L(H.parrafos)||[])[0] || '';
+    return `
+    <section class="story teaser"><div class="wrap">
+      <div class="story-pic reveal">${H.foto ? `<img src="${esc(H.foto)}" alt="${esc(L(H.fotoAlt))}" loading="lazy">` : `<div class="ph">${esc(L(H.fotoPendiente))}</div>`}</div>
+      <div class="story-text reveal">
+        <span class="eyebrow">${esc(L(H.etiqueta))}</span>
+        <h2 style="margin:10px 0 18px">${esc(L(H.titulo))}</h2>
+        <p>${esc(first)}</p>
+        ${H.frase ? `<p class="quote">${esc(L(H.frase))}</p>` : ''}
+        <div class="btns"><a class="btn btn-main" href="#nosotros">${t('readStory')}</a></div>
+      </div>
+    </div></section>`;
+  };
+
+  sec.explore = () => {
+    const items = [['menu','menu','menu'],['nosotros','about','star'],['visitanos','visit','pin']].filter(([v]) => VIEWS[v]);
+    return `
+    <section class="explore"><div class="wrap">
+      <div class="sec-head center reveal"><span class="eyebrow">${t('explore')}</span><h2>${t('exploreT')}</h2></div>
+      <div class="ex-grid">${items.map(([v,k,ic])=>`
+        <a class="ex-card reveal" href="#${v}">
+          <span class="ex-ico">${ico(ic==='menu'?'bag':ic)}</span>
+          <span class="ex-t">${t(k)}</span>
+          <span class="ex-d">${t('ex_'+v)}</span>
+          <span class="ex-go">${t('go')} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>`).join('')}</div>
+    </div></section>`;
+  };
+
   sec.first = () => {
     const P = N.primeraVez; if (!P) return '';
     return `
@@ -248,7 +306,6 @@
     const locs = N.locales || []; if (!locs.length) return '';
     return `
     <section class="visit" id="visitanos"><div class="wrap">
-      <div class="sec-head center reveal"><span class="eyebrow">${t('visit')}</span><h2>${esc(L(N.visitanosTitulo))}</h2></div>
       <div class="grid">${locs.map(l => l.pronto ? `
         <div class="place reveal"><div class="soon-art">${esc(l.nombre)}</div><div class="body">
           <span class="tag soon">${t('soon')}</span><h3>${esc(l.nombre)}</h3><p class="hours">${esc(L(l.nota))}${pend(l.porConfirmar)}</p>
@@ -283,6 +340,7 @@
         ${C.whatsapp ? `<p><a href="${esc(wa())}" target="_blank" rel="noopener">WhatsApp</a>${pend(C.whatsappPorConfirmar)}</p>` : ''}
         ${C.pedidos ? `<p><a href="${esc(C.pedidos)}" target="_blank" rel="noopener">${t('order')} online</a></p>` : ''}
       </div>
+      <div><h3>${esc(N.nombre)}</h3>${NAV.map(([v,k])=>`<p><a href="#${v}">${t(k)}</a></p>`).join('')}</div>
       <div><h3>${t('hoursT')}</h3><p>${esc(hoursText(main.horario))}</p><p>${esc(main.direccion||'')}</p></div>
       <p class="copy">© ${new Date().getFullYear()} ${esc(N.nombre)}. ${t('rights')}${N.creditos ? ' · ' + N.creditos : ''}</p>
     </div></footer>`;
@@ -312,18 +370,19 @@
     document.documentElement.lang = lang;
   }
 
-  const ORDER = N.orden || ['demo','header','hero','top5','first','breakfast','menu','story','reviews','visit','footer','dock'];
-  function render(){
+  function render(keepScroll){
     const y = window.scrollY;
     applyTheme();
-    document.getElementById('app').innerHTML = ORDER.map(k => sec[k] ? sec[k]() : '').join('');
+    const order = ['demo','header', ...VIEWS[viewNow()], 'footer','dock'];
+    document.getElementById('app').innerHTML = order.map(k => sec[k] ? sec[k]() : '').join('');
     wire();
-    window.scrollTo(0, y);
+    window.scrollTo(0, keepScroll ? y : 0);
   }
+  window.addEventListener('hashchange', () => { currentTab = 0; render(false); });
 
   function wire(){
     // idioma
-    document.querySelectorAll('[data-lang]').forEach(b => b.onclick = () => { lang = b.dataset.lang; try{localStorage.setItem(LKEY,lang)}catch(e){} render(); });
+    document.querySelectorAll('[data-lang]').forEach(b => b.onclick = () => { lang = b.dataset.lang; try{localStorage.setItem(LKEY,lang)}catch(e){} render(true); });
     // encabezado con línea al bajar
     const top = document.getElementById('top');
     const onScroll = () => top && top.classList.toggle('scrolled', window.scrollY > 10);
@@ -335,7 +394,8 @@
       document.getElementById('tabPanel').innerHTML = menuPanel(N.menu.categorias[currentTab]);
     });
     // tarjetas que se voltean (sin voltear al tocar un link interno)
-    document.querySelectorAll('.fav').forEach(f => { f.onclick = e => { if (e.target.closest('a')) return; f.classList.toggle('flip'); pause(); }; f.onkeydown = e => { if ((e.key==='Enter'||e.key===' ') && !e.target.closest('a')) { e.preventDefault(); f.click(); } }; });
+    document.querySelectorAll('.fav').forEach(f => { f.onclick = e => { if (e.target.closest('a')) return; f.classList.toggle('flip'); pause(9000); }; f.onkeydown = e => { if ((e.key==='Enter'||e.key===' ') && !e.target.closest('a')) { e.preventDefault(); f.click(); } }; });
+    document.querySelectorAll('[data-scroll]').forEach(a => a.onclick = e => { e.preventDefault(); const el = document.getElementById(a.dataset.scroll); if (el) el.scrollIntoView({behavior:'smooth'}); });
     railAuto();
     fitImages();
     reveal();
@@ -367,27 +427,34 @@
     });
   }
 
-  // carrusel automático, se detiene cuando la persona lo toca
-  let timer = null, paused = false;
-  function pause(){ paused = true; clearInterval(timer); }
+  // carrusel automático: se pausa mientras la persona lo usa y vuelve a moverse solo
+  let timer = null, holdUntil = 0, hovering = false;
+  function pause(ms){ holdUntil = Date.now() + (ms || 6000); }
   function railAuto(){
     const rail = document.getElementById('rail'); if (!rail) return;
     const cards = [...rail.querySelectorAll('.fav')]; const dots = [...document.querySelectorAll('#railDots button')];
-    let cur = 0;
+    let cur = 0, autoScroll = false, autoT = null;
     const center = el => el.offsetLeft + el.offsetWidth/2;   // .rail es position:relative
     const idx = () => { const c = rail.scrollLeft + rail.clientWidth/2; let best=0,d=1e9; cards.forEach((el,i)=>{ const m=Math.abs(center(el)-c); if(m<d){d=m;best=i;} }); return best; };
     const setActive = i => { cur = i; dots.forEach((d,j)=>d.setAttribute('aria-current', j===i)); cards.forEach((c,j)=>c.classList.toggle('active', j===i)); };
     const canScroll = () => rail.scrollWidth > rail.clientWidth + 4;
-    const go = i => { setActive(i); if (canScroll()) rail.scrollTo({left: center(cards[i]) - rail.clientWidth/2, behavior:'smooth'}); };
+    const go = i => { setActive(i); if (canScroll()) { autoScroll = true; clearTimeout(autoT); autoT = setTimeout(()=>autoScroll=false, 900); rail.scrollTo({left: center(cards[i]) - rail.clientWidth/2, behavior:'smooth'}); } };
     let ticking = false;
-    rail.onscroll = () => { if (!paused || !canScroll() || ticking) return; ticking = true; requestAnimationFrame(() => { ticking = false; setActive(idx()); }); };
-    cards.forEach((c,i) => c.addEventListener('mouseenter', () => setActive(i)));
+    rail.onscroll = () => { if (autoScroll || !canScroll() || ticking) return; ticking = true; requestAnimationFrame(() => { ticking = false; setActive(idx()); }); };
+    cards.forEach((c,i) => {
+      c.addEventListener('mouseenter', () => { hovering = true; setActive(i); });
+      c.addEventListener('mouseleave', () => { hovering = false; holdUntil = Date.now() + 1200; });
+    });
     dots.forEach((d,i) => d.onclick = () => { pause(); go(i); });
-    ['pointerdown','wheel','touchstart','keydown'].forEach(ev => rail.addEventListener(ev, pause, {passive:true}));
+    ['pointerdown','wheel','touchstart','keydown'].forEach(ev => rail.addEventListener(ev, () => pause(), {passive:true}));
     requestAnimationFrame(() => setActive(canScroll() ? idx() : 0));
     clearInterval(timer);
-    if (paused || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    timer = setInterval(() => { if (document.hidden) return; cards.forEach(c=>c.classList.remove('flip')); go((cur+1) % cards.length); }, 3800);
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    timer = setInterval(() => {
+      if (document.hidden || hovering || Date.now() < holdUntil) return;
+      if (cards.some(c => c.classList.contains('flip'))) { cards.forEach(c=>c.classList.remove('flip')); holdUntil = Date.now() + 900; return; }
+      go((cur+1) % cards.length);
+    }, 3800);
   }
 
   // aparición suave; todo queda visible a los 2.5 s pase lo que pase
