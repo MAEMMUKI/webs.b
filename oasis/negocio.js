@@ -49,7 +49,11 @@ window.NEGOCIO = {
     pedidos: ''                      // link de DoorDash / Uber Eats si tienen
   },
 
-  redes: { instagram: '', tiktok: '', facebook: '' },   // pegar los links reales
+  redes: {
+    instagram: 'https://www.instagram.com/oasisheladosconqueso/', instagramUsuario: '@oasisheladosconqueso',
+    tiktok: 'https://www.tiktok.com/@oasis.coffeee', tiktokUsuario: '@oasis.coffeee',
+    facebook: 'https://www.facebook.com/oasisheladosconqueso', facebookUsuario: ''
+  },
 
   resenas: {
     calificacion: '4.7',
@@ -95,24 +99,29 @@ window.NEGOCIO = {
     ]
   },
 
-  // NUESTRA HISTORIA · completar con el dueño (lo que está entre [ ] es para llenar)
+  // NUESTRA HISTORIA · resumida de la historia de Jaime Chacha (Facebook de Oasis)
   historia: {
-    porConfirmar: true,
-    etiqueta: { es: 'Nuestra historia', en: 'Our story' },
-    titulo: { es: 'Un pedacito de Ecuador en Union City', en: 'A little piece of Ecuador in Union City' },
-    foto: '',
-    fotoAlt: { es: 'La familia de Oasis', en: 'The Oasis family' },
-    fotoPendiente: { es: 'Aquí va una foto del dueño, la familia o el día de la apertura', en: 'A photo of the owner, the family or opening day goes here' },
+    porConfirmar: false,
+    etiqueta: { es: 'Nuestra historia · Jaime Chacha', en: 'Our story · Jaime Chacha' },
+    titulo: { es: 'Un oasis después de la tormenta', en: 'An oasis after the storm' },
+    foto: '',                        // pegar aquí una foto de Jaime o del local
+    fotoAlt: { es: 'Jaime Chacha, fundador de Oasis', en: 'Jaime Chacha, founder of Oasis' },
+    fotoPendiente: { es: 'Aquí va una foto de Jaime en Oasis', en: 'A photo of Jaime at Oasis goes here' },
     parrafos: {
-      es: ['Oasis nació de [nombre del dueño], que creció en [ciudad de Ecuador] comiendo helado con queso en la plaza los domingos.',
-           'Al llegar a New Jersey en [año] extrañaba ese sabor, y en [año] abrió Oasis en Bergenline Avenue para compartirlo con su nueva comunidad.',
-           'Hoy hacemos [cada día / a mano] el helado y el pan, con recetas de [la abuela / la familia].'],
-      en: ['Oasis was started by [owner’s name], who grew up in [city in Ecuador] eating ice cream with cheese in the town square on Sundays.',
-           'After moving to New Jersey in [year], they missed that taste, and in [year] opened Oasis on Bergenline Avenue to share it with a new community.',
-           'Today we make our ice cream and bread [daily / by hand], with [grandma’s / family] recipes.']
+      es: ['Jaime llegó de Ecuador a los 29 años, con las manos acostumbradas al campo y la cabeza llena de sueños. Esa misma noche ya estaba trabajando.',
+           'Aprendió carpintería metálica, compró sus propias herramientas y, entre puertas cerradas y un idioma nuevo, se convirtió en empresario de la construcción con su propio equipo.',
+           'Después llegó otro sueño: una heladería. El primer intento no salió como esperaba, y Jaime hizo lo más difícil: empezar de cero, esta vez a su manera.',
+           'Así nació Oasis: un lugar de paz después de la tormenta, con el helado con queso de siempre, café, pan recién hecho y el sabor de su tierra.',
+           'Hoy sueña con llevar Oasis a más ciudades como franquicia, con transparencia y justicia para quienes quieran crecer con él.'],
+      en: ['Jaime arrived from Ecuador at 29, with hands used to farm work and a head full of dreams. He was working that very same night.',
+           'He learned metalwork, bought his own tools and, through closed doors and a new language, built his own construction business with his own crew.',
+           'Then came another dream: an ice cream shop. The first try didn’t go as planned, so Jaime did the hardest thing: start from zero, this time his own way.',
+           'That’s how Oasis was born: a place of peace after the storm, with classic ice cream with cheese, coffee, fresh bread and the taste of home.',
+           'Today he dreams of taking Oasis to more cities as a franchise, built on transparency and fairness for everyone who grows with him.']
     },
-    frase: { es: '“Lo dulce y lo salado, como la vida: mejor en familia.”', en: '“Sweet and savory, like life: better with family.”' },
-    datos: { es: ['Desde [año]', 'Receta de [ciudad]', 'Union City, NJ'], en: ['Since [year]', 'Recipe from [city]', 'Union City, NJ'] }
+    frase: { es: '“Persevera, rodéate de quienes impulsan tus sueños y, cuando haga falta, sigue tu propio camino.” — Jaime Chacha', en: '“Keep going, surround yourself with people who push your dreams forward and, when you have to, follow your own path.” — Jaime Chacha' },
+    datos: { es: ['De Ecuador a New Jersey', 'Empezó de cero', 'Próximo sueño: franquicias'], en: ['From Ecuador to New Jersey', 'Started from zero', 'Next dream: franchising'] },
+    redesTexto: { es: 'Sigue la historia de Oasis', en: 'Follow the Oasis story' }
   },
 
   // ¿PRIMERA VEZ? · explica el helado con queso a quien no lo conoce
@@ -140,9 +149,13 @@ window.NEGOCIO = {
       { nombre: { es: 'Chocolate con tostis', en: 'Hot chocolate & tostis' }, precio: '$11.50', desc: { es: 'Chocolate ecuatoriano tradicional con 2 sánduches de jamón y queso.', en: 'Traditional Ecuadorian hot chocolate with 2 toasted ham and cheese sandwiches.' } },
       { nombre: { es: 'Sánduche integral', en: 'Whole wheat sandwich' }, precio: '$16.50', desc: { es: 'Pan integral, aguacate, huevo, queso y tomate, con batido o milkshake.', en: 'Whole wheat bread, avocado, egg, cheese and tomato, with a smoothie or milkshake.' } }
     ],
+    temporadaTitulo: { es: 'Nuevo · platos calientes de invierno', en: 'New · hot winter plates' },
+    temporadaPorConfirmar: true,     // falta precios
+    temporada: [{ es: 'Arroz con pollo', en: 'Arroz con pollo' }, 'Encebollado', 'Corviche',
+      { es: 'Empanadas de carne y de pollo', en: 'Beef and chicken empanadas' }, { es: 'Empanadas de verde', en: 'Green plantain empanadas' }, { es: 'Empanadas de viento', en: 'Empanadas de viento' }],
     panesTitulo: { es: 'Pan ecuatoriano del día', en: 'Today’s Ecuadorian bread' },
     panesSinPrecio: true,
-    panes: ['Manitas', 'Pan de cereal', 'Enrollado', 'Bizcochos', 'Empanada integral', 'Reventado', 'Pan de chocolate', 'Ambateño', 'Rosita', 'Roscón de fresa', 'Pan de coco', 'Pan de guayaba', 'Encasillado', 'Empanada', 'Mini empanada', 'Nacional Oasis', 'Baguette']
+    panes: ['Manitas', 'Pan de cereal', 'Enrollado', 'Bizcochos', 'Empanada integral', 'Reventado', 'Pan de chocolate', 'Ambateño', 'Rosita', 'Roscón de fresa', 'Pan de coco', 'Pan de guayaba', 'Encasillado', 'Empanada', 'Mini empanada', 'Nacional Oasis', 'Quimbolitos', 'Baguette']
   },
 
   // MENÚ COMPLETO (precios de su web actual)
