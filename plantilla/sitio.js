@@ -21,8 +21,9 @@
       seeAll:'Ver todas en Google', leaveReview:'Déjanos tu reseña', reviewsOn:'reseñas en Google', soon:'Próximamente', notifyMe:'Avísame cuando abra',
       follow:'Síguenos', hoursT:'Horario', contact:'Contacto', rights:'Todos los derechos reservados.', flavors:'Nuestros sabores', viewMenu:'Ver el menú',
       home:'Inicio', about:'Nosotros', readStory:'Leer la historia completa', explore:'Sigue explorando', exploreT:'¿Qué quieres ver?', go:'Ver',
-      pg_menu:'Desayuno ecuatoriano, copas con queso, café y más.', pg_nosotros:'La historia detrás de cada copa.', pg_visitanos:'Te esperamos con una copa lista.',
+      pg_menu:'Helados con queso, copas, waffles, café y más.', pg_nosotros:'La historia detrás de cada copa.', pg_visitanos:'Te esperamos con una copa lista.',
       ex_menu:'Copas, desayunos, panes y café, con precios.', ex_nosotros:'Cómo un sueño migrante se convirtió en Oasis.', ex_visitanos:'Dirección, horario, mapa y WhatsApp.',
+      close:'Cerrar',
       demo:'Borrador de propuesta para', demo2:'· no es la página oficial', pend:'por confirmar', reviewPh:'Aquí va una reseña real de Google, elegida con el dueño.'},
     en:{menu:'Menu', favs:'Favorites', story:'Our story', visit:'Visit us', reviews:'Reviews', order:'Order', call:'Call', directions:'Directions', whatsapp:'WhatsApp',
       openNow:'Open now', closedNow:'Closed now', opensAt:'Opens at', closesAt:'Closes at', today:'Today', everyDay:'Every day',
@@ -30,8 +31,9 @@
       seeAll:'See all on Google', leaveReview:'Leave us a review', reviewsOn:'reviews on Google', soon:'Coming soon', notifyMe:'Tell me when it opens',
       follow:'Follow us', hoursT:'Hours', contact:'Contact', rights:'All rights reserved.', flavors:'Our flavors', viewMenu:'See the menu',
       home:'Home', about:'About us', readStory:'Read the full story', explore:'Keep exploring', exploreT:'What would you like to see?', go:'See',
-      pg_menu:'Ecuadorian breakfast, cups with cheese, coffee and more.', pg_nosotros:'The story behind every cup.', pg_visitanos:'We’ll have a cup ready for you.',
+      pg_menu:'Ice cream with cheese, cups, waffles, coffee and more.', pg_nosotros:'The story behind every cup.', pg_visitanos:'We’ll have a cup ready for you.',
       ex_menu:'Cups, breakfast, bread and coffee, with prices.', ex_nosotros:'How an immigrant’s dream became Oasis.', ex_visitanos:'Address, hours, map and WhatsApp.',
+      close:'Close',
       demo:'Draft proposal for', demo2:'· not the official website', pend:'to confirm', reviewPh:'A real Google review goes here, chosen with the owner.'}
   };
   const t = k => (T[lang] && T[lang][k]) || T.es[k] || k;
@@ -88,7 +90,7 @@
   // ---------- páginas (pestañas) ----------
   const VIEWS = N.paginas || {
     inicio:    ['hero','top5','first','storyTeaser','explore'],
-    menu:      ['pagehead','breakfast','menu'],
+    menu:      ['pagehead','menu','breakfast','promo'],
     nosotros:  ['pagehead','story','reviews'],
     visitanos: ['pagehead','visit']
   };
@@ -244,6 +246,23 @@
     </div></section>`;
   };
 
+  // aviso emergente de novedades (sale una vez por visita)
+  sec.promo = () => {
+    const P = N.novedad; if (!P) return '';
+    let seen = false; try { seen = sessionStorage.getItem('promo-'+(N.id||'')) === '1'; } catch(e) {}
+    if (seen) return '';
+    return `
+    <aside class="promo" id="promo" role="dialog" aria-label="${esc(L(P.titulo))}" hidden>
+      <button type="button" class="promo-x" aria-label="${t('close')}">×</button>
+      <div class="promo-ico" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path class="steam" d="M17 6c-3 3 3 5 0 8M24 4c-3 3 3 5 0 8M31 6c-3 3 3 5 0 8"/><path d="M6 22h36a18 18 0 0 1-36 0z" fill="currentColor" fill-opacity=".15"/><path d="M6 22h36M14 40h20"/></svg></div>
+      <span class="promo-tag">${esc(L(P.etiqueta))}</span>
+      <h3>${esc(L(P.titulo))}</h3>
+      <p>${esc(L(P.texto))}</p>
+      ${P.items ? `<div class="chips">${P.items.map(i=>`<span>${esc(L(i))}</span>`).join('')}</div>` : ''}
+      <a class="btn btn-main" href="#menu" data-scroll="${esc(P.destino||'desayuno')}">${esc(L(P.boton))}</a>
+    </aside>`;
+  };
+
   sec.first = () => {
     const P = N.primeraVez; if (!P) return '';
     return `
@@ -396,6 +415,13 @@
     // tarjetas que se voltean (sin voltear al tocar un link interno)
     document.querySelectorAll('.fav').forEach(f => { f.onclick = e => { if (e.target.closest('a')) return; f.classList.toggle('flip'); pause(9000); }; f.onkeydown = e => { if ((e.key==='Enter'||e.key===' ') && !e.target.closest('a')) { e.preventDefault(); f.click(); } }; });
     document.querySelectorAll('[data-scroll]').forEach(a => a.onclick = e => { e.preventDefault(); const el = document.getElementById(a.dataset.scroll); if (el) el.scrollIntoView({behavior:'smooth'}); });
+    const promo = document.getElementById('promo');
+    if (promo) {
+      const close = () => { promo.classList.remove('show'); setTimeout(()=>promo.hidden = true, 400); try { sessionStorage.setItem('promo-'+(N.id||''), '1'); } catch(e) {} };
+      setTimeout(() => { promo.hidden = false; requestAnimationFrame(() => promo.classList.add('show')); }, 1400);
+      promo.querySelector('.promo-x').onclick = close;
+      promo.querySelector('[data-scroll]').addEventListener('click', close);
+    }
     railAuto();
     fitImages();
     reveal();

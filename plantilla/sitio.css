@@ -255,3 +255,19 @@ footer a:hover{color:#fff}
 .ex-go{display:inline-flex;align-items:center;gap:6px;font-weight:600;color:var(--sun);margin-top:6px}
 .ex-go svg{width:18px;height:18px}
 .explore + footer{border-top:1px solid rgba(255,255,255,.08)}
+
+/* Aviso emergente de novedades */
+.promo{position:fixed;z-index:45;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(88px + env(safe-area-inset-bottom,0px));width:min(340px,calc(100vw - 32px));background:#fff;border-radius:24px;padding:22px 20px 20px;box-shadow:0 24px 50px -18px rgba(29,58,33,.55);border:1px solid var(--line);display:grid;gap:8px;transform:translateY(30px) scale(.94);opacity:0;transition:transform .55s cubic-bezier(.34,1.56,.64,1),opacity .35s}
+.promo.show{transform:none;opacity:1}
+.promo::before{content:"";position:absolute;inset:0 0 auto;height:6px;border-radius:24px 24px 0 0;background:linear-gradient(90deg,var(--sun),#e07a3f,var(--brand))}
+.promo-x{position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:50%;border:0;background:var(--sand);color:var(--ink);font-size:22px;line-height:1;cursor:pointer}
+.promo-ico{width:56px;height:56px;border-radius:18px;background:var(--brand-deep);color:var(--sun);display:grid;place-items:center;transform:rotate(-6deg)}
+.promo-ico svg{width:34px;height:34px}
+.promo-ico .steam{animation:steam 2.2s ease-in-out infinite}
+@keyframes steam{0%,100%{transform:translateY(0);opacity:.9}50%{transform:translateY(-3px);opacity:.4}}
+.promo-tag{justify-self:start;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--sun);color:var(--brand-deep);padding:4px 10px;border-radius:999px;margin-top:4px}
+.promo h3{font-size:22px}
+.promo p{color:var(--ink-soft);font-size:15px}
+.promo .chips span{font-size:13px;padding:5px 11px;background:var(--sand);border:0}
+.promo .btn{margin-top:6px}
+@media(min-width:900px){.promo{bottom:28px;right:28px}}
