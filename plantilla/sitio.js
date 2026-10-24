@@ -380,7 +380,7 @@
     const canScroll = () => rail.scrollWidth > rail.clientWidth + 4;
     const go = i => { setActive(i); if (canScroll()) rail.scrollTo({left: center(cards[i]) - rail.clientWidth/2, behavior:'smooth'}); };
     let ticking = false;
-    rail.onscroll = () => { if (!canScroll() || ticking) return; ticking = true; requestAnimationFrame(() => { ticking = false; setActive(idx()); }); };
+    rail.onscroll = () => { if (!paused || !canScroll() || ticking) return; ticking = true; requestAnimationFrame(() => { ticking = false; setActive(idx()); }); };
     cards.forEach((c,i) => c.addEventListener('mouseenter', () => setActive(i)));
     dots.forEach((d,i) => d.onclick = () => { pause(); go(i); });
     ['pointerdown','wheel','touchstart','keydown'].forEach(ev => rail.addEventListener(ev, pause, {passive:true}));
