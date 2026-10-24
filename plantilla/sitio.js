@@ -249,8 +249,6 @@
   // aviso emergente de novedades (sale una vez por visita)
   sec.promo = () => {
     const P = N.novedad; if (!P) return '';
-    let seen = false; try { seen = sessionStorage.getItem('promo-'+(N.id||'')) === '1'; } catch(e) {}
-    if (seen) return '';
     return `
     <aside class="promo" id="promo" role="dialog" aria-label="${esc(L(P.titulo))}" hidden>
       <button type="button" class="promo-x" aria-label="${t('close')}">×</button>
@@ -398,6 +396,11 @@
     window.scrollTo(0, keepScroll ? y : 0);
   }
   window.addEventListener('hashchange', () => { currentTab = 0; render(false); });
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href^="#"]'); if (!a || a.dataset.scroll) return;
+    const v = a.getAttribute('href').slice(1);
+    if (VIEWS[v] && v === viewNow()) { e.preventDefault(); currentTab = 0; render(false); }
+  });
 
   function wire(){
     // idioma
@@ -417,10 +420,11 @@
     document.querySelectorAll('[data-scroll]').forEach(a => a.onclick = e => { e.preventDefault(); const el = document.getElementById(a.dataset.scroll); if (el) el.scrollIntoView({behavior:'smooth'}); });
     const promo = document.getElementById('promo');
     if (promo) {
-      const close = () => { promo.classList.remove('show'); setTimeout(()=>promo.hidden = true, 400); try { sessionStorage.setItem('promo-'+(N.id||''), '1'); } catch(e) {} };
+      const close = () => { promo.classList.remove('show'); setTimeout(()=>promo.hidden = true, 400); };
       setTimeout(() => { promo.hidden = false; requestAnimationFrame(() => promo.classList.add('show')); }, 1400);
       promo.querySelector('.promo-x').onclick = close;
       promo.querySelector('[data-scroll]').addEventListener('click', close);
+      promo.querySelector('[data-scroll]').addEventListener('click', e => e.stopPropagation());
     }
     railAuto();
     fitImages();
