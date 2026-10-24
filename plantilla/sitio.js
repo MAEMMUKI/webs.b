@@ -142,7 +142,7 @@
             <div class="face front">
               <span class="rank">${i+1}</span>
               <span class="turn">${ico('turn')}</span>
-              <div class="pic">${p.foto ? `<img src="${esc(p.foto)}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ph'}))">` : '<span class="ph"></span>'}</div>
+              <div class="pic"><span class="halo"></span>${p.foto ? `<img src="${esc(p.foto)}" alt="" crossorigin="anonymous" data-fit onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ph'}))">` : '<span class="ph"></span>'}</div>
               <div class="info"><h3>${esc(p.nombre)}</h3><span>${esc(L(p.corto))} · ${esc(p.precio)}</span></div>
             </div>
             <div class="face back">
@@ -171,9 +171,17 @@
         ${(L(H.parrafos)||[]).map(p=>`<p>${esc(p)}</p>`).join('')}
         ${H.frase ? `<p class="quote">${esc(L(H.frase))}</p>` : ''}
         ${H.datos ? `<div class="facts">${(L(H.datos)||[]).map(d=>`<span>${esc(d)}</span>`).join('')}</div>` : ''}
+        ${socialButtons(L(H.redesTexto))}
       </div>
     </div></section>`;
   };
+
+  function socialButtons(title){
+    const S = N.redes || {}; const ks = ['instagram','tiktok','facebook'].filter(k => S[k]);
+    if (!ks.length) return '';
+    const names = {instagram:'Instagram', tiktok:'TikTok', facebook:'Facebook'};
+    return `<div class="follow">${title ? `<p class="follow-t">${esc(title)}</p>` : ''}<div class="btns">${ks.map(k=>`<a class="btn btn-soc ${k}" href="${esc(S[k])}" target="_blank" rel="noopener">${ico(k)}${names[k]}${S[k+'Usuario'] ? `<small>${esc(S[k+'Usuario'])}</small>` : ''}</a>`).join('')}</div></div>`;
+  }
 
   sec.first = () => {
     const P = N.primeraVez; if (!P) return '';
@@ -192,6 +200,7 @@
     <section class="breakfast" id="desayuno"><div class="wrap">
       <div class="sec-head reveal"><span class="eyebrow">${esc(L(D.etiqueta))}</span><h2>${esc(L(D.titulo))}</h2><p class="lead">${esc(L(D.texto))}</p></div>
       <div class="grid">${(D.platos||[]).map(p=>`<div class="dish reveal"><div class="row"><h3>${esc(L(p.nombre))}</h3><span class="p">${esc(p.precio)}</span></div><p>${esc(L(p.desc))}</p></div>`).join('')}</div>
+      ${D.temporada ? `<div class="breads reveal" style="background:#fff;border:1px solid var(--line)"><h3>${esc(L(D.temporadaTitulo))}${pend(D.temporadaPorConfirmar)}</h3><div class="chips">${D.temporada.map(b=>`<span>${esc(L(b))}</span>`).join('')}</div></div>` : ''}
       ${D.panes ? `<div class="breads reveal"><h3>${esc(L(D.panesTitulo))}${pend(D.panesSinPrecio)}</h3><div class="chips">${D.panes.map(b=>`<span>${esc(b)}</span>`).join('')}</div></div>` : ''}
     </div></section>`;
   };
@@ -325,7 +334,33 @@
     // tarjetas que se voltean (sin voltear al tocar un link interno)
     document.querySelectorAll('.fav').forEach(f => { f.onclick = e => { if (e.target.closest('a')) return; f.classList.toggle('flip'); pause(); }; f.onkeydown = e => { if ((e.key==='Enter'||e.key===' ') && !e.target.closest('a')) { e.preventDefault(); f.click(); } }; });
     railAuto();
+    fitImages();
     reveal();
+  }
+
+
+  // recorta el espacio vacío de cada foto para que todas se vean del mismo tamaño
+  function fitImages(){
+    document.querySelectorAll('img[data-fit]').forEach(img => {
+      const run = () => {
+        try {
+          const W = img.naturalWidth, H = img.naturalHeight; if (!W) return;
+          const k = Math.min(1, 220 / Math.max(W,H)), w = Math.round(W*k), h = Math.round(H*k);
+          const c = document.createElement('canvas'); c.width = w; c.height = h;
+          const x = c.getContext('2d', {willReadFrequently:true}); x.drawImage(img,0,0,w,h);
+          const d = x.getImageData(0,0,w,h).data; let x0=w,y0=h,x1=-1,y1=-1;
+          for (let y=0;y<h;y++) for (let q=0;q<w;q++){ const i=(y*w+q)*4; if (d[i+3]>24 && !(d[i]>244&&d[i+1]>244&&d[i+2]>244)) { if(q<x0)x0=q; if(q>x1)x1=q; if(y<y0)y0=y; if(y>y1)y1=y; } }
+          if (x1 < 0) return;
+          const bw=(x1-x0+1)/w, bh=(y1-y0+1)/h, ar=W/H; // fracciones de la imagen
+          const fill = 0.9, m = Math.max(bw*ar, bh);        // lado mayor del producto, en alturas de imagen
+          const hPct = fill/m*100, wPct = hPct*ar;            // tamaño de la imagen respecto a la caja cuadrada
+          const cx = (x0/w + bw/2)*wPct, cy = (y0/h + bh/2)*hPct;
+          Object.assign(img.style, {position:'absolute', width:wPct+'%', height:hPct+'%', maxWidth:'none', maxHeight:'none', left:(50-cx)+'%', top:(50-cy)+'%'});
+          img.classList.add('fitted');
+        } catch(e) { /* si la foto no deja leerse, se queda centrada normal */ }
+      };
+      img.complete && img.naturalWidth ? run() : img.addEventListener('load', run, {once:true});
+    });
   }
 
   // carrusel automático, se detiene cuando la persona lo toca
@@ -336,7 +371,8 @@
     const cards = [...rail.querySelectorAll('.fav')]; const dots = [...document.querySelectorAll('#railDots button')];
     const idx = () => { const c = rail.scrollLeft + rail.clientWidth/2; let best=0,d=1e9; cards.forEach((el,i)=>{const m=el.offsetLeft+el.offsetWidth/2; if(Math.abs(m-c)<d){d=Math.abs(m-c);best=i;}}); return best; };
     const go = i => rail.scrollTo({left: cards[i].offsetLeft - (rail.clientWidth - cards[i].offsetWidth)/2, behavior:'smooth'});
-    rail.onscroll = () => { const i = idx(); dots.forEach((d,j)=>d.setAttribute('aria-current', j===i)); };
+    const mark = () => { const i = idx(); dots.forEach((d,j)=>d.setAttribute('aria-current', j===i)); cards.forEach((c,j)=>c.classList.toggle('active', j===i)); };
+    rail.onscroll = mark; requestAnimationFrame(mark);
     dots.forEach((d,i) => d.onclick = () => { pause(); go(i); });
     ['pointerdown','wheel','touchstart','keydown'].forEach(ev => rail.addEventListener(ev, pause, {passive:true}));
     clearInterval(timer);
