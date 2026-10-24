@@ -87,7 +87,7 @@
 
   sec.header = () => `
   <header class="top" id="top"><div class="wrap">
-    <a class="logo" href="#inicio" aria-label="${esc(N.nombre)}">${N.logo ? `<img src="${esc(N.logo)}" alt="${esc(N.nombre)}" onerror="this.replaceWith(document.createTextNode(this.alt))">` : esc(N.nombre)}</a>
+    <a class="logo" href="#inicio" aria-label="${esc(N.nombre)}">${N.logo ? `<span class="logo-badge"><img src="${esc(N.logo)}" alt="${esc(N.nombre)}" crossorigin="anonymous" data-fit="alpha" data-fill="0.86" onerror="this.closest('.logo').textContent=this.alt"></span>` : esc(N.nombre)}</a>
     <nav class="nav" aria-label="Principal">
       <a href="#favoritos">${t('favs')}</a><a href="#menu">${t('menu')}</a><a href="#historia">${t('story')}</a><a href="#visitanos">${t('visit')}</a>
     </nav>
@@ -112,7 +112,10 @@
           ${main.direccion ? `<a class="btn btn-line" style="color:#fff;border-color:rgba(255,255,255,.7)" href="${esc(dir(main.direccion))}" target="_blank" rel="noopener">${ico('pin')}${t('directions')}</a>` : ''}
         </div>
         ${R.calificacion ? `<a class="rating" href="${esc(R.verTodas||R.dejarResena||'#')}" target="_blank" rel="noopener"><span class="stars">★★★★★</span><b>${esc(R.calificacion)}</b> · ${esc(R.total)} ${t('reviewsOn')}</a>` : ''}
+        ${(() => { const st = status(main.horario); return st ? `<p class="hero-open"><span class="dot ${st.open?'open':''}"></span>${esc(st.text)}</p>` : ''; })()}
       </div>
+      <svg class="arc" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true"><path d="M0 80V40C240 8 480 0 720 0s480 8 720 40v40z"/></svg>
+      <a class="cue" href="#favoritos" aria-label="${t('favs')}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
     </section>`;
   };
 
@@ -130,7 +133,7 @@
     if (!items.length) return '';
     return `
     <section class="top5" id="favoritos">
-      <div class="wrap sec-head reveal">
+      <div class="wrap sec-head center reveal">
         <span class="eyebrow">${esc(L(F.etiqueta))}</span>
         <h2>${esc(L(F.titulo))}${pend(F.porConfirmar)}</h2>
         <p class="lead">${esc(L(F.texto))}</p>
@@ -188,7 +191,7 @@
     return `
     <section class="first"><svg class="paila" viewBox="0 0 200 120" fill="none" stroke="#f4ead7" stroke-width="3" aria-hidden="true"><ellipse cx="100" cy="30" rx="90" ry="18"/><path d="M10 30c4 50 40 78 90 78s86-28 90-78"/><path d="M40 20c20-30 100-30 120 0" stroke-dasharray="4 7"/><path d="M150 4l-38 46"/><ellipse cx="108" cy="54" rx="7" ry="4"/></svg>
       <div class="wrap">
-        <div class="sec-head reveal"><span class="eyebrow">${esc(L(P.etiqueta))}</span><h2>${esc(L(P.titulo))}</h2><p class="lead">${esc(L(P.texto))}</p></div>
+        <div class="sec-head center reveal"><span class="eyebrow">${esc(L(P.etiqueta))}</span><h2>${esc(L(P.titulo))}</h2><p class="lead">${esc(L(P.texto))}</p></div>
         <div class="steps">${(P.pasos||[]).map(s=>`<div class="step reveal"><h3>${esc(L(s.titulo))}</h3><p>${esc(L(s.texto))}</p></div>`).join('')}</div>
       </div>
     </section>`;
@@ -198,7 +201,7 @@
     const D = N.desayuno; if (!D) return '';
     return `
     <section class="breakfast" id="desayuno"><div class="wrap">
-      <div class="sec-head reveal"><span class="eyebrow">${esc(L(D.etiqueta))}</span><h2>${esc(L(D.titulo))}</h2><p class="lead">${esc(L(D.texto))}</p></div>
+      <div class="sec-head center reveal"><span class="eyebrow">${esc(L(D.etiqueta))}</span><h2>${esc(L(D.titulo))}</h2><p class="lead">${esc(L(D.texto))}</p></div>
       <div class="grid">${(D.platos||[]).map(p=>`<div class="dish reveal"><div class="row"><h3>${esc(L(p.nombre))}</h3><span class="p">${esc(p.precio)}</span></div><p>${esc(L(p.desc))}</p></div>`).join('')}</div>
       ${D.temporada ? `<div class="breads reveal" style="background:#fff;border:1px solid var(--line)"><h3>${esc(L(D.temporadaTitulo))}${pend(D.temporadaPorConfirmar)}</h3><div class="chips">${D.temporada.map(b=>`<span>${esc(L(b))}</span>`).join('')}</div></div>` : ''}
       ${D.panes ? `<div class="breads reveal"><h3>${esc(L(D.panesTitulo))}${pend(D.panesSinPrecio)}</h3><div class="chips">${D.panes.map(b=>`<span>${esc(b)}</span>`).join('')}</div></div>` : ''}
@@ -211,7 +214,7 @@
     const cats = M.categorias || [];
     return `
     <section class="menu" id="menu"><div class="wrap">
-      <div class="sec-head reveal"><span class="eyebrow">${esc(L(M.etiqueta))}</span><h2>${esc(L(M.titulo))}</h2></div>
+      <div class="sec-head center reveal"><span class="eyebrow">${esc(L(M.etiqueta))}</span><h2>${esc(L(M.titulo))}</h2></div>
       <div class="tabs" role="tablist">${cats.map((c,i)=>`<button type="button" role="tab" data-tab="${i}" aria-selected="${i===currentTab}">${esc(L(c.nombre))}</button>`).join('')}</div>
       <div id="tabPanel">${menuPanel(cats[currentTab])}</div>
       ${M.sabores ? `<div class="flavors"><h3>${t('flavors')}</h3><div class="chips">${M.sabores.map(s=>`<span>${esc(L(s))}</span>`).join('')}</div></div>` : ''}
@@ -228,7 +231,7 @@
     if (!R.calificacion) return '';
     const cards = (R.destacadas && R.destacadas.length ? R.destacadas : [null,null,null]);
     return `
-    <section class="reviews" id="resenas"><div class="wrap">
+    <section class="reviews" id="resenas" style="background:var(--sand)"><div class="wrap">
       <div class="head reveal">
         <div class="sec-head" style="margin:0"><span class="eyebrow">${t('reviews')}</span><h2>${esc(L(R.titulo))}</h2></div>
         <div class="score"><b>${esc(R.calificacion)}</b><div><div class="stars">★★★★★</div><div>${esc(R.total)} ${t('reviewsOn')}</div></div></div>
@@ -244,8 +247,8 @@
   sec.visit = () => {
     const locs = N.locales || []; if (!locs.length) return '';
     return `
-    <section class="visit" id="visitanos" style="background:var(--sand)"><div class="wrap">
-      <div class="sec-head reveal"><span class="eyebrow">${t('visit')}</span><h2>${esc(L(N.visitanosTitulo))}</h2></div>
+    <section class="visit" id="visitanos"><div class="wrap">
+      <div class="sec-head center reveal"><span class="eyebrow">${t('visit')}</span><h2>${esc(L(N.visitanosTitulo))}</h2></div>
       <div class="grid">${locs.map(l => l.pronto ? `
         <div class="place reveal"><div class="soon-art">${esc(l.nombre)}</div><div class="body">
           <span class="tag soon">${t('soon')}</span><h3>${esc(l.nombre)}</h3><p class="hours">${esc(L(l.nota))}${pend(l.porConfirmar)}</p>
@@ -309,7 +312,7 @@
     document.documentElement.lang = lang;
   }
 
-  const ORDER = N.orden || ['demo','header','hero','today','top5','story','first','breakfast','menu','reviews','visit','footer','dock'];
+  const ORDER = N.orden || ['demo','header','hero','top5','first','breakfast','menu','story','reviews','visit','footer','dock'];
   function render(){
     const y = window.scrollY;
     applyTheme();
@@ -342,6 +345,7 @@
   // recorta el espacio vacío de cada foto para que todas se vean del mismo tamaño
   function fitImages(){
     document.querySelectorAll('img[data-fit]').forEach(img => {
+      const alphaOnly = img.dataset.fit === 'alpha', fill = +(img.dataset.fill || 0.9);
       const run = () => {
         try {
           const W = img.naturalWidth, H = img.naturalHeight; if (!W) return;
@@ -349,10 +353,10 @@
           const c = document.createElement('canvas'); c.width = w; c.height = h;
           const x = c.getContext('2d', {willReadFrequently:true}); x.drawImage(img,0,0,w,h);
           const d = x.getImageData(0,0,w,h).data; let x0=w,y0=h,x1=-1,y1=-1;
-          for (let y=0;y<h;y++) for (let q=0;q<w;q++){ const i=(y*w+q)*4; if (d[i+3]>24 && !(d[i]>244&&d[i+1]>244&&d[i+2]>244)) { if(q<x0)x0=q; if(q>x1)x1=q; if(y<y0)y0=y; if(y>y1)y1=y; } }
+          for (let y=0;y<h;y++) for (let q=0;q<w;q++){ const i=(y*w+q)*4; if (d[i+3]>24 && (alphaOnly || !(d[i]>244&&d[i+1]>244&&d[i+2]>244))) { if(q<x0)x0=q; if(q>x1)x1=q; if(y<y0)y0=y; if(y>y1)y1=y; } }
           if (x1 < 0) return;
           const bw=(x1-x0+1)/w, bh=(y1-y0+1)/h, ar=W/H; // fracciones de la imagen
-          const fill = 0.9, m = Math.max(bw*ar, bh);        // lado mayor del producto, en alturas de imagen
+          const m = Math.max(bw*ar, bh);        // lado mayor del producto, en alturas de imagen
           const hPct = fill/m*100, wPct = hPct*ar;            // tamaño de la imagen respecto a la caja cuadrada
           const cx = (x0/w + bw/2)*wPct, cy = (y0/h + bh/2)*hPct;
           Object.assign(img.style, {position:'absolute', width:wPct+'%', height:hPct+'%', maxWidth:'none', maxHeight:'none', left:(50-cx)+'%', top:(50-cy)+'%'});
@@ -369,15 +373,21 @@
   function railAuto(){
     const rail = document.getElementById('rail'); if (!rail) return;
     const cards = [...rail.querySelectorAll('.fav')]; const dots = [...document.querySelectorAll('#railDots button')];
-    const idx = () => { const c = rail.scrollLeft + rail.clientWidth/2; let best=0,d=1e9; cards.forEach((el,i)=>{const m=el.offsetLeft+el.offsetWidth/2; if(Math.abs(m-c)<d){d=Math.abs(m-c);best=i;}}); return best; };
-    const go = i => rail.scrollTo({left: cards[i].offsetLeft - (rail.clientWidth - cards[i].offsetWidth)/2, behavior:'smooth'});
-    const mark = () => { const i = idx(); dots.forEach((d,j)=>d.setAttribute('aria-current', j===i)); cards.forEach((c,j)=>c.classList.toggle('active', j===i)); };
-    rail.onscroll = mark; requestAnimationFrame(mark);
+    let cur = 0;
+    const center = el => el.offsetLeft + el.offsetWidth/2;   // .rail es position:relative
+    const idx = () => { const c = rail.scrollLeft + rail.clientWidth/2; let best=0,d=1e9; cards.forEach((el,i)=>{ const m=Math.abs(center(el)-c); if(m<d){d=m;best=i;} }); return best; };
+    const setActive = i => { cur = i; dots.forEach((d,j)=>d.setAttribute('aria-current', j===i)); cards.forEach((c,j)=>c.classList.toggle('active', j===i)); };
+    const canScroll = () => rail.scrollWidth > rail.clientWidth + 4;
+    const go = i => { setActive(i); if (canScroll()) rail.scrollTo({left: center(cards[i]) - rail.clientWidth/2, behavior:'smooth'}); };
+    let ticking = false;
+    rail.onscroll = () => { if (!canScroll() || ticking) return; ticking = true; requestAnimationFrame(() => { ticking = false; setActive(idx()); }); };
+    cards.forEach((c,i) => c.addEventListener('mouseenter', () => setActive(i)));
     dots.forEach((d,i) => d.onclick = () => { pause(); go(i); });
     ['pointerdown','wheel','touchstart','keydown'].forEach(ev => rail.addEventListener(ev, pause, {passive:true}));
+    requestAnimationFrame(() => setActive(canScroll() ? idx() : 0));
     clearInterval(timer);
     if (paused || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    timer = setInterval(() => { if (document.hidden) return; const i = idx(); cards.forEach(c=>c.classList.remove('flip')); go((i+1) % cards.length); }, 3800);
+    timer = setInterval(() => { if (document.hidden) return; cards.forEach(c=>c.classList.remove('flip')); go((cur+1) % cards.length); }, 3800);
   }
 
   // aparición suave; todo queda visible a los 2.5 s pase lo que pase
