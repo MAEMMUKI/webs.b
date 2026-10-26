@@ -104,8 +104,8 @@ window.NEGOCIO = {
     porConfirmar: false,
     etiqueta: { es: 'Nuestra historia · Jaime Chacha', en: 'Our story · Jaime Chacha' },
     titulo: { es: 'Un oasis después de la tormenta', en: 'An oasis after the storm' },
-    foto: '',                        // pegar aquí una foto de Jaime o del local
-    fotoAlt: { es: 'Jaime Chacha, fundador de Oasis', en: 'Jaime Chacha, founder of Oasis' },
+    foto: 'equipo.jpg',              // foto del equipo (está en la carpeta oasis)
+    fotoAlt: { es: 'Jaime Chacha y el equipo de Oasis en el local', en: 'Jaime Chacha and the Oasis team at the shop' },
     fotoPendiente: { es: 'Aquí va una foto de Jaime en Oasis', en: 'A photo of Jaime at Oasis goes here' },
     parrafos: {
       es: ['Jaime llegó de Ecuador a los 29 años, con las manos acostumbradas al campo y la cabeza llena de sueños. Esa misma noche ya estaba trabajando.',
