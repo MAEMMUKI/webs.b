@@ -161,10 +161,8 @@
         <div class="fav" role="button" tabindex="0" aria-label="${esc(p.nombre)}: ${t('turn')}" style="--c1:${esc(p.color1)};--c2:${esc(p.color2)}">
           <div class="fav-in">
             <div class="face front">
-              <span class="rank">${i+1}</span>
-              <span class="turn">${ico('turn')}</span>
-              <div class="pic"><span class="halo"></span>${p.foto ? `<img src="${esc(p.foto)}" alt="" crossorigin="anonymous" data-fit onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ph'}))">` : '<span class="ph"></span>'}</div>
-              <div class="info"><h3>${esc(p.nombre)}</h3><span>${esc(L(p.corto))} · ${esc(p.precio)}</span></div>
+              <div class="stage"><span class="rank">${i+1}</span><span class="turn">${ico('turn')}</span><div class="pic">${p.foto ? `<img src="${esc(p.foto)}" alt="" crossorigin="anonymous" data-fit data-fill="0.86" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ph'}))">` : '<span class="ph"></span>'}</div></div>
+              <div class="info"><h3>${esc(p.nombre)}</h3><span class="meta">${esc(L(p.corto))}</span><span class="tag">${esc(p.precio)}</span></div>
             </div>
             <div class="face back">
               <h3>${esc(p.nombre)}</h3>
