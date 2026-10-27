@@ -19,7 +19,7 @@
       openNow:'Abierto ahora', closedNow:'Cerrado ahora', opensAt:'Abre a las', closesAt:'Cierra a las', today:'Hoy', everyDay:'Todos los días',
       flipHint:'Toca una copa para ver qué lleva', turn:'Voltear', pairWith:'Combínalo con', orderThis:'Pídelo por WhatsApp',
       seeAll:'Ver todas en Google', leaveReview:'Déjanos tu reseña', reviewsOn:'reseñas en Google', soon:'Próximamente', notifyMe:'Avísame cuando abra',
-      follow:'Síguenos', hoursT:'Horario', contact:'Contacto', rights:'Todos los derechos reservados.', flavors:'Nuestros sabores', viewMenu:'Ver el menú',
+      follow:'Síguenos', hoursT:'Horario', contact:'Contacto', rights:'Todos los derechos reservados.', flavors:'Nuestros sabores', flavHint:'Toca un sabor ✨', flavTipDef:'Pídelo con queso rallado encima, como en Ecuador.', viewMenu:'Ver el menú',
       home:'Inicio', about:'Nosotros', readStory:'Leer la historia completa', explore:'Sigue explorando', exploreT:'¿Qué quieres ver?', go:'Ver',
       pg_menu:'Helados con queso, copas, waffles, café y más.', pg_nosotros:'La historia detrás de cada copa.', pg_visitanos:'Te esperamos con una copa lista.',
       ex_menu:'Copas, desayunos, panes y café, con precios.', ex_nosotros:'Cómo un sueño migrante se convirtió en Oasis.', ex_visitanos:'Dirección, horario, mapa y WhatsApp.',
@@ -29,7 +29,7 @@
       openNow:'Open now', closedNow:'Closed now', opensAt:'Opens at', closesAt:'Closes at', today:'Today', everyDay:'Every day',
       flipHint:'Tap a cup to see what’s inside', turn:'Flip', pairWith:'Pair it with', orderThis:'Order on WhatsApp',
       seeAll:'See all on Google', leaveReview:'Leave us a review', reviewsOn:'reviews on Google', soon:'Coming soon', notifyMe:'Tell me when it opens',
-      follow:'Follow us', hoursT:'Hours', contact:'Contact', rights:'All rights reserved.', flavors:'Our flavors', viewMenu:'See the menu',
+      follow:'Follow us', hoursT:'Hours', contact:'Contact', rights:'All rights reserved.', flavors:'Our flavors', flavHint:'Tap a flavor ✨', flavTipDef:'Get it topped with grated cheese, Ecuadorian style.', viewMenu:'See the menu',
       home:'Home', about:'About us', readStory:'Read the full story', explore:'Keep exploring', exploreT:'What would you like to see?', go:'See',
       pg_menu:'Ice cream with cheese, cups, waffles, coffee and more.', pg_nosotros:'The story behind every cup.', pg_visitanos:'We’ll have a cup ready for you.',
       ex_menu:'Cups, breakfast, bread and coffee, with prices.', ex_nosotros:'How an immigrant’s dream became Oasis.', ex_visitanos:'Address, hours, map and WhatsApp.',
@@ -285,6 +285,45 @@
     </div></section>`;
   };
 
+  // SABORES con partículas: cada sabor suelta 2-3 dibujitos al tocarlo
+  const norm = x => (x||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+  const FLAVS = [
+    ['fresa','#e0566f'],['coco','#e9e2d3'],['chocolate','#6b3f26'],['vainilla','#f3e2b0'],['mango','#f5a623'],
+    ['cafe','#7a5236'],['cookies','#3b3b3b'],['caramelo','#d08a2e'],['ron','#6d3b5c'],['mora','#5b2a6e'],
+    ['maracuya','#f2c230'],['chicle','#f49ac1'],['durazno','#f6a77a'],['guanabana','#eef0e2'],['naranjilla','#f39c34'],['tamarindo','#9b6a3c']
+  ];
+  const flavorOf = es => { const n = norm(es); const f = FLAVS.find(([k])=>n.includes(k)); return f ? {k:f[0], c:f[1]} : {k:'gen', c:'var(--sun)'}; };
+  const PART = {
+    fresa:'<path d="M10 18c-4-2-7-6-6-10 1-2 3-3 6-3s5 1 6 3c1 4-2 8-6 10z" fill="#e0566f"/><path d="M6 5c1-2 3-2 4-1 1-1 3-1 4 1-2 1-6 1-8 0z" fill="#3f9a4a"/><g fill="#ffd6dd"><circle cx="8" cy="10" r=".8"/><circle cx="12" cy="10" r=".8"/><circle cx="10" cy="13" r=".8"/></g>',
+    coco:'<rect x="5" y="8" width="10" height="4" rx="2" fill="#fff" stroke="#cdbf9f" stroke-width="1" transform="rotate(-20 10 10)"/>',
+    chocolate:'<rect x="5" y="5" width="10" height="10" rx="2" fill="#6b3f26"/><path d="M7 8h6M7 12h6" stroke="#8a5537" stroke-width="1"/>',
+    vainilla:'<g fill="#f3e2b0" stroke="#e2c47a" stroke-width=".6"><circle cx="10" cy="5.5" r="3"/><circle cx="14.3" cy="8.6" r="3"/><circle cx="12.7" cy="13.6" r="3"/><circle cx="7.3" cy="13.6" r="3"/><circle cx="5.7" cy="8.6" r="3"/></g><circle cx="10" cy="10" r="2" fill="#f5b942"/>',
+    mango:'<rect x="5" y="5" width="10" height="10" rx="2.5" fill="#f5a623"/><rect x="7" y="7" width="3" height="3" rx="1" fill="#ffd27a"/>',
+    cafe:'<ellipse cx="10" cy="10" rx="5" ry="7" fill="#7a5236" transform="rotate(25 10 10)"/><path d="M8 4c3 4-1 8 2 12" stroke="#4a2f1d" stroke-width="1.2" fill="none" transform="rotate(25 10 10)"/>',
+    cookies:'<circle cx="10" cy="10" r="6" fill="#3b3b3b"/><circle cx="8" cy="8" r="1.2" fill="#f4f1ea"/><circle cx="12" cy="11" r="1" fill="#f4f1ea"/><circle cx="9" cy="12.5" r=".8" fill="#f4f1ea"/>',
+    caramelo:'<path d="M10 3c3 5 5 7 5 10a5 5 0 0 1-10 0c0-3 2-5 5-10z" fill="#d08a2e"/><ellipse cx="8.3" cy="12" rx="1.2" ry="2" fill="#f2c27a"/>',
+    ron:'<ellipse cx="10" cy="10" rx="4" ry="5.5" fill="#6d3b5c" transform="rotate(-15 10 10)"/><path d="M8 8c1 1 3 1 4 0M8 12c1 1 3 1 4 0" stroke="#4a2440" stroke-width=".9" fill="none"/>',
+    mora:'<g fill="#5b2a6e"><circle cx="8" cy="8" r="2.6"/><circle cx="12" cy="8" r="2.6"/><circle cx="10" cy="11.5" r="2.6"/><circle cx="7" cy="12" r="2.3"/><circle cx="13" cy="12" r="2.3"/><circle cx="10" cy="15" r="2.2"/></g><path d="M9 4l1 2 1-2" stroke="#3f9a4a" stroke-width="1.2" fill="none"/>',
+    maracuya:'<circle cx="10" cy="10" r="6.5" fill="#f2c230"/><g fill="#3b2a12"><circle cx="8" cy="8" r=".9"/><circle cx="12" cy="9" r=".9"/><circle cx="9" cy="12" r=".9"/><circle cx="12.5" cy="12.5" r=".8"/></g>',
+    chicle:'<circle cx="10" cy="10" r="6" fill="#f49ac1" fill-opacity=".35" stroke="#f49ac1" stroke-width="1.4"/><circle cx="8" cy="8" r="1.4" fill="#fff" fill-opacity=".9"/>',
+    gen:'<path d="M10 2l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="#f5b942"/>'
+  };
+  ['durazno','guanabana','naranjilla','tamarindo'].forEach(k => PART[k] = PART.gen);
+  function burst(btn){
+    const k = btn.dataset.flav, reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    btn.classList.remove('pop'); void btn.offsetWidth; btn.classList.add('pop');
+    if (reduce) return;
+    const n = 3;
+    for (let i=0;i<n;i++){
+      const el = document.createElement('b'); el.className = 'flav-p';
+      el.innerHTML = `<svg viewBox="0 0 20 20" width="21" height="21">${PART[k]||PART.gen}</svg>`;
+      const dx = (i-(n-1)/2)*18 + (Math.random()*10-5), dy = -(26 + Math.random()*20), r = (Math.random()*80-40)|0;
+      el.style.setProperty('--dx', dx+'px'); el.style.setProperty('--dy', dy+'px'); el.style.setProperty('--r', r+'deg');
+      el.style.animationDelay = (i*60)+'ms';
+      btn.appendChild(el); setTimeout(()=>el.remove(), 1200);
+    }
+  }
+
   let currentTab = 0;
   sec.menu = () => {
     const M = N.menu; if (!M) return '';
@@ -294,7 +333,7 @@
       <div class="sec-head center reveal"><span class="eyebrow">${esc(L(M.etiqueta))}</span><h2>${esc(L(M.titulo))}</h2></div>
       <div class="tabs" role="tablist">${cats.map((c,i)=>`<button type="button" role="tab" data-tab="${i}" aria-selected="${i===currentTab}">${esc(L(c.nombre))}</button>`).join('')}</div>
       <div id="tabPanel">${menuPanel(cats[currentTab])}</div>
-      ${M.sabores ? `<div class="flavors"><h3>${t('flavors')}</h3><div class="chips">${M.sabores.map(s=>`<span>${esc(L(s))}</span>`).join('')}</div></div>` : ''}
+      ${M.sabores ? `<div class="flavors"><h3>${t('flavors')}</h3><div class="chips flav">${M.sabores.map(s=>{ const es = typeof s==='string' ? s : s.es; const f = flavorOf(es); return `<button type="button" class="flav-chip" data-flav="${esc(f.k)}" data-es="${esc(es)}" style="--fc:${f.c}"><i aria-hidden="true"></i>${esc(L(s))}</button>`; }).join('')}</div><p class="flav-tip" id="flavTip" aria-live="polite">${t('flavHint')}</p></div>` : ''}
       ${M.nota ? `<p class="note">${esc(L(M.nota))}</p>` : ''}
     </div></section>`;
   };
@@ -411,6 +450,15 @@
     const top = document.getElementById('top');
     const onScroll = () => top && top.classList.toggle('scrolled', window.scrollY > 10);
     window.onscroll = onScroll; onScroll();
+    // sabores con partículas
+    const tip = document.getElementById('flavTip');
+    document.querySelectorAll('.flav-chip').forEach(b => {
+      let last = 0;
+      const go = () => { if (Date.now()-last < 500) return; last = Date.now(); burst(b);
+        if (tip) { const T = (N.menu.saboresTips||{})[b.dataset.es]; tip.innerHTML = `<b>${esc(b.textContent)}</b> · ${esc(T ? L(T) : t('flavTipDef'))}`; tip.classList.remove('show'); void tip.offsetWidth; tip.classList.add('show'); } };
+      b.addEventListener('click', go);
+      b.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') go(); });
+    });
     // pestañas del menú
     document.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => {
       currentTab = +b.dataset.tab;

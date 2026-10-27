@@ -179,6 +179,11 @@ window.NEGOCIO = {
       'Chocolate', { es: 'Café', en: 'Coffee' }, 'Cookies & Cream', { es: 'Caramelo', en: 'Caramel' },
       { es: 'Ron con pasas', en: 'Rum raisin' }, { es: 'Mora', en: 'Blackberry' }, { es: 'Maracuyá', en: 'Passion fruit' }, { es: 'Chicle', en: 'Bubblegum' }
     ],
+    // frase que sale al tocar un sabor (opcional; si no hay, sale una frase general)
+    saboresTips: {
+      'Fresa': { es: 'Va perfecto en la Beach Sunset, con sirope de fresa.', en: 'Perfect in the Beach Sunset, with strawberry syrup.' },
+      'Chocolate': { es: 'Va perfecto en la Brownie Delight.', en: 'Perfect in the Brownie Delight.' }
+    },
     categorias: [
       { nombre: { es: 'Copas', en: 'Cups' }, items: [
         { nombre: 'Super Tropical Cup', precio: '$15.75', desc: { es: 'Doble durazno y fresa, 2 sabores, crema, queso, 2 barquillos.', en: 'Double peach and strawberry, 2 flavors, cream, cheese, 2 wafers.' } },
