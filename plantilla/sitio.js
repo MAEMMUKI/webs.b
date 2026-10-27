@@ -120,7 +120,7 @@
   sec.hero = () => {
     const P = N.portada || {};
     const media = P.video
-      ? `<video autoplay muted loop playsinline poster="${esc(P.imagen||'')}"><source src="${esc(P.video)}"></video>`
+      ? `<video autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture disableremoteplayback poster="${esc(P.imagen||'')}"><source src="${esc(P.video)}" type="video/mp4"></video>`
       : (P.imagen ? `<img src="${esc(P.imagen)}" alt="" fetchpriority="high" onerror="this.remove()">` : '');
     return `
     <section class="hero" id="inicio">
@@ -278,7 +278,7 @@
     const D = N.desayuno; if (!D) return '';
     return `
     <section class="breakfast${D.video ? ' has-video' : ''}" id="desayuno">
-      ${D.video ? `<div class="nube" aria-hidden="true"><video autoplay muted loop playsinline preload="metadata" poster="${esc(D.videoPoster||'')}"><source src="${esc(D.video)}" type="video/mp4"></video></div>` : ''}
+      ${D.video ? `<div class="nube" aria-hidden="true"><video autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture disableremoteplayback poster="${esc(D.videoPoster||'')}"><source src="${esc(D.video)}" type="video/mp4"></video></div>` : ''}
       <div class="wrap">
       <div class="sec-head center reveal"><span class="eyebrow">${esc(L(D.etiqueta))}</span><h2>${esc(L(D.titulo))}</h2><p class="lead">${esc(L(D.texto))}</p></div>
       <div class="grid">${(D.platos||[]).map(p=>`<div class="dish reveal"><div class="row"><h3>${esc(L(p.nombre))}</h3><span class="p">${esc(p.precio)}</span></div><p>${esc(L(p.desc))}</p></div>`).join('')}</div>
@@ -435,6 +435,19 @@
       ${apps.length ? `<p class="os-q">${t('appsQ')}</p><div class="os-apps">${apps.map(d=>`<a class="os-app ${appCls(d.nombre)}" href="${esc(d.url)}" target="_blank" rel="noopener">${appLabel(d.nombre)}</a>`).join('')}</div>` : ''}
       ${tel ? `<a class="os-call" href="${esc(tel)}">${ico('phone')}<span>${t('callQ')} <b>${esc(C.telefono)}</b></span></a>` : ''}`;
   }
+  function startVideos(){
+    document.querySelectorAll('video[autoplay]').forEach(v => {
+      v.muted = true; v.defaultMuted = true; v.playsInline = true; v.controls = false;
+      const go = () => { const pr = v.play(); if (pr && pr.catch) pr.catch(() => v.classList.add('still')); };
+      if (v.readyState >= 2) go(); else v.addEventListener('canplay', go, {once:true});
+      v.addEventListener('playing', () => v.classList.remove('still'));
+      go();
+    });
+  }
+  // si el teléfono bloqueó el video (modo ahorro), intentarlo otra vez al primer toque o al volver a la pestaña
+  ['touchstart','click'].forEach(ev => document.addEventListener(ev, () => document.querySelectorAll('video.still').forEach(v => v.play().catch(()=>{})), {passive:true}));
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) document.querySelectorAll('video[autoplay]').forEach(v => v.paused && v.play().catch(()=>{})); });
+
   let lastFocus = null;
   function openSheet(item){
     const sh = document.getElementById('osheet'); if (!sh) return false;
@@ -497,6 +510,8 @@
   });
 
   function wire(){
+    // videos de fondo: arrancarlos por código (iPhone a veces no lo hace solo) y nunca mostrar el botón de play
+    startVideos();
     // idioma
     document.querySelectorAll('[data-lang]').forEach(b => b.onclick = () => { lang = b.dataset.lang; try{localStorage.setItem(LKEY,lang)}catch(e){} render(true); });
     // encabezado con línea al bajar

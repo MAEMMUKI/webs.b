@@ -341,3 +341,7 @@ html.os-lock,html.os-lock body{overflow:hidden}
 .promo .chips span{font-size:13px;padding:5px 11px;background:var(--sand);border:0}
 .promo .btn{margin-top:6px}
 @media(min-width:900px){.promo{bottom:28px;right:28px}}
+
+/* videos de fondo: sin botón de play ni controles en iPhone */
+video::-webkit-media-controls,video::-webkit-media-controls-panel,video::-webkit-media-controls-play-button,video::-webkit-media-controls-start-playback-button,video::-webkit-media-controls-overlay-play-button{display:none!important;-webkit-appearance:none;opacity:0!important}
+.hero-media video,.nube video{pointer-events:none}
