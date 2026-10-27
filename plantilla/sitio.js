@@ -275,7 +275,9 @@
   sec.breakfast = () => {
     const D = N.desayuno; if (!D) return '';
     return `
-    <section class="breakfast" id="desayuno"><div class="wrap">
+    <section class="breakfast${D.video ? ' has-video' : ''}" id="desayuno">
+      ${D.video ? `<div class="nube" aria-hidden="true"><video autoplay muted loop playsinline preload="metadata" poster="${esc(D.videoPoster||'')}"><source src="${esc(D.video)}" type="video/mp4"></video></div>` : ''}
+      <div class="wrap">
       <div class="sec-head center reveal"><span class="eyebrow">${esc(L(D.etiqueta))}</span><h2>${esc(L(D.titulo))}</h2><p class="lead">${esc(L(D.texto))}</p></div>
       <div class="grid">${(D.platos||[]).map(p=>`<div class="dish reveal"><div class="row"><h3>${esc(L(p.nombre))}</h3><span class="p">${esc(p.precio)}</span></div><p>${esc(L(p.desc))}</p></div>`).join('')}</div>
       ${D.temporada ? `<div class="breads reveal" style="background:#fff;border:1px solid var(--line)"><h3>${esc(L(D.temporadaTitulo))}${pend(D.temporadaPorConfirmar)}</h3><div class="chips">${D.temporada.map(b=>`<span>${esc(L(b))}</span>`).join('')}</div></div>` : ''}

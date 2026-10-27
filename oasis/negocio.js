@@ -151,6 +151,7 @@ window.NEGOCIO = {
     etiqueta: { es: 'Nuevo · desde las 6 AM', en: 'New · from 6 AM' },
     titulo: { es: 'Desayunos y platos de invierno', en: 'Breakfast & winter plates' },
     texto: { es: 'Antes del helado, el pan recién hecho y los platos de casa.', en: 'Before the ice cream: fresh bread and home-style plates.' },
+    video: 'colada.mp4', videoPoster: 'colada.jpg',   // video de fondo (nube); borra esta línea para quitarlo
     platos: [
       { nombre: 'Bolón', precio: '$20.00', desc: { es: 'Verde majado con queso y chicharrón, 2 huevos fritos y seco de carne.', en: 'Mashed green plantain with cheese and chicharrón, 2 fried eggs and Ecuadorian beef stew.' } },
       { nombre: { es: 'Morocho con empanadas de viento', en: 'Morocho with empanadas de viento' }, precio: '$10.50', desc: { es: 'Morocho cremoso con leche y canela, con dos empanadas recién fritas.', en: 'Creamy corn and milk drink with cinnamon, with two freshly fried empanadas.' } },

@@ -157,6 +157,15 @@ section{padding-block:76px}
 .paila{position:absolute;right:-60px;top:30px;width:300px;opacity:.09;pointer-events:none}
 
 /* Desayuno */
+/* video de fondo tipo nube (desayuno) */
+.breakfast.has-video{position:relative;isolation:isolate;overflow:hidden}
+.breakfast .nube{position:absolute;z-index:-1;left:50%;top:0;transform:translateX(-50%);margin-top:24px;width:min(760px,118vw);aspect-ratio:1;pointer-events:none;-webkit-mask-image:radial-gradient(closest-side,#000 40%,rgba(0,0,0,.6) 66%,transparent 100%);mask-image:radial-gradient(closest-side,#000 40%,rgba(0,0,0,.6) 66%,transparent 100%)}
+.breakfast .nube video{width:100%;height:100%;object-fit:cover}
+.breakfast .nube::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(251,248,241,.25) 0%,rgba(251,248,241,0) 30%,rgba(251,248,241,.15) 55%,var(--cream) 88%)}
+.breakfast.has-video .sec-head{min-height:min(600px,104vw);align-content:end}
+.breakfast.has-video .sec-head .eyebrow{background:rgba(251,248,241,.9);border-radius:999px;padding:5px 14px}
+.breakfast.has-video .sec-head h2,.breakfast.has-video .sec-head .lead{text-shadow:0 0 18px var(--cream),0 0 6px var(--cream)}
+.breakfast.has-video .dish{background:rgba(255,255,255,.94)}
 .breakfast .grid{display:grid;gap:16px;text-align:left;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
 .dish{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px;display:grid;gap:6px}
 .dish .row{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
