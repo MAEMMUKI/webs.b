@@ -232,6 +232,7 @@ window.NEGOCIO = {
   visitanosTitulo: { es: 'Ven a vernos', en: 'Come see us' },
   locales: [
     { nombre: 'Bergenline Ave', ciudad: 'Union City, NJ', direccion: '3413 Bergenline Ave, Union City, NJ 07087',
+      nombreMaps: 'Oasis Helados Con Queso & Coffee', placeId: 'ChIJt_AjvmJZwokR6062rCNfLBs',
       horario: { lun:['06:00','21:00'], mar:['06:00','21:00'], mie:['06:00','21:00'], jue:['06:00','21:00'], vie:['06:00','21:00'], sab:['06:00','21:00'], dom:['06:00','21:00'] } },
     { nombre: 'Ferry Street · Newark', pronto: true, porConfirmar: true,
       nota: { es: 'Estamos preparando algo especial en el Ironbound. Fecha de apertura muy pronto.', en: 'We’re preparing something special in the Ironbound. Opening date coming soon.' } }

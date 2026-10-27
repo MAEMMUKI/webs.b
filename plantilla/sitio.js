@@ -59,8 +59,10 @@
   const C = N.contacto || {};
   const tel = C.telefono ? 'tel:' + C.telefono.replace(/[^\d+]/g,'') : null;
   const wa = (msg) => C.whatsapp ? 'https://wa.me/' + C.whatsapp.replace(/\D/g,'') + (msg ? '?text=' + encodeURIComponent(msg) : '') : null;
-  const dir = a => 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(a);
-  const mapEmbed = a => 'https://www.google.com/maps?q=' + encodeURIComponent(a) + '&output=embed';
+  // l = un local de N.locales; si tiene nombreMaps/placeId, Maps abre la ficha del negocio y no solo la calle
+  const lugar = l => l.nombreMaps ? l.nombreMaps + ', ' + l.direccion : l.direccion;
+  const dir = l => 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(lugar(l)) + (l.placeId ? '&destination_place_id=' + encodeURIComponent(l.placeId) : '');
+  const mapEmbed = l => 'https://www.google.com/maps?q=' + encodeURIComponent(lugar(l)) + '&output=embed';
   const R = N.resenas || {};
 
   // ---------- horario ----------
@@ -127,7 +129,7 @@
         <p class="hero-sub">${esc(L(P.subtitulo))}</p>
         <div class="btns">
           <a class="btn btn-light" href="#menu">${t('viewMenu')}</a>
-          ${main.direccion ? `<a class="btn btn-line" style="color:#fff;border-color:rgba(255,255,255,.7)" href="${esc(dir(main.direccion))}" target="_blank" rel="noopener">${ico('pin')}${t('directions')}</a>` : ''}
+          ${main.direccion ? `<a class="btn btn-line" style="color:#fff;border-color:rgba(255,255,255,.7)" href="${esc(dir(main))}" target="_blank" rel="noopener">${ico('pin')}${t('directions')}</a>` : ''}
         </div>
         ${R.calificacion ? `<a class="rating" href="${esc(R.verTodas||R.dejarResena||'#')}" target="_blank" rel="noopener"><span class="stars">★★★★★</span><b>${esc(R.calificacion)}</b> · ${esc(R.total)} ${t('reviewsOn')}</a>` : ''}
         ${(() => { const st = status(main.horario); return st ? `<p class="hero-open"><span class="dot ${st.open?'open':''}"></span>${esc(st.text)}</p>` : ''; })()}
@@ -327,13 +329,13 @@
           ${wa() ? `<div class="btns"><a class="btn btn-main" href="${esc(wa((lang==='es'?'Hola, avísenme cuando abra Oasis en ':'Hi, let me know when Oasis opens in ')+l.nombre))}" target="_blank" rel="noopener">${ico('wa')}${t('notifyMe')}</a></div>` : ''}
         </div></div>` : `
         <div class="place reveal">
-          <iframe class="map" loading="lazy" title="Mapa ${esc(l.nombre)}" src="${esc(mapEmbed(l.direccion))}" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <iframe class="map" loading="lazy" title="Mapa ${esc(l.nombre)}" src="${esc(mapEmbed(l))}" referrerpolicy="no-referrer-when-downgrade"></iframe>
           <div class="body">
             <span class="tag">${esc(l.ciudad||'')}</span><h3>${esc(l.nombre)}</h3>
             <p>${esc(l.direccion)}</p>
             <p class="hours"><b>${t('hoursT')}:</b> ${esc(hoursText(l.horario))}</p>
             <div class="btns">
-              <a class="btn btn-main" href="${esc(dir(l.direccion))}" target="_blank" rel="noopener">${ico('pin')}${t('directions')}</a>
+              <a class="btn btn-main" href="${esc(dir(l))}" target="_blank" rel="noopener">${ico('pin')}${t('directions')}</a>
               ${tel ? `<a class="btn btn-line" href="${esc(tel)}">${ico('phone')}${t('call')}</a>` : ''}
               ${wa() ? `<a class="btn btn-line" href="${esc(wa(L(C.mensajeWhatsapp)))}" target="_blank" rel="noopener">${ico('wa')}WhatsApp</a>` : ''}
             </div>
@@ -365,7 +367,7 @@
     <nav class="dock" aria-label="${t('contact')}">
       ${tel ? `<a href="${esc(tel)}">${ico('phone')}${t('call')}</a>` : ''}
       ${wa() ? `<a class="main" href="${esc(wa(L(C.mensajeWhatsapp)))}" target="_blank" rel="noopener">${ico('wa')}${t('order')}</a>` : ''}
-      ${main.direccion ? `<a href="${esc(dir(main.direccion))}" target="_blank" rel="noopener">${ico('pin')}${t('directions')}</a>` : ''}
+      ${main.direccion ? `<a href="${esc(dir(main))}" target="_blank" rel="noopener">${ico('pin')}${t('directions')}</a>` : ''}
     </nav>`;
 
   // ---------- armar ----------
