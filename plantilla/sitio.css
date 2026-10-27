@@ -246,6 +246,44 @@ footer a:hover{color:#fff}
 .dock svg{width:21px;height:21px}
 @media(min-width:900px){.dock{display:none}}
 
+/* Tarjeta "¿Cómo quieres pedir?" */
+.osheet{position:fixed;inset:0;z-index:60}
+.osheet[hidden]{display:none}
+.osheet-bg{position:absolute;inset:0;background:rgba(20,35,22,.42);opacity:0;transition:opacity .3s}
+.osheet.show .osheet-bg{opacity:1}
+.osheet-card{position:absolute;left:0;right:0;bottom:0;max-height:88vh;overflow:auto;background:var(--cream);border-radius:28px 28px 0 0;padding:14px 20px calc(22px + env(safe-area-inset-bottom,0px));box-shadow:0 -20px 50px -20px rgba(0,0,0,.4);transform:translateY(100%);transition:transform .38s cubic-bezier(.22,1.2,.36,1);outline:none}
+.osheet.show .osheet-card{transform:translateY(0)}
+.osheet-grab{display:block;width:44px;height:5px;border-radius:5px;background:var(--line);margin:0 auto 10px}
+.osheet-x{position:absolute;top:12px;right:14px;width:36px;height:36px;border-radius:50%;border:0;background:var(--sand);color:var(--ink);font-size:22px;line-height:1;cursor:pointer}
+.osheet-card h3{font-size:22px;margin:4px 40px 14px 0}
+.osheet-card h3 em{font-style:normal;color:var(--brand)}
+.os-status{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#9a3b2e;background:#fbe9e4;border-radius:999px;padding:5px 11px;margin-bottom:8px}
+.os-status.open{color:var(--brand);background:#e6f0e3}
+.os-wa{display:flex;align-items:center;gap:14px;background:#25d366;color:#fff;text-decoration:none;border-radius:20px;padding:16px 18px;box-shadow:0 12px 24px -14px rgba(37,211,102,.9);transition:transform .15s}
+.os-wa:active{transform:scale(.98)}
+.os-wa svg{width:34px;height:34px;flex:none}
+.os-wa span{display:grid;gap:2px}
+.os-wa b{font-size:18px}
+.os-wa small{font-size:13px;opacity:.92}
+.os-q{margin:18px 0 8px;font-size:14px;color:var(--ink-soft);text-align:center}
+.os-apps{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.os-app{display:flex;align-items:center;justify-content:center;min-height:50px;border-radius:16px;text-decoration:none;font-weight:700;font-size:16px;letter-spacing:-.01em;background:#fff;border:1px solid var(--line);color:var(--ink);transition:transform .15s}
+.os-app:active{transform:scale(.97)}
+.os-app.dd{color:#eb1700}
+.os-app.ue{color:#000}
+.os-app.ue b{color:#06c167;margin-left:.25em}
+.os-call{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;padding:10px;font-size:14px;color:var(--ink-soft);text-decoration:none;border-top:1px dashed var(--line)}
+.os-call svg{width:17px;height:17px;color:var(--brand)}
+.os-call b{color:var(--brand-deep)}
+html.os-lock,html.os-lock body{overflow:hidden}
+@media(min-width:900px){
+  .osheet-card{left:auto;right:max(20px,calc((100vw - 1120px)/2 + 20px));top:96px;bottom:auto;width:380px;border-radius:24px;transform:translateY(-10px) scale(.97);opacity:0;transition:transform .28s cubic-bezier(.22,1.2,.36,1),opacity .2s;padding:20px 22px 18px}
+  .osheet.show .osheet-card{transform:none;opacity:1}
+  .osheet-grab{display:none}
+  .osheet-bg{background:rgba(20,35,22,.18)}
+}
+@media(prefers-reduced-motion:reduce){.osheet-card,.osheet-bg{transition:none}}
+
 /* Animación suave al aparecer (siempre visible si no hay JS o movimiento reducido) */
 .reveal{transition:opacity .7s ease,transform .7s ease}
 .js .reveal.wait{opacity:0;transform:translateY(18px)}

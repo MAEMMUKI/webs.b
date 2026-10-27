@@ -46,7 +46,11 @@ window.NEGOCIO = {
     whatsapp: '19734956143',
     whatsappPorConfirmar: true,
     mensajeWhatsapp: { es: 'Hola Oasis, quiero hacer un pedido', en: 'Hi Oasis, I’d like to place an order' },
-    pedidos: ''                      // link de DoorDash / Uber Eats si tienen
+    // apps de delivery (salen como botones pequeños al tocar "Pedir"); borra una línea si no la tienen
+    delivery: [
+      { nombre: 'DoorDash', url: 'https://www.doordash.com/store/oasis-helados-con-queso-&-coffee-union-city-32585151/' },
+      { nombre: 'Uber Eats', url: 'https://www.ubereats.com/store/oasis-helados-con-queso-%26-coffee/IJTMYKlqWnWMkTlaUoq7gQ' }
+    ]
   },
 
   redes: {

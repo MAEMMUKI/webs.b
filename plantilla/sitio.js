@@ -16,20 +16,20 @@
 
   const T = { // textos fijos de la plantilla
     es:{menu:'Menú', favs:'Favoritos', story:'Historia', visit:'Visítanos', reviews:'Reseñas', order:'Pedir', call:'Llamar', directions:'Cómo llegar', whatsapp:'WhatsApp',
-      openNow:'Abierto ahora', closedNow:'Cerrado ahora', opensAt:'Abre a las', closesAt:'Cierra a las', today:'Hoy', everyDay:'Todos los días',
+      openNow:'Abierto ahora', closedNow:'Cerrado ahora', opensAt:'Abre a las', opensTomorrow:'abre mañana a las', closesAt:'Cierra a las', today:'Hoy', everyDay:'Todos los días',
       flipHint:'Toca una copa para ver qué lleva', turn:'Voltear', pairWith:'Combínalo con', orderThis:'Pídelo por WhatsApp',
       seeAll:'Ver todas en Google', leaveReview:'Déjanos tu reseña', reviewsOn:'reseñas en Google', soon:'Próximamente', notifyMe:'Avísame cuando abra',
-      follow:'Síguenos', hoursT:'Horario', contact:'Contacto', rights:'Todos los derechos reservados.', flavors:'Nuestros sabores', flavHint:'Toca un sabor ✨', flavTipDef:'Pídelo con queso rallado encima, como en Ecuador.', viewMenu:'Ver el menú',
+      follow:'Síguenos', hoursT:'Horario', contact:'Contacto', rights:'Todos los derechos reservados.', flavors:'Nuestros sabores', howOrder:'¿Cómo quieres pedir?', orderItem:'Pedir', waSub:'Directo con nosotros · respuesta rápida', appsQ:'¿Prefieres delivery por app?', callQ:'¿Prefieres llamar?', orderThis2:'Pedir esta', flavHint:'Toca un sabor ✨', flavTipDef:'Pídelo con queso rallado encima, como en Ecuador.', viewMenu:'Ver el menú',
       home:'Inicio', about:'Nosotros', readStory:'Leer la historia completa', explore:'Sigue explorando', exploreT:'¿Qué quieres ver?', go:'Ver',
       pg_menu:'Helados con queso, copas, waffles, café y más.', pg_nosotros:'La historia detrás de cada copa.', pg_visitanos:'Te esperamos con una copa lista.',
       ex_menu:'Copas, desayunos, panes y café, con precios.', ex_nosotros:'Cómo un sueño migrante se convirtió en Oasis.', ex_visitanos:'Dirección, horario, mapa y WhatsApp.',
       close:'Cerrar',
       demo:'Borrador de propuesta para', demo2:'· no es la página oficial', pend:'por confirmar', reviewPh:'Aquí va una reseña real de Google, elegida con el dueño.'},
     en:{menu:'Menu', favs:'Favorites', story:'Our story', visit:'Visit us', reviews:'Reviews', order:'Order', call:'Call', directions:'Directions', whatsapp:'WhatsApp',
-      openNow:'Open now', closedNow:'Closed now', opensAt:'Opens at', closesAt:'Closes at', today:'Today', everyDay:'Every day',
+      openNow:'Open now', closedNow:'Closed now', opensAt:'Opens at', opensTomorrow:'opens tomorrow at', closesAt:'Closes at', today:'Today', everyDay:'Every day',
       flipHint:'Tap a cup to see what’s inside', turn:'Flip', pairWith:'Pair it with', orderThis:'Order on WhatsApp',
       seeAll:'See all on Google', leaveReview:'Leave us a review', reviewsOn:'reviews on Google', soon:'Coming soon', notifyMe:'Tell me when it opens',
-      follow:'Follow us', hoursT:'Hours', contact:'Contact', rights:'All rights reserved.', flavors:'Our flavors', flavHint:'Tap a flavor ✨', flavTipDef:'Get it topped with grated cheese, Ecuadorian style.', viewMenu:'See the menu',
+      follow:'Follow us', hoursT:'Hours', contact:'Contact', rights:'All rights reserved.', flavors:'Our flavors', howOrder:'How would you like to order?', orderItem:'Order', waSub:'Straight to us · quick reply', appsQ:'Prefer delivery through an app?', callQ:'Rather call?', orderThis2:'Order this', flavHint:'Tap a flavor ✨', flavTipDef:'Get it topped with grated cheese, Ecuadorian style.', viewMenu:'See the menu',
       home:'Home', about:'About us', readStory:'Read the full story', explore:'Keep exploring', exploreT:'What would you like to see?', go:'See',
       pg_menu:'Ice cream with cheese, cups, waffles, coffee and more.', pg_nosotros:'The story behind every cup.', pg_visitanos:'We’ll have a cup ready for you.',
       ex_menu:'Cups, breakfast, bread and coffee, with prices.', ex_nosotros:'How an immigrant’s dream became Oasis.', ex_visitanos:'Address, hours, map and WhatsApp.',
@@ -79,7 +79,9 @@
     const {day,min} = nowParts(); const h = hours[DAYS[day]];
     if (!h) return {open:false, text:t('closedNow')};
     const [a,b] = h; const open = min >= toMin(a) && min < toMin(b);
-    return {open, text: open ? `${t('openNow')} · ${t('closesAt')} ${fmt(b)}` : `${t('closedNow')} · ${min < toMin(a) ? t('opensAt')+' '+fmt(a) : ''}`.replace(/ · $/,'')};
+    const nx = hours[DAYS[(day+1)%7]];
+    const later = min < toMin(a) ? t('opensAt')+' '+fmt(a) : (nx ? t('opensTomorrow')+' '+fmt(nx[0]) : '');
+    return {open, text: open ? `${t('openNow')} · ${t('closesAt')} ${fmt(b)}` : `${t('closedNow')} · ${later}`.replace(/ · $/,'')};
   }
   function hoursText(hours){
     if (!hours) return '';
@@ -110,7 +112,7 @@
     <a class="logo" href="#inicio" aria-label="${esc(N.nombre)}">${N.logo ? `<span class="logo-badge"><img src="${esc(N.logo)}" alt="${esc(N.nombre)}" crossorigin="anonymous" data-fit="alpha" data-fill="0.86" onerror="this.closest('.logo').textContent=this.alt"></span>` : esc(N.nombre)}</a>
     <nav class="nav" aria-label="Principal">${NAV.map(([v,k])=>`<a href="#${v}"${v===viewNow()?' aria-current="page"':''}>${t(k)}</a>`).join('')}</nav>
     ${(N.idiomas||[]).length > 1 ? `<div class="lang" role="group" aria-label="Idioma / Language">${N.idiomas.map(l=>`<button type="button" data-lang="${l}" aria-pressed="${l===lang}">${l.toUpperCase()}</button>`).join('')}</div>` : ''}
-    ${wa() ? `<a class="btn btn-main" href="${esc(wa(L(C.mensajeWhatsapp)))}" target="_blank" rel="noopener">${ico('wa')}${t('order')}</a>` : ''}
+    ${wa() ? `<a class="btn btn-main" href="${esc(wa(L(C.mensajeWhatsapp)))}" target="_blank" rel="noopener" data-order>${ico('bag')}${t('order')}</a>` : ''}
   </div>
   <nav class="tabsbar" aria-label="Principal"><div class="wrap">${NAV.map(([v,k])=>`<a href="#${v}"${v===viewNow()?' aria-current="page"':''}>${t(k)}</a>`).join('')}</div></nav>
   </header>`;
@@ -171,7 +173,7 @@
               <span class="price">${esc(p.precio)}</span>
               <ul>${(L(p.lleva)||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
               ${p.combina ? `<span class="pair"><b>${t('pairWith')}:</b> ${esc(L(p.combina))}</span>` : ''}
-              ${wa() ? `<a class="btn btn-main" href="${esc(wa((lang==='es'?'Hola, quiero pedir un ':'Hi, I’d like to order a ')+p.nombre))}" target="_blank" rel="noopener">${ico('wa')}${t('orderThis')}</a>` : ''}
+              ${wa() ? `<a class="btn btn-main" href="${esc(wa((lang==='es'?'Hola, quiero pedir un ':'Hi, I’d like to order a ')+p.nombre))}" target="_blank" rel="noopener" data-order="${esc(p.nombre)}">${ico('bag')}${t('orderThis2')}</a>` : ''}
             </div>
           </div>
         </div>`).join('')}
@@ -396,7 +398,7 @@
       <div><h3>${t('contact')}</h3>
         ${C.telefono ? `<p><a href="${esc(tel)}">${esc(C.telefono)}</a></p>` : ''}
         ${C.whatsapp ? `<p><a href="${esc(wa())}" target="_blank" rel="noopener">WhatsApp</a>${pend(C.whatsappPorConfirmar)}</p>` : ''}
-        ${C.pedidos ? `<p><a href="${esc(C.pedidos)}" target="_blank" rel="noopener">${t('order')} online</a></p>` : ''}
+        ${(C.delivery||[]).filter(d=>d&&d.url).map(d=>`<p><a href="${esc(d.url)}" target="_blank" rel="noopener">${esc(d.nombre)}</a></p>`).join('')}
       </div>
       <div><h3>${esc(N.nombre)}</h3>${NAV.map(([v,k])=>`<p><a href="#${v}">${t(k)}</a></p>`).join('')}</div>
       <div><h3>${t('hoursT')}</h3><p>${esc(hoursText(main.horario))}</p><p>${esc(main.direccion||'')}</p></div>
@@ -407,9 +409,60 @@
   sec.dock = () => `
     <nav class="dock" aria-label="${t('contact')}">
       ${tel ? `<a href="${esc(tel)}">${ico('phone')}${t('call')}</a>` : ''}
-      ${wa() ? `<a class="main" href="${esc(wa(L(C.mensajeWhatsapp)))}" target="_blank" rel="noopener">${ico('wa')}${t('order')}</a>` : ''}
+      ${wa() ? `<a class="main" href="${esc(wa(L(C.mensajeWhatsapp)))}" target="_blank" rel="noopener" data-order>${ico('bag')}${t('order')}</a>` : ''}
       ${main.direccion ? `<a href="${esc(dir(main))}" target="_blank" rel="noopener">${ico('pin')}${t('directions')}</a>` : ''}
-    </nav>`;
+    </nav>
+    <div class="osheet" id="osheet" hidden>
+      <div class="osheet-bg" data-close></div>
+      <div class="osheet-card" role="dialog" aria-modal="true" aria-labelledby="osTitle" tabindex="-1">
+        <span class="osheet-grab" aria-hidden="true"></span>
+        <button type="button" class="osheet-x" data-close aria-label="${t('close')}">×</button>
+        <div id="osBody"></div>
+      </div>
+    </div>`;
+
+  // tarjeta "¿Cómo quieres pedir?": WhatsApp grande, apps de delivery pequeñas y llamar
+  function sheetBody(item){
+    const st = status(main.horario);
+    const msg = item ? (lang==='es' ? 'Hola, quiero pedir un ' : 'Hi, I’d like to order a ') + item : L(C.mensajeWhatsapp);
+    const apps = (C.delivery||[]).filter(d => d && d.url);
+    const appCls = n => /door/i.test(n) ? 'dd' : /uber/i.test(n) ? 'ue' : '';
+    const appLabel = n => /uber/i.test(n) ? 'Uber <b>Eats</b>' : esc(n);
+    return `
+      ${st ? `<p class="os-status ${st.open?'open':''}"><span class="dot ${st.open?'open':''}"></span>${esc(st.text)}</p>` : ''}
+      <h3 id="osTitle">${item ? `${t('orderItem')} <em>${esc(item)}</em>` : t('howOrder')}</h3>
+      ${wa() ? `<a class="os-wa" href="${esc(wa(msg))}" target="_blank" rel="noopener">${ico('wa')}<span><b>${lang==='es'?'Pedir por WhatsApp':'Order on WhatsApp'}</b><small>${t('waSub')}</small></span></a>` : ''}
+      ${apps.length ? `<p class="os-q">${t('appsQ')}</p><div class="os-apps">${apps.map(d=>`<a class="os-app ${appCls(d.nombre)}" href="${esc(d.url)}" target="_blank" rel="noopener">${appLabel(d.nombre)}</a>`).join('')}</div>` : ''}
+      ${tel ? `<a class="os-call" href="${esc(tel)}">${ico('phone')}<span>${t('callQ')} <b>${esc(C.telefono)}</b></span></a>` : ''}`;
+  }
+  let lastFocus = null;
+  function openSheet(item){
+    const sh = document.getElementById('osheet'); if (!sh) return false;
+    document.getElementById('osBody').innerHTML = sheetBody(item);
+    lastFocus = document.activeElement;
+    sh.hidden = false; document.documentElement.classList.add('os-lock');
+    requestAnimationFrame(() => { sh.classList.add('show'); const f = sh.querySelector('.os-wa,.os-app,.os-call'); f && f.focus({preventScroll:true}); });
+    return true;
+  }
+  function closeSheet(){
+    const sh = document.getElementById('osheet'); if (!sh || sh.hidden) return;
+    sh.classList.remove('show'); document.documentElement.classList.remove('os-lock');
+    const card = sh.querySelector('.osheet-card'); card.style.transform = '';
+    setTimeout(() => { sh.hidden = true; }, 320);
+    lastFocus && lastFocus.focus && lastFocus.focus({preventScroll:true});
+  }
+  document.addEventListener('click', e => {
+    const o = e.target.closest('[data-order]');
+    if (o) { if (openSheet(o.dataset.order || '')) { e.preventDefault(); e.stopPropagation(); } return; }
+    if (e.target.closest('#osheet [data-close]')) { closeSheet(); return; }
+    if (e.target.closest('#osheet a')) setTimeout(closeSheet, 300);
+  }, true);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheet(); });
+  // deslizar hacia abajo para cerrar (celular)
+  let dragY = null;
+  document.addEventListener('touchstart', e => { const c = e.target.closest('.osheet-card'); dragY = c && c.scrollTop <= 0 ? e.touches[0].clientY : null; }, {passive:true});
+  document.addEventListener('touchmove', e => { if (dragY == null) return; const d = e.touches[0].clientY - dragY; const c = document.querySelector('.osheet-card'); if (c && d > 0) c.style.transform = `translateY(${d}px)`; }, {passive:true});
+  document.addEventListener('touchend', e => { if (dragY == null) return; const d = e.changedTouches[0].clientY - dragY; dragY = null; const c = document.querySelector('.osheet-card'); if (!c) return; if (d > 90) closeSheet(); else c.style.transform = ''; });
 
   // ---------- armar ----------
   function applyTheme(){
