@@ -34,8 +34,8 @@ window.NEGOCIO = {
 
   // PORTADA: pon "video" con el link de un .mp4 para que se mueva atrás; si no, usa la imagen
   portada: {
-    imagen: 'https://vibe.filesafe.space/1782778390814352848/attachments/f9cffd0b-c571-4f65-88ff-9964febe6724.png',
-    video: '',
+    imagen: 'portada.jpg',           // se ve mientras carga el video (antes: foto de la copa)
+    video: 'portada.mp4',
     titulo: 'Oasis',
     etiqueta: { es: 'Tradición ecuatoriana · Union City, NJ', en: 'Ecuadorian tradition · Union City, NJ' },
     subtitulo: { es: 'Helado con queso, pan recién hecho y café. Dulce, salado y hecho para compartir.', en: 'Ice cream with cheese, fresh bread and coffee. Sweet, savory and made for sharing.' }
