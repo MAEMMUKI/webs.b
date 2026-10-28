@@ -77,6 +77,9 @@ h2{font-size:clamp(32px,5.4vw,52px)}
 .hero .wrap{display:grid;gap:44px;align-items:center}
 @media(min-width:960px){.hero .wrap{grid-template-columns:1.05fr .95fr}}
 .hero h1{font-size:clamp(40px,7.4vw,76px);font-weight:800}
+.rotbox{display:inline-grid;vertical-align:bottom;white-space:nowrap}
+.rotbox>span{grid-area:1/1;text-align:left}
+.rotbox .ghost{visibility:hidden;padding-right:10px}
 .rot{display:inline-block;min-width:1ch}
 .rot::after{content:"";display:inline-block;width:4px;height:.9em;margin-left:4px;vertical-align:-.08em;background:var(--acc);animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
@@ -107,6 +110,12 @@ h2{font-size:clamp(32px,5.4vw,52px)}
 .quick button:hover{border-color:var(--cyan)}
 .quick button:disabled{opacity:.45;cursor:default}
 .phone-note{text-align:center;color:var(--dim);font-size:14px;margin-top:14px}
+.phone.glow{animation:glow 1.2s ease-in-out 3}
+@keyframes glow{0%,100%{box-shadow:0 40px 80px -30px rgba(91,63,224,.55),inset 0 0 0 1px rgba(255,255,255,.08)}50%{box-shadow:0 0 0 10px rgba(198,255,77,.65),0 40px 90px -20px rgba(91,63,224,.8)}}
+.tap-hint{position:absolute;left:50%;bottom:118px;transform:translateX(-50%);z-index:3;background:var(--lime);color:#14122a;font-weight:800;font-size:15px;padding:8px 14px;border-radius:999px;white-space:nowrap;box-shadow:0 10px 24px -8px rgba(0,0,0,.5);pointer-events:none;opacity:0;transition:opacity .3s}
+.tap-hint.on{opacity:1;animation:bounce 1s ease-in-out infinite}
+@keyframes bounce{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,6px)}}
+@media(prefers-reduced-motion:reduce){.phone.glow{animation:none;box-shadow:0 0 0 6px var(--lime)}}
 
 /* antes / después */
 .ba{display:grid;gap:28px;align-items:center}
@@ -287,11 +296,11 @@ footer i{font-style:normal;color:var(--soft)}
   <section class="hero"><div class="wrap">
     <div>
       <span class="eyebrow">Tecnología fácil para negocios locales</span>
-      <h1 style="margin-top:16px">Hacemos que tu negocio <span class="grad">sea fácil de encontrar</span><br>y que <span class="rot" id="rot">te escriban</span></h1>
+      <h1 style="margin-top:16px">Hacemos que tu negocio <span class="grad">sea fácil de encontrar</span><br>y que <span class="rotbox"><span class="ghost" aria-hidden="true">te recomienden</span><span class="rot" id="rot">te escriban</span></span></h1>
       <p class="lead">Página web, Google Maps, reseñas y asistentes con inteligencia artificial que atienden a tus clientes, aunque estés ocupado. Nosotros lo instalamos, te lo explicamos sin palabras raras y lo cuidamos cada mes.</p>
       <div class="btns">
         <a class="btn btn-lime" href="#ayuda">Descubre qué necesitas <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        <a class="btn btn-ghost" href="#demo">Prueba un asistente</a>
+        <a class="btn btn-ghost" href="#demo" id="tryBot">Prueba un asistente <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
       </div>
       <div class="trust">
         <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>En español e inglés</span>
@@ -301,7 +310,7 @@ footer i{font-style:normal;color:var(--soft)}
     </div>
 
     <div id="demo">
-      <div class="phone" role="group" aria-label="Demostración de un asistente de WhatsApp">
+      <div class="phone" id="phone" role="group" aria-label="Demostración de un asistente de WhatsApp"><span class="tap-hint" id="tapHint" aria-hidden="true">👇 Toca una pregunta</span>
         <div class="screen">
           <div class="chat-top"><span class="avatar">C</span><div><b>Café La Esquina</b><small>● Asistente en línea · responde al instante</small></div></div>
           <div class="msgs" id="msgs" aria-live="polite"></div>
@@ -496,8 +505,21 @@ const CHAT = [
   const add = (cls, html) => { const d = document.createElement('div'); d.className = 'm ' + cls; d.innerHTML = html; box.appendChild(d); box.scrollTop = box.scrollHeight; return d; };
   add('bot', '¡Hola! 👋 Soy el asistente de Café La Esquina. Pregúntame lo que quieras.');
   q.innerHTML = CHAT.map((c,i) => `<button type="button" data-i="${i}">${esc(c[0])}</button>`).join('');
+  let asked = 0;
+  // "Prueba un asistente": lleva al teléfono, lo ilumina y hace la primera pregunta sola
+  $('tryBot').addEventListener('click', e => {
+    e.preventDefault();
+    const ph = $('phone'), hint = $('tapHint');
+    ph.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block: 'center'});
+    ph.classList.remove('glow'); void ph.offsetWidth; ph.classList.add('glow');
+    setTimeout(() => {
+      if (!asked) { const first = q.querySelector('button'); if (first) first.click(); }
+      setTimeout(() => { hint.style.bottom = (q.offsetHeight + 22) + 'px'; hint.classList.add('on'); setTimeout(() => hint.classList.remove('on'), 4000); }, asked ? 0 : 1400);
+    }, reduce ? 50 : 700);
+  });
   q.addEventListener('click', e => {
     const b = e.target.closest('button'); if (!b || b.disabled) return;
+    asked++; $('tapHint').classList.remove('on');
     const [ask, ans] = CHAT[b.dataset.i];
     q.querySelectorAll('button').forEach(x => x.disabled = true);
     add('me', esc(ask));
