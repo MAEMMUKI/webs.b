@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Maemuki · Tecnología fácil para tu negocio</title>
+<meta name="description" content="Maemuki ayuda a negocios locales a que los encuentren en Google, les escriban y vuelvan: páginas web, Google Maps, reseñas y asistentes con inteligencia artificial, explicados fácil.">
+<meta name="theme-color" content="#07091a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Maemuki — oscuro futurista pero calmado: un fondo, un acento (lima) y un brillo (violeta→cian) */
+:root{
+  --bg:#07091a; --bg2:#0d1130; --card:#121738; --card2:#171d46; --line:#262d5e;
+  --ink:#f3f5ff; --soft:#b9bfe6; --dim:#8a91c4;
+  --lime:#c6ff4d; --cyan:#4fe3ff; --violet:#8b6bff; --pink:#ff7ad9;
+  --display:"Sora",system-ui,sans-serif; --body:"Figtree",system-ui,sans-serif;
+  --r:24px; --wrap:1140px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);line-height:1.08;margin:0;letter-spacing:-.02em;text-wrap:balance}
+p{margin:0}
+.wrap{width:100%;max-width:var(--wrap);margin:0 auto;padding-inline:max(18px,env(safe-area-inset-left,0px))}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+:focus-visible{outline:3px solid var(--lime);outline-offset:3px;border-radius:10px}
+
+/* fondo: aurora + rejilla muy suave */
+.sky{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.sky::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(139,107,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(139,107,255,.07) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 30%,transparent 80%);-webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 30%,transparent 80%)}
+.orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;animation:drift 18s ease-in-out infinite alternate}
+.orb.a{width:520px;height:520px;background:var(--violet);top:-160px;left:-120px}
+.orb.b{width:440px;height:440px;background:var(--cyan);top:120px;right:-160px;opacity:.35;animation-delay:-6s}
+.orb.c{width:360px;height:360px;background:var(--pink);top:60vh;left:30%;opacity:.18;animation-delay:-12s}
+@keyframes drift{to{transform:translate(60px,40px) scale(1.12)}}
+
+/* cabecera */
+.top{position:sticky;top:0;z-index:30;background:rgba(7,9,26,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(38,45,94,.6)}
+.top .wrap{display:flex;align-items:center;gap:18px;height:72px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--display);font-weight:800;font-size:23px;letter-spacing:-.03em}
+.mark{width:36px;height:36px;border-radius:12px;background:conic-gradient(from 200deg,var(--violet),var(--cyan),var(--lime),var(--violet));display:grid;place-items:center;box-shadow:0 0 24px -4px var(--violet)}
+.mark svg{width:20px;height:20px;color:#07091a}
+.nav{display:none;gap:4px;margin-left:auto}
+.nav a{text-decoration:none;color:var(--soft);font-weight:600;font-size:16px;padding:8px 14px;border-radius:999px}
+.nav a:hover{color:var(--ink);background:var(--card)}
+.top .btn{margin-left:auto}
+@media(min-width:960px){.nav{display:flex}.top .btn{margin-left:8px}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:0 26px;border-radius:999px;font:700 18px/1 var(--body);text-decoration:none;border:0;cursor:pointer;transition:transform .15s,box-shadow .2s,background .2s;white-space:nowrap}
+.btn svg{width:22px;height:22px}
+.btn-lime{background:var(--lime);color:#0b0e22;box-shadow:0 10px 30px -10px rgba(198,255,77,.7)}
+.btn-lime:hover{transform:translateY(-2px);box-shadow:0 16px 36px -10px rgba(198,255,77,.85)}
+.btn-ghost{background:rgba(255,255,255,.04);color:var(--ink);border:1px solid var(--line)}
+.btn-ghost:hover{background:var(--card)}
+.top .btn{min-height:46px;padding:0 18px;font-size:16px}
+
+/* secciones */
+section{padding-block:88px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan)}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 12px var(--lime)}
+.head{display:grid;gap:14px;max-width:760px;margin-bottom:40px}
+.head.c{margin-inline:auto;text-align:center;justify-items:center}
+h2{font-size:clamp(32px,5.4vw,52px)}
+.lead{color:var(--soft);font-size:clamp(18px,2.2vw,21px)}
+.grad{background:linear-gradient(100deg,var(--lime),var(--cyan) 45%,var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* héroe */
+.hero{padding-block:72px 64px}
+.hero .wrap{display:grid;gap:44px;align-items:center}
+@media(min-width:960px){.hero .wrap{grid-template-columns:1.05fr .95fr}}
+.hero h1{font-size:clamp(40px,7.4vw,76px);font-weight:800}
+.rot{display:inline-block;min-width:1ch}
+.rot::after{content:"";display:inline-block;width:4px;height:.9em;margin-left:4px;vertical-align:-.08em;background:var(--lime);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.hero .lead{margin-top:20px;max-width:560px}
+.hero .btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.trust{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:28px;color:var(--soft);font-size:16px}
+.trust span{display:inline-flex;align-items:center;gap:8px}
+.trust svg{width:20px;height:20px;color:var(--lime)}
+
+/* teléfono demo */
+.phone{position:relative;justify-self:center;width:min(360px,100%);border-radius:44px;padding:12px;background:linear-gradient(160deg,#2a3170,#0d1130);box-shadow:0 40px 80px -30px rgba(139,107,255,.6),inset 0 0 0 1px rgba(255,255,255,.08)}
+.screen{border-radius:34px;background:#0b0f2a;overflow:hidden;display:flex;flex-direction:column;height:560px}
+.chat-top{display:flex;align-items:center;gap:10px;padding:16px 16px 12px;background:#10153a;border-bottom:1px solid var(--line)}
+.avatar{width:40px;height:40px;border-radius:50%;background:conic-gradient(from 200deg,var(--violet),var(--cyan),var(--lime),var(--violet));display:grid;place-items:center;font-weight:800;color:#0b0e22;font-family:var(--display)}
+.chat-top b{display:block;font-size:16px}
+.chat-top small{color:var(--lime);font-size:13px}
+.msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}
+.m{max-width:84%;padding:10px 14px;border-radius:18px;font-size:16px;line-height:1.4;animation:pop .35s cubic-bezier(.34,1.56,.64,1)}
+.m.bot{background:var(--card2);border-bottom-left-radius:6px;align-self:flex-start}
+.m.me{background:var(--lime);color:#0b0e22;border-bottom-right-radius:6px;align-self:flex-end;font-weight:600}
+.m.typing{display:flex;gap:4px;padding:14px}
+.m.typing i{width:7px;height:7px;border-radius:50%;background:var(--soft);animation:dot 1s infinite}
+.m.typing i:nth-child(2){animation-delay:.15s}.m.typing i:nth-child(3){animation-delay:.3s}
+@keyframes dot{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+@keyframes pop{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
+.quick{display:flex;flex-wrap:wrap;gap:8px;padding:12px;border-top:1px solid var(--line);background:#10153a}
+.quick button{font:600 15px var(--body);color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:9px 14px;cursor:pointer}
+.quick button:hover{border-color:var(--cyan)}
+.quick button:disabled{opacity:.45;cursor:default}
+.phone-note{text-align:center;color:var(--dim);font-size:14px;margin-top:14px}
+
+/* antes / después */
+.ba{display:grid;gap:28px;align-items:center}
+@media(min-width:900px){.ba{grid-template-columns:1fr 1fr}}
+.switch{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px;gap:4px}
+.switch button{font:700 17px var(--body);border:0;border-radius:999px;padding:12px 22px;cursor:pointer;background:transparent;color:var(--soft);transition:background .25s,color .25s}
+.switch button[aria-pressed="true"]{background:var(--lime);color:#0b0e22}
+.gcard{background:#fff;color:#202124;border-radius:22px;padding:20px;box-shadow:0 30px 60px -30px rgba(0,0,0,.8);font-family:Arial,system-ui,sans-serif;transition:transform .4s}
+.gcard h3{font-family:Arial,system-ui,sans-serif;font-size:22px;letter-spacing:0;color:#1a0dab}
+.g-row{display:flex;align-items:center;gap:8px;font-size:15px;color:#4d5156;margin-top:6px}
+.g-stars{color:#fbbc04;letter-spacing:1px}
+.g-btns{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}
+.g-btns span{display:grid;justify-items:center;gap:4px;font-size:12px;color:#1a73e8;padding:8px 2px;border-radius:12px;background:#f1f6fe;text-align:center}
+.g-btns span.off{color:#9aa0a6;background:#f3f3f3;text-decoration:line-through}
+.g-btns svg{width:20px;height:20px}
+.g-photos{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:14px}
+.g-photos i{aspect-ratio:1;border-radius:10px;background:#e8eaed}
+.g-photos.on i:nth-child(1){background:linear-gradient(135deg,#ffb3c7,#ff7aa2)}
+.g-photos.on i:nth-child(2){background:linear-gradient(135deg,#ffe08a,#ffb84d)}
+.g-photos.on i:nth-child(3){background:linear-gradient(135deg,#a8e6cf,#56c596)}
+.g-note{margin-top:14px;font-size:14px;padding:10px 12px;border-radius:12px}
+.g-note.bad{background:#fdecea;color:#a1271b}
+.g-note.good{background:#e6f4ea;color:#137333}
+.ba-list{display:grid;gap:12px;margin-top:22px}
+.ba-list li{display:flex;gap:12px;align-items:flex-start;color:var(--soft)}
+.ba-list svg{width:24px;height:24px;flex:none;margin-top:2px}
+.ba-list ul{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+
+/* recomendador */
+.quiz{background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:32px;padding:clamp(22px,4vw,44px);max-width:880px;margin:0 auto;position:relative;overflow:hidden}
+.quiz::after{content:"";position:absolute;right:-80px;top:-80px;width:260px;height:260px;border-radius:50%;background:var(--violet);filter:blur(90px);opacity:.35;pointer-events:none}
+.q-step{font-size:15px;color:var(--cyan);font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.q-title{font-size:clamp(24px,3.6vw,34px);margin:8px 0 22px}
+.opts{display:grid;gap:12px}
+@media(min-width:700px){.opts{grid-template-columns:repeat(3,1fr)}}
+.opt{display:grid;gap:10px;text-align:left;font:inherit;color:var(--ink);background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:20px;padding:20px;cursor:pointer;transition:transform .2s,border-color .2s,background .2s}
+.opt:hover{transform:translateY(-3px);border-color:var(--lime);background:rgba(198,255,77,.06)}
+.opt .em{font-size:34px;line-height:1}
+.opt b{font-size:19px}
+.opt small{color:var(--soft);font-size:15px}
+.bar{height:6px;border-radius:6px;background:var(--line);margin-bottom:22px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--lime),var(--cyan));transition:width .4s}
+.result{display:grid;gap:14px;animation:pop .4s}
+.result .tag{justify-self:start;background:var(--lime);color:#0b0e22;font-weight:800;font-size:14px;padding:6px 12px;border-radius:999px}
+.result ul{margin:0;padding-left:20px;color:var(--soft)}
+.result .btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+
+/* servicios */
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px}
+.filters button{font:700 16px var(--body);color:var(--soft);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:11px 18px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.svc{position:relative;text-align:left;font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px;cursor:pointer;display:grid;gap:10px;align-content:start;transition:transform .2s,border-color .2s,box-shadow .2s;overflow:hidden}
+.svc:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--c) 70%,var(--line));box-shadow:0 20px 40px -24px var(--c)}
+.svc .ic{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 18%,transparent);color:var(--c)}
+.svc .ic svg{width:26px;height:26px}
+.svc h3{font-size:21px}
+.svc p{color:var(--soft);font-size:16px}
+.svc .more{color:var(--ink);font-size:16px;display:none;border-top:1px dashed var(--line);padding-top:12px}
+.svc[aria-expanded="true"] .more{display:block;animation:pop .3s}
+.svc .tap{font-size:14px;color:var(--c);font-weight:700}
+.badge{position:absolute;top:18px;right:18px;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;border-radius:999px}
+.badge.ok{background:rgba(198,255,77,.14);color:var(--lime)}
+.badge.soon{background:rgba(139,107,255,.18);color:#c3b5ff}
+.svc.soon{background:linear-gradient(160deg,var(--card),#141038)}
+.svc[hidden]{display:none}
+
+/* calculadora */
+.calc{display:grid;gap:28px;align-items:center}
+@media(min-width:900px){.calc{grid-template-columns:1fr 1fr}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:clamp(22px,3.5vw,36px);display:grid;gap:26px}
+.rng{display:grid;gap:10px}
+.rng label{display:flex;justify-content:space-between;gap:12px;font-weight:600;font-size:17px}
+.rng output{font-family:var(--display);color:var(--lime);font-weight:700;font-size:20px}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:10px;border-radius:10px;background:linear-gradient(90deg,var(--lime) var(--p,50%),var(--line) var(--p,50%));outline-offset:6px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;border-radius:50%;background:#fff;border:4px solid var(--lime);box-shadow:0 0 0 6px rgba(198,255,77,.2);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:#fff;border:4px solid var(--lime);cursor:pointer}
+.big{font-family:var(--display);font-size:clamp(48px,8vw,80px);font-weight:800;line-height:1}
+.calc-out{display:grid;gap:12px}
+.calc-out small{color:var(--dim);font-size:14px}
+
+/* pasos */
+.steps{display:grid;gap:16px;counter-reset:s}
+@media(min-width:900px){.steps{grid-template-columns:repeat(4,1fr)}}
+.step{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px;display:grid;gap:10px;align-content:start}
+.step::before{counter-increment:s;content:"0" counter(s);font-family:var(--display);font-weight:800;font-size:40px;line-height:1;background:linear-gradient(120deg,var(--lime),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.step h3{font-size:21px}
+.step p{color:var(--soft);font-size:16px}
+
+/* planes */
+.plans{display:grid;gap:18px}
+@media(min-width:960px){.plans{grid-template-columns:repeat(3,1fr);align-items:stretch}}
+.plan{position:relative;background:var(--card);border:1px solid var(--line);border-radius:28px;padding:28px;display:grid;gap:16px;align-content:start}
+.plan.star{background:linear-gradient(170deg,#1c2361,#121738 55%);border-color:var(--lime);box-shadow:0 30px 60px -30px rgba(198,255,77,.45)}
+.plan .pill{justify-self:start;font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px;border-radius:999px;background:var(--line);color:var(--soft)}
+.plan.star .pill{background:var(--lime);color:#0b0e22}
+.plan h3{font-size:28px}
+.plan .for{color:var(--soft);font-size:16px}
+.price{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.price b{font-family:var(--display);font-size:40px;font-weight:800}
+.price span{color:var(--soft);font-size:16px}
+.price small{width:100%;color:var(--dim);font-size:14px}
+.plan ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.plan li{display:flex;gap:10px;font-size:16px}
+.plan li svg{width:22px;height:22px;flex:none;color:var(--lime);margin-top:1px}
+.plan li.s{color:var(--dim)}
+.plan li.s svg{color:var(--violet)}
+.plan .btn{margin-top:auto}
+.trial{margin-top:26px;display:grid;gap:18px;align-items:center;background:linear-gradient(100deg,rgba(198,255,77,.12),rgba(79,227,255,.08));border:1px solid rgba(198,255,77,.35);border-radius:28px;padding:clamp(22px,3vw,32px)}
+@media(min-width:900px){.trial{grid-template-columns:auto 1fr auto}}
+.trial .em{font-size:44px}
+.trial h3{font-size:24px;margin-bottom:6px}
+.trial p{color:var(--soft)}
+
+/* glosario */
+.words{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.words button{font:700 18px var(--display);color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 20px;cursor:pointer;transition:border-color .2s,transform .2s}
+.words button:hover{transform:translateY(-2px);border-color:var(--cyan)}
+.words button[aria-pressed="true"]{border-color:var(--lime);background:rgba(198,255,77,.08)}
+.def{max-width:720px;margin:24px auto 0;min-height:120px;background:var(--card);border:1px solid var(--line);border-radius:24px;padding:22px 26px;display:grid;gap:8px;text-align:left}
+.def b{font-family:var(--display);font-size:22px;color:var(--lime)}
+.def p{color:var(--soft)}
+.def .ex{color:var(--ink);font-size:16px}
+.def .ex::before{content:"Ejemplo: ";color:var(--cyan);font-weight:700}
+
+/* preguntas */
+.faq{max-width:820px;margin:0 auto;display:grid;gap:12px}
+.faq details{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:4px 22px}
+.faq summary{list-style:none;cursor:pointer;font-weight:700;font-size:19px;padding:18px 0;display:flex;justify-content:space-between;gap:16px;align-items:center}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--display);font-size:28px;color:var(--lime);transition:transform .25s;flex:none}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{color:var(--soft);padding-bottom:20px}
+
+/* contacto */
+.cta{text-align:center;background:radial-gradient(120% 140% at 50% 0%,rgba(139,107,255,.35),transparent 60%),var(--bg2);border:1px solid var(--line);border-radius:36px;padding:clamp(32px,6vw,64px) clamp(20px,4vw,48px);display:grid;gap:18px;justify-items:center}
+.cta h2{max-width:720px}
+.form{width:100%;max-width:560px;display:grid;gap:12px;margin-top:8px;text-align:left}
+.form label{display:grid;gap:6px;font-weight:600;font-size:16px}
+.form input,.form select{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;min-height:56px;width:100%}
+.form select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--soft) 50%),linear-gradient(135deg,var(--soft) 50%,transparent 50%);background-position:calc(100% - 22px) 50%,calc(100% - 16px) 50%;background-size:6px 6px;background-repeat:no-repeat}
+.form .btn{width:100%;margin-top:6px}
+.form-note{color:var(--dim);font-size:14px;text-align:center}
+
+footer{padding:40px 0 calc(40px + env(safe-area-inset-bottom,0px));color:var(--dim);font-size:15px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:28px}
+footer i{font-style:normal;color:var(--soft)}
+
+/* botón flotante */
+.float{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;width:62px;height:62px;border-radius:50%;background:#25d366;color:#fff;display:grid;place-items:center;box-shadow:0 14px 30px -10px rgba(37,211,102,.8);text-decoration:none;transition:transform .2s}
+.float:hover{transform:scale(1.06)}
+.float svg{width:32px;height:32px}
+.float[hidden]{display:none}
+
+/* aparecer al bajar */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="sky" aria-hidden="true"><span class="orb a"></span><span class="orb b"></span><span class="orb c"></span></div>
+
+<header class="top"><div class="wrap">
+  <a class="brand" href="#inicio" aria-label="Maemuki, inicio"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h12M12 6l6 6-6 6"/></svg></span>Maemuki</a>
+  <nav class="nav" aria-label="Principal">
+    <a href="#demo">Pruébalo</a><a href="#servicios">Servicios</a><a href="#planes">Planes</a><a href="#preguntas">Preguntas</a>
+  </nav>
+  <a class="btn btn-lime" href="#contacto">Hablemos</a>
+</div></header>
+
+<main id="inicio">
+  <!-- HÉROE -->
+  <section class="hero"><div class="wrap">
+    <div>
+      <span class="eyebrow">Tecnología fácil para negocios locales</span>
+      <h1 style="margin-top:16px">Hacemos que tu negocio <span class="grad">sea fácil de encontrar</span><br>y que <span class="rot" id="rot">te escriban</span></h1>
+      <p class="lead">Página web, Google Maps, reseñas y asistentes con inteligencia artificial que atienden a tus clientes, aunque estés ocupado. Nosotros lo instalamos, te lo explicamos sin palabras raras y lo cuidamos cada mes.</p>
+      <div class="btns">
+        <a class="btn btn-lime" href="#ayuda">Descubre qué necesitas <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn-ghost" href="#demo">Prueba un asistente</a>
+      </div>
+      <div class="trust">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>En español e inglés</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Te visitamos en persona</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Empiezas con 3 meses</span>
+      </div>
+    </div>
+
+    <div id="demo">
+      <div class="phone" role="group" aria-label="Demostración de un asistente de WhatsApp">
+        <div class="screen">
+          <div class="chat-top"><span class="avatar">C</span><div><b>Café La Esquina</b><small>● Asistente en línea · responde al instante</small></div></div>
+          <div class="msgs" id="msgs" aria-live="polite"></div>
+          <div class="quick" id="quick"></div>
+        </div>
+      </div>
+      <p class="phone-note">Toca una pregunta: así respondería tu negocio por WhatsApp, a cualquier hora.</p>
+    </div>
+  </div></section>
+
+  <!-- ANTES / DESPUÉS -->
+  <section><div class="wrap ba">
+    <div class="rv">
+      <span class="eyebrow">Antes y después</span>
+      <h2 style="margin-top:14px">Así te ve un cliente cuando te busca en Google</h2>
+      <p class="lead" style="margin-top:14px">Mueve el botón y mira la diferencia. La mayoría de la gente decide a dónde ir en menos de un minuto.</p>
+      <div style="margin-top:24px"><div class="switch" role="group" aria-label="Comparar"><button type="button" data-ba="0" aria-pressed="true">Sin Maemuki</button><button type="button" data-ba="1" aria-pressed="false">Con Maemuki</button></div></div>
+      <div class="ba-list" id="baList"></div>
+    </div>
+    <div class="rv"><div class="gcard" id="gcard"></div></div>
+  </div></section>
+
+  <!-- RECOMENDADOR -->
+  <section id="ayuda"><div class="wrap">
+    <div class="head c rv"><span class="eyebrow">En 3 toques</span><h2>¿Qué necesita tu negocio?</h2><p class="lead">Responde con un toque. Te decimos qué te conviene, sin compromiso.</p></div>
+    <div class="quiz rv" id="quiz"></div>
+  </div></section>
+
+  <!-- SERVICIOS -->
+  <section id="servicios"><div class="wrap">
+    <div class="head rv"><span class="eyebrow">Todo lo que hacemos</span><h2>Servicios, explicados fácil</h2><p class="lead">Toca cualquier tarjeta para ver qué es y cómo te ayuda. Los marcados como <b style="color:#c3b5ff">Próximamente</b> ya los estamos preparando.</p></div>
+    <div class="filters rv" id="filters" role="group" aria-label="Filtrar servicios"></div>
+    <div class="grid" id="grid"></div>
+  </div></section>
+
+  <!-- CALCULADORA -->
+  <section><div class="wrap calc">
+    <div class="rv">
+      <span class="eyebrow">Haz la cuenta</span>
+      <h2 style="margin-top:14px">¿Cuánto pierdes por no contestar a tiempo?</h2>
+      <p class="lead" style="margin-top:14px">Cuando alguien escribe y no le responden rápido, casi siempre le compra a otro. Mueve las barras con los números de tu negocio.</p>
+    </div>
+    <div class="panel rv">
+      <div class="rng"><label for="r1">Mensajes al día que no alcanzas a contestar <output id="o1">5</output></label><input type="range" id="r1" min="0" max="40" value="5"></div>
+      <div class="rng"><label for="r2">Cuánto gasta un cliente, en promedio <output id="o2">$25</output></label><input type="range" id="r2" min="5" max="200" step="5" value="25"></div>
+      <div class="rng"><label for="r3">De cada 10 de esos mensajes, ¿cuántos te comprarían? <output id="o3">3</output></label><input type="range" id="r3" min="1" max="10" value="3"></div>
+      <div class="calc-out">
+        <span style="color:var(--soft)">Podrías estar dejando de ganar al mes</span>
+        <span class="big grad" id="lost">$1,125</span>
+        <small>Cálculo aproximado: mensajes × 30 días × clientes que compran × gasto promedio.</small>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- PASOS -->
+  <section><div class="wrap">
+    <div class="head c rv"><span class="eyebrow">Cómo trabajamos</span><h2>Tú atiendes tu negocio. Nosotros, la tecnología.</h2></div>
+    <div class="steps">
+      <div class="step rv"><h3>Te visitamos</h3><p>Conversamos en tu negocio, vemos qué tienes y qué te falta. Sin costo.</p></div>
+      <div class="step rv"><h3>Lo diseñamos</h3><p>Te mostramos cómo se vería antes de pagar la instalación completa.</p></div>
+      <div class="step rv"><h3>Lo lanzamos</h3><p>Instalamos todo y te enseñamos a usarlo con calma, paso a paso.</p></div>
+      <div class="step rv"><h3>Lo cuidamos</h3><p>Cada mes revisamos, actualizamos y te mandamos un reporte fácil de leer.</p></div>
+    </div>
+  </div></section>
+
+  <!-- PLANES -->
+  <section id="planes"><div class="wrap">
+    <div class="head c rv"><span class="eyebrow">Planes</span><h2>Empieza con lo que necesitas hoy</h2><p class="lead">Puedes subir o bajar de plan cuando quieras. El precio exacto lo armamos contigo según tu negocio.</p></div>
+    <div class="plans" id="plans"></div>
+    <div class="trial rv">
+      <span class="em" aria-hidden="true">🤝</span>
+      <div><h3>Empieza con 3 meses</h3><p>Pagas la instalación y tres meses de servicio. Si te encanta, seguimos. Si no, puedes pasarte a un plan más sencillo o quedarte solo con lo básico. Sin enredos y con todo por escrito.</p></div>
+      <a class="btn btn-lime" href="#contacto">Quiero empezar</a>
+    </div>
+  </div></section>
+
+  <!-- GLOSARIO -->
+  <section><div class="wrap">
+    <div class="head c rv"><span class="eyebrow">Sin palabras raras</span><h2>¿Qué significa…?</h2><p class="lead">Toca una palabra y te la explicamos como a un amigo.</p></div>
+    <div class="words rv" id="words"></div>
+    <div class="def rv" id="def" aria-live="polite"></div>
+  </div></section>
+
+  <!-- PREGUNTAS -->
+  <section id="preguntas"><div class="wrap">
+    <div class="head c rv"><span class="eyebrow">Preguntas</span><h2>Lo que más nos preguntan</h2></div>
+    <div class="faq rv">
+      <details><summary>No sé nada de tecnología. ¿Igual puedo?</summary><p>Sí. Para eso estamos. Nosotros instalamos todo, te lo explicamos en persona y quedamos disponibles por WhatsApp para cualquier duda.</p></details>
+      <details><summary>¿La inteligencia artificial va a hablar raro con mis clientes?</summary><p>No. El asistente responde con la información que tú nos das (horario, menú, precios) y con el tono de tu negocio. Si alguien pregunta algo que no sabe, te avisa a ti.</p></details>
+      <details><summary>¿Tengo que firmar un contrato largo?</summary><p>Empezamos con 3 meses para que veas resultados. Después decides: seguir, cambiar de plan o quedarte solo con lo básico.</p></details>
+      <details><summary>¿Por qué hay un pago mensual?</summary><p>Porque la tecnología necesita cuidado: actualizar horarios y precios, revisar que todo funcione, responder reseñas y mejorar cada mes. Así nunca te quedas con algo abandonado.</p></details>
+      <details><summary>¿De quién son mi página y mis cuentas?</summary><p>Tuyas. Tu página, tu perfil de Google y tus redes quedan a nombre de tu negocio.</p></details>
+      <details><summary>¿Trabajan solo en New Jersey?</summary><p>Empezamos con negocios de New Jersey y Nueva York para visitarlos en persona, y también trabajamos a distancia.</p></details>
+    </div>
+  </div></section>
+
+  <!-- CONTACTO -->
+  <section id="contacto"><div class="wrap">
+    <div class="cta rv">
+      <span class="eyebrow">Primera visita sin costo</span>
+      <h2>Cuéntanos de tu negocio y te decimos por dónde empezar</h2>
+      <p class="lead">Llena esto en 20 segundos. Te escribimos por WhatsApp.</p>
+      <form class="form" id="form">
+        <label>Tu nombre<input name="n" required autocomplete="name" placeholder="Ej. María"></label>
+        <label>Tu negocio<input name="b" required placeholder="Ej. Panadería Sol, Union City"></label>
+        <label>¿Qué te gustaría?
+          <select name="q">
+            <option>Que me encuentren más en Google</option>
+            <option>Una página web</option>
+            <option>Más reseñas</option>
+            <option>Un asistente que conteste WhatsApp</option>
+            <option>Contenido para redes</option>
+            <option>No sé, quiero que me asesoren</option>
+          </select>
+        </label>
+        <button class="btn btn-lime" type="submit"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>Enviar por WhatsApp</button>
+        <p class="form-note" id="formNote">Al tocar el botón se abre WhatsApp con tu mensaje listo.</p>
+      </form>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="wrap">
+  <a class="brand" href="#inicio"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h12M12 6l6 6-6 6"/></svg></span>Maemuki</a>
+  <span><i>Maemuki</i> (前向き) significa “mirando hacia adelante”.</span>
+  <span>© <span id="yr"></span> Maemuki · New Jersey</span>
+</div></footer>
+
+<a class="float" id="float" href="#contacto" aria-label="Escríbenos por WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg></a>
+
+<script>
+/* ===== CAMBIA AQUÍ =====
+   whatsapp: tu número con código de país, solo dígitos (ej. '12015551234'). Si está vacío, los botones llevan al formulario.
+   mostrarPrecios: false para esconder los precios de los planes. */
+const CONFIG = {
+  whatsapp: '',
+  mostrarPrecios: true
+};
+
+/* ---------- íconos ---------- */
+const P = {
+  web:'<rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/>',
+  pin:'<path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/>',
+  star:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
+  card:'<rect x="3" y="6" width="18" height="12" rx="3"/><path d="M15 10.5a3 3 0 0 1 0 3M17.5 9a5.5 5.5 0 0 1 0 6"/><path d="M6 15h4"/>',
+  globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/>',
+  chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+  chat:'<path d="M4 5h16v11H9l-5 4z"/><path d="M8 10h8M8 13h5"/>',
+  cam:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/>',
+  cal:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4M8 14h3"/>',
+  users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/>',
+  bell:'<path d="M6 16V11a6 6 0 1 1 12 0v5l2 2H4z"/><path d="M10 21h4"/>',
+  spark:'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/>',
+  video:'<rect x="2" y="5" width="14" height="14" rx="3"/><path d="M16 10l6-3v10l-6-3"/>',
+  phone:'<rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/>',
+  store:'<path d="M3 9l1.5-5h15L21 9M3 9h18v11H3zM3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/><path d="M9 20v-5h6v5"/>',
+  bag:'<path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 0 1 6 0v2"/>',
+  bot:'<rect x="4" y="7" width="16" height="12" rx="4"/><path d="M12 3v4M9 12h.01M15 12h.01M9 16h6"/>',
+  check:'<path d="M5 12l5 5L20 7"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  x:'<path d="M6 6l12 12M18 6L6 18"/>'
+};
+const ico = k => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[k]||''}</svg>`;
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $ = id => document.getElementById(id);
+const wa = msg => CONFIG.whatsapp ? 'https://wa.me/' + CONFIG.whatsapp.replace(/\D/g,'') + '?text=' + encodeURIComponent(msg) : null;
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- palabra que cambia en el título ---------- */
+(() => {
+  const words = ['te escriban','te visiten','vuelvan','te recomienden'];
+  const el = $('rot'); if (reduce) return;
+  let w = 0, i = words[0].length, del = true;
+  const tick = () => {
+    const word = words[w];
+    if (del) { i--; el.textContent = word.slice(0,i); if (i === 0) { del = false; w = (w+1) % words.length; } setTimeout(tick, 45); }
+    else { const nw = words[w]; i++; el.textContent = nw.slice(0,i); if (i === nw.length) { del = true; setTimeout(tick, 2200); } else setTimeout(tick, 75); }
+  };
+  setTimeout(tick, 2400);
+})();
+
+/* ---------- chat de demostración ---------- */
+const CHAT = [
+  ['¿A qué hora abren hoy?', 'Hoy abrimos de 7:00 AM a 8:00 PM ☕ ¿Quieres que te reserve una mesa?'],
+  ['¿Tienen opciones sin azúcar?', 'Sí 😊 Tenemos café negro, té de hierbas y pan integral. ¿Te mando el menú completo?'],
+  ['Quiero reservar para 4 el sábado', '¡Listo! ¿A qué hora te queda mejor: 10 AM, 12 PM o 2 PM? Te confirmo al instante.'],
+  ['¿Dónde quedan?', 'Estamos en Bergenline Ave, Union City 📍 Te mando la ubicación para abrirla en Maps.']
+];
+(() => {
+  const box = $('msgs'), q = $('quick');
+  const add = (cls, html) => { const d = document.createElement('div'); d.className = 'm ' + cls; d.innerHTML = html; box.appendChild(d); box.scrollTop = box.scrollHeight; return d; };
+  add('bot', '¡Hola! 👋 Soy el asistente de Café La Esquina. Pregúntame lo que quieras.');
+  q.innerHTML = CHAT.map((c,i) => `<button type="button" data-i="${i}">${esc(c[0])}</button>`).join('');
+  q.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b || b.disabled) return;
+    const [ask, ans] = CHAT[b.dataset.i];
+    q.querySelectorAll('button').forEach(x => x.disabled = true);
+    add('me', esc(ask));
+    const t = add('bot typing', '<i></i><i></i><i></i>');
+    setTimeout(() => { t.remove(); add('bot', esc(ans)); b.remove(); q.querySelectorAll('button').forEach(x => x.disabled = false);
+      if (!q.children.length) { add('bot', 'Así funciona: responde solo, 24/7, con la información de tu negocio. ✨'); }
+    }, reduce ? 200 : 1100);
+  });
+})();
+
+/* ---------- antes / después ---------- */
+const BA = [
+  { list:[['x','Sin página web: no saben qué vendes ni tus precios.'],['x','Pocas reseñas: la gente desconfía.'],['x','Horario viejo: llegan y está cerrado.'],['x','Nadie contesta los mensajes de noche.']],
+    card:{name:'Café La Esquina', stars:'★★★☆☆', rating:'3.6', count:'12', type:'Cafetería', hours:'Horario no disponible', btns:[['web','Sitio web',0],['pin','Cómo llegar',1],['phone','Llamar',1],['chat','Mensaje',0]], photos:false, note:['bad','Faltan fotos, horario y página web.']}},
+  { list:[['check','Página web clara, en español e inglés.'],['check','Más reseñas con tarjetas inteligentes.'],['check','Horario, fotos y menú siempre al día.'],['check','Un asistente responde al instante, de día y de noche.']],
+    card:{name:'Café La Esquina', stars:'★★★★★', rating:'4.8', count:'214', type:'Cafetería · $$', hours:'Abierto · Cierra a las 8 PM', btns:[['web','Sitio web',1],['pin','Cómo llegar',1],['phone','Llamar',1],['chat','Mensaje',1]], photos:true, note:['good','Perfil completo: aparece más arriba en Google.']}}
+];
+function renderBA(n){
+  const s = BA[n], c = s.card;
+  document.querySelectorAll('[data-ba]').forEach(b => b.setAttribute('aria-pressed', b.dataset.ba == n));
+  $('baList').innerHTML = '<ul>' + s.list.map(([k,t]) => `<li><span style="color:${k==='check'?'var(--lime)':'#ff8a8a'}">${ico(k)}</span>${esc(t)}</li>`).join('') + '</ul>';
+  $('gcard').innerHTML = `<h3>${esc(c.name)}</h3>
+    <div class="g-row"><b style="color:#202124">${c.rating}</b><span class="g-stars">${c.stars}</span><span>(${c.count})</span><span>· ${esc(c.type)}</span></div>
+    <div class="g-row" style="color:${n?'#188038':'#70757a'}">${esc(c.hours)}</div>
+    <div class="g-btns">${c.btns.map(([k,t,on]) => `<span class="${on?'':'off'}">${ico(k)}${esc(t)}</span>`).join('')}</div>
+    <div class="g-photos ${c.photos?'on':''}"><i></i><i></i><i></i></div>
+    <div class="g-note ${c.note[0]}">${esc(c.note[1])}</div>`;
+  if (!reduce) { const g = $('gcard'); g.style.transform = 'scale(.97)'; requestAnimationFrame(() => setTimeout(() => g.style.transform = '', 60)); }
+}
+document.querySelectorAll('[data-ba]').forEach(b => b.onclick = () => renderBA(+b.dataset.ba));
+renderBA(0);
+
+/* ---------- servicios (cambia "listo" a true cuando un servicio esté disponible) ---------- */
+const CATS = [['todos','Todos'],['presencia','Que te encuentren'],['auto','Asistentes y automatización'],['contenido','Contenido'],['crecer','Para crecer']];
+const SVC = [
+  {c:'presencia', ic:'web', col:'#4fe3ff', t:'Página web', d:'Tu negocio en internet, bonita y rápida en el celular.', m:'Con tu menú o servicios, fotos, horario, botón para llamar, escribir por WhatsApp y llegar con Maps. En español e inglés.', listo:true},
+  {c:'presencia', ic:'pin', col:'#4fe3ff', t:'Google Maps optimizado', d:'Que aparezcas cuando alguien busca “cerca de mí”.', m:'Arreglamos tu perfil de Google: categorías, fotos, horario, productos y publicaciones, para que salgas más arriba.', listo:true},
+  {c:'presencia', ic:'card', col:'#c6ff4d', t:'Tarjetas de reseña inteligentes', d:'El cliente toca o escanea y te deja 5 estrellas en segundos.', m:'Tarjetas con QR y tecnología de “tocar con el celular” que abren directo la página para dejar tu reseña en Google.', listo:true},
+  {c:'presencia', ic:'globe', col:'#4fe3ff', t:'Dominio propio', d:'Tu dirección web: tunegocio.com.', m:'Lo registramos a tu nombre y lo conectamos con tu página y tu correo.', listo:true},
+  {c:'presencia', ic:'star', col:'#c6ff4d', t:'Respuestas a reseñas con IA', d:'Cada reseña recibe una respuesta amable y a tiempo.', m:'La inteligencia artificial prepara la respuesta con el tono de tu negocio; nosotros la revisamos antes de publicar.', listo:false},
+  {c:'presencia', ic:'chart', col:'#4fe3ff', t:'Reporte mensual', d:'Cuánta gente te vio, te llamó y te visitó.', m:'Un resumen corto y fácil de leer, cada mes, en tu WhatsApp o correo.', listo:true},
+  {c:'auto', ic:'chat', col:'#8b6bff', t:'Asistente de WhatsApp', d:'Responde a tus clientes al instante, 24/7.', m:'Contesta horario, precios, menú y ubicación; toma pedidos o datos, y te avisa cuando hace falta una persona.', listo:false},
+  {c:'auto', ic:'cam', col:'#8b6bff', t:'Asistente de Instagram', d:'Contesta mensajes y comentarios por ti.', m:'Responde preguntas frecuentes en mensajes directos y comentarios, y manda el link para pedir o reservar.', listo:false},
+  {c:'auto', ic:'cal', col:'#8b6bff', t:'Citas y reservas automáticas', d:'Tus clientes reservan solos, sin llamadas.', m:'Eligen día y hora disponible, reciben confirmación y un recordatorio antes de la cita.', listo:false},
+  {c:'auto', ic:'users', col:'#8b6bff', t:'Lista de clientes automática', d:'Cada persona que te escribe queda guardada.', m:'Nombre, teléfono y qué quería, organizado en una hoja para que puedas volver a escribirles con promociones.', listo:false},
+  {c:'auto', ic:'bell', col:'#8b6bff', t:'Recordatorio para dejar reseña', d:'Un mensaje amable después de cada compra.', m:'Se envía solo por WhatsApp o texto, con el link directo para dejar la reseña.', listo:false},
+  {c:'contenido', ic:'video', col:'#ff7ad9', t:'Videos y fotos con IA', d:'Contenido llamativo de tus productos para redes.', m:'Videos cortos tipo TikTok y Reels, y fotos de producto, creados con inteligencia artificial a partir de tus fotos.', listo:true},
+  {c:'contenido', ic:'spark', col:'#ff7ad9', t:'Manejo de redes sociales', d:'Publicamos por ti cada semana.', m:'Calendario de publicaciones, textos y hashtags para Instagram, Facebook y TikTok.', listo:false},
+  {c:'crecer', ic:'bag', col:'#ffb84d', t:'Pedidos y delivery', d:'Que te pidan por WhatsApp, DoorDash o Uber Eats.', m:'Configuramos tus apps de delivery y un botón en tu página para que el cliente elija cómo pedir, siempre primero directo contigo.', listo:true},
+  {c:'crecer', ic:'chart', col:'#ffb84d', t:'Panel de ventas', d:'Tus números en una sola pantalla.', m:'Ventas, clientes nuevos, reseñas y mensajes, actualizados solos para que tomes mejores decisiones.', listo:false},
+  {c:'crecer', ic:'store', col:'#ffb84d', t:'Varios locales y franquicias', d:'Todo igual en cada sucursal.', m:'Una página con todas tus sedes, perfiles de Google para cada una y los mismos asistentes en todos tus locales.', listo:false},
+  {c:'crecer', ic:'bot', col:'#ffb84d', t:'Asistente de IA a la medida', d:'Un asistente entrenado con todo tu negocio.', m:'Para negocios con más volumen: responde casos complejos, se conecta a tus sistemas y aprende de tus preguntas frecuentes.', listo:false}
+];
+(() => {
+  const f = $('filters'), g = $('grid');
+  f.innerHTML = CATS.map(([k,t],i) => `<button type="button" data-f="${k}" aria-pressed="${i===0}">${t}</button>`).join('');
+  g.innerHTML = SVC.map((s,i) => `<button type="button" class="svc rv ${s.listo?'':'soon'}" data-c="${s.c}" aria-expanded="false" style="--c:${s.col}">
+      <span class="badge ${s.listo?'ok':'soon'}">${s.listo?'Disponible':'Próximamente'}</span>
+      <span class="ic">${ico(s.ic)}</span><h3>${esc(s.t)}</h3><p>${esc(s.d)}</p>
+      <span class="more">${esc(s.m)}</span><span class="tap">Toca para saber más</span></button>`).join('');
+  f.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    f.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b));
+    g.querySelectorAll('.svc').forEach(s => { s.hidden = !(b.dataset.f === 'todos' || s.dataset.c === b.dataset.f); s.classList.add('in'); });
+  });
+  g.addEventListener('click', e => {
+    const s = e.target.closest('.svc'); if (!s) return;
+    const open = s.getAttribute('aria-expanded') !== 'true';
+    s.setAttribute('aria-expanded', open);
+    s.querySelector('.tap').textContent = open ? 'Toca para cerrar' : 'Toca para saber más';
+  });
+})();
+
+/* ---------- recomendador ---------- */
+const QZ = [
+  { q:'¿Qué es lo que más te preocupa hoy?', o:[
+    ['🔍','Que no me encuentran','Pocos clientes nuevos me conocen.','visible'],
+    ['💬','No alcanzo a contestar','Me escriben y no doy abasto.','auto'],
+    ['🏪','Tengo o quiero varios locales','Necesito que todo funcione igual.','multi']]},
+  { q:'¿Tienes página web hoy?', o:[
+    ['🚫','No tengo','Solo redes o nada.','noweb'],
+    ['😕','Tengo, pero no me gusta','Está vieja o no la uso.','oldweb'],
+    ['✅','Sí, y me sirve','Solo quiero mejorar otras cosas.','okweb']]},
+  { q:'¿Cómo prefieres empezar?', o:[
+    ['🌱','Poco a poco','Algo sencillo y luego crecer.','slow'],
+    ['🚀','Con todo','Quiero ver resultados rápido.','fast'],
+    ['🤷','No sé, asesórenme','Que me expliquen en persona.','help']]}
+];
+const PLANS = [
+  {id:'basico', n:'Presencia', pill:'Para empezar', for:'Para que te encuentren y confíen en ti.', setup:'1,110', month:'199',
+   inc:['Página web en español e inglés','Google Maps optimizado','10 tarjetas de reseña inteligentes','Cambios y cuidado cada mes','Reporte mensual'], soon:[]},
+  {id:'auto', n:'Automático', pill:'El más completo', star:true, for:'Para no perder clientes por no contestar.', setup:'2,380', month:'375',
+   inc:['Todo lo de Presencia, si lo necesitas','Lista de clientes automática'], soon:['Asistente de WhatsApp 24/7','Asistente de Instagram','Citas y reservas automáticas']},
+  {id:'premium', n:'Crecimiento', pill:'Varios locales', for:'Para franquicias y negocios con varias sedes.', setup:null, month:null,
+   inc:['Todo lo de Presencia y Automático','Un perfil y página por cada sede','Videos y fotos con IA cada mes'], soon:['Panel de ventas','Asistente de IA a la medida']}
+];
+(() => {
+  const box = $('quiz'); let step = 0, ans = [];
+  const draw = () => {
+    if (step < QZ.length) {
+      const s = QZ[step];
+      box.innerHTML = `<div class="bar"><i style="width:${(step/QZ.length)*100}%"></i></div>
+        <span class="q-step">Pregunta ${step+1} de ${QZ.length}</span><h3 class="q-title">${esc(s.q)}</h3>
+        <div class="opts">${s.o.map(([em,t,d,v]) => `<button type="button" class="opt" data-v="${v}"><span class="em" aria-hidden="true">${em}</span><b>${esc(t)}</b><small>${esc(d)}</small></button>`).join('')}</div>`;
+      requestAnimationFrame(() => { const i = box.querySelector('.bar i'); if (i) i.style.width = ((step+1)/QZ.length*100) + '%'; });
+      return;
+    }
+    const pick = ans[0] === 'multi' ? 'premium' : (ans[0] === 'auto' ? 'auto' : 'basico');
+    const p = PLANS.find(x => x.id === pick);
+    const why = {basico:'Lo primero es que te encuentren y vean un negocio confiable. Con eso llegan los clientes nuevos.',
+                 auto:'Ya tienes clientes que te escriben: el siguiente paso es que nadie se quede sin respuesta.',
+                 premium:'Con varias sedes, lo importante es que todo funcione igual y lo puedas ver desde un solo lugar.'}[pick];
+    const extra = ans[1] === 'okweb' ? 'Como ya tienes página, la revisamos y solo mejoramos lo necesario.' : (ans[1] === 'noweb' ? 'Empezamos por tu página web: es la base de todo lo demás.' : 'Renovamos tu página para que se vea moderna y funcione en el celular.');
+    const pace = ans[2] === 'slow' ? 'Puedes empezar solo con una parte y sumar después.' : ans[2] === 'fast' ? 'Podemos tener lo principal funcionando en 1 a 2 semanas.' : 'Te visitamos y te lo explicamos en persona, sin costo.';
+    const msg = `Hola Maemuki, hice el test en su página. Me recomendaron el plan ${p.n}. ¿Me pueden asesorar?`;
+    box.innerHTML = `<div class="bar"><i style="width:100%"></i></div><div class="result">
+      <span class="tag">Te recomendamos</span><h3 class="q-title" style="margin:0">Plan ${esc(p.n)}</h3>
+      <p class="lead">${esc(why)}</p>
+      <ul><li>${esc(extra)}</li><li>${esc(pace)}</li><li>Empiezas con 3 meses y luego decides si sigues, subes o bajas de plan.</li></ul>
+      <div class="btns"><a class="btn btn-lime" href="${wa(msg) || '#contacto'}" ${wa(msg)?'target="_blank" rel="noopener"':''}>Quiero este plan</a><a class="btn btn-ghost" href="#planes">Ver los planes</a><button type="button" class="btn btn-ghost" id="again">Volver a empezar</button></div></div>`;
+    $('again').onclick = () => { step = 0; ans = []; draw(); };
+  };
+  box.addEventListener('click', e => { const o = e.target.closest('.opt'); if (!o) return; ans[step] = o.dataset.v; step++; draw(); });
+  draw();
+})();
+
+/* ---------- planes ---------- */
+(() => {
+  $('plans').innerHTML = PLANS.map(p => {
+    const price = !CONFIG.mostrarPrecios ? '<div class="price"><b>A tu medida</b></div>'
+      : p.month ? `<div class="price"><span>desde</span><b>$${p.month}</b><span>/ mes</span><small>Instalación desde $${p.setup}</small></div>`
+      : '<div class="price"><b>A tu medida</b><small>Según el número de locales</small></div>';
+    const msg = `Hola Maemuki, me interesa el plan ${p.n}.`;
+    return `<article class="plan rv ${p.star?'star':''}"><span class="pill">${esc(p.pill)}</span><h3>${esc(p.n)}</h3><p class="for">${esc(p.for)}</p>${price}
+      <ul>${p.inc.map(t => `<li>${ico('check')}${esc(t)}</li>`).join('')}${p.soon.map(t => `<li class="s">${ico('clock')}${esc(t)} · próximamente</li>`).join('')}</ul>
+      <a class="btn ${p.star?'btn-lime':'btn-ghost'}" href="${wa(msg) || '#contacto'}" ${wa(msg)?'target="_blank" rel="noopener"':''}>Me interesa</a></article>`;
+  }).join('');
+})();
+
+/* ---------- calculadora ---------- */
+(() => {
+  const r1 = $('r1'), r2 = $('r2'), r3 = $('r3');
+  const fill = r => r.style.setProperty('--p', ((r.value - r.min) / (r.max - r.min) * 100) + '%');
+  const calc = () => {
+    [r1,r2,r3].forEach(fill);
+    $('o1').textContent = r1.value; $('o2').textContent = '$' + r2.value; $('o3').textContent = r3.value;
+    const v = Math.round(r1.value * 30 * (r3.value / 10) * r2.value);
+    $('lost').textContent = '$' + v.toLocaleString('en-US');
+  };
+  [r1,r2,r3].forEach(r => r.addEventListener('input', calc)); calc();
+})();
+
+/* ---------- glosario ---------- */
+const GL = [
+  ['Inteligencia artificial (IA)','Un programa que entiende lo que la gente escribe y responde de forma natural, como una persona.','Un cliente pregunta “¿abren el domingo?” a las 11 PM y recibe la respuesta correcta al instante.'],
+  ['Chatbot o asistente','Un ayudante que contesta mensajes por ti en WhatsApp, Instagram o tu página.','Responde precios, horarios y toma pedidos mientras tú atiendes en el mostrador.'],
+  ['Automatización','Tareas repetitivas que se hacen solas, sin que tengas que acordarte.','Después de cada compra, el cliente recibe un mensaje de “gracias” con el link para dejar reseña.'],
+  ['Google Maps / perfil de negocio','La ficha de tu negocio que sale cuando alguien te busca en Google o en el mapa.','Alguien busca “panadería cerca de mí” y tu negocio sale primero, con fotos y buenas reseñas.'],
+  ['NFC','Una tecnología para “tocar” con el celular y abrir algo, sin escanear ni escribir.','El cliente acerca su celular a una tarjeta y se abre la página para dejar 5 estrellas.'],
+  ['Dominio','El nombre de tu página en internet, como tu dirección de casa pero en la web.','panaderiasol.com'],
+  ['Mantenimiento mensual','El cuidado de tu tecnología cada mes para que nunca se quede vieja ni falle.','Cambiamos tu horario de invierno, subimos el nuevo menú y revisamos que todo funcione.']
+];
+(() => {
+  const w = $('words'), d = $('def');
+  w.innerHTML = GL.map((g,i) => `<button type="button" data-i="${i}" aria-pressed="false">${esc(g[0])}</button>`).join('');
+  const show = i => { w.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.i == i)); const g = GL[i];
+    d.innerHTML = `<b>${esc(g[0])}</b><p>${esc(g[1])}</p><p class="ex">${esc(g[2])}</p>`; d.style.animation = 'none'; d.offsetWidth; d.style.animation = 'pop .35s'; };
+  w.addEventListener('click', e => { const b = e.target.closest('button'); if (b) show(+b.dataset.i); });
+  show(0);
+})();
+
+/* ---------- contacto ---------- */
+(() => {
+  const f = $('form'), fl = $('float');
+  if (CONFIG.whatsapp) { fl.href = wa('Hola Maemuki, quiero información.'); fl.target = '_blank'; fl.rel = 'noopener'; }
+  f.addEventListener('submit', e => {
+    e.preventDefault();
+    const d = new FormData(f);
+    const msg = `Hola Maemuki 👋 Soy ${d.get('n')}, de ${d.get('b')}. Me gustaría: ${d.get('q')}.`;
+    const link = wa(msg);
+    if (link) window.open(link, '_blank', 'noopener');
+    else $('formNote').textContent = 'Muy pronto podrás escribirnos directo desde aquí. ¡Gracias por tu interés!';
+  });
+})();
+
+/* ---------- aparecer al bajar ---------- */
+(() => {
+  const els = document.querySelectorAll('.rv');
+  if (reduce || !('IntersectionObserver' in window)) { els.forEach(e => e.classList.add('in')); return; }
+  const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); } }), {threshold:.12, rootMargin:'0px 0px -40px 0px'});
+  els.forEach(e => io.observe(e));
+})();
+$('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
