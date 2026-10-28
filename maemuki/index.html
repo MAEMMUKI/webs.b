@@ -75,7 +75,8 @@ h2{font-size:clamp(32px,5.4vw,52px)}
 /* héroe */
 .hero{padding-block:72px 64px}
 .hero .wrap{display:grid;gap:44px;align-items:center}
-@media(min-width:960px){.hero .wrap{grid-template-columns:1.05fr .95fr}}
+@media(min-width:960px){.hero .wrap{grid-template-columns:1.05fr .95fr}#tryBot svg{transform:rotate(-90deg)}}
+#tryBot svg{transition:transform .3s}
 .hero h1{font-size:clamp(40px,7.4vw,76px);font-weight:800}
 .rotbox{display:inline-grid;vertical-align:bottom;white-space:nowrap}
 .rotbox>span{grid-area:1/1;text-align:left}
