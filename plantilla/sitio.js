@@ -616,6 +616,39 @@
     setTimeout(() => els.forEach(el => el.classList.remove('wait')), 2500);
   }
 
+  // MÉTRICAS (GoatCounter): visitas por página y toques en los botones importantes. Sin datos personales.
+  // En negocio.js: metricas: { codigo: 'maemuki' }  (vacío o sin "metricas" = no se mide nada)
+  (function metricas(){
+    const code = String((N.metricas && N.metricas.codigo) || '').replace(/[^a-z0-9-]/g,'');
+    if (!code || /^(localhost|127\.|$)/.test(location.hostname) || location.protocol === 'file:') return;
+    const site = String((N.metricas && N.metricas.sitio) || N.id || 'sitio').replace(/[^a-z0-9-]/g,'');
+    const hit = (p, ev) => { try {
+      const u = 'https://' + code + '.goatcounter.com/count?p=' + encodeURIComponent(p) + '&t=' + encodeURIComponent(document.title) + (ev ? '&e=true' : '&r=' + encodeURIComponent(document.referrer)) + '&rnd=' + Math.random().toString(36).slice(2);
+      if (ev && navigator.sendBeacon && navigator.sendBeacon(u)) return; new Image().src = u;
+    } catch(e) {} };
+    const page = () => hit('/web/' + site + '/' + viewNow());
+    page(); window.addEventListener('hashchange', page);
+    const kind = a => {
+      if (a.dataset.order !== undefined) return 'abrir-pedir';
+      if (a.dataset.flav) return 'sabor-' + a.dataset.flav;
+      const h = a.getAttribute('href') || '';
+      if (h.startsWith('tel:')) return 'llamar';
+      if (/wa\.me/.test(h)) return 'whatsapp';
+      if (/maps\/dir|maps\?q|google\.com\/maps/.test(h)) return 'como-llegar';
+      if (/writereview/.test(h)) return 'dejar-resena';
+      if (/doordash/.test(h)) return 'doordash';
+      if (/ubereats/.test(h)) return 'ubereats';
+      if (/instagram\.com/.test(h)) return 'instagram';
+      if (/facebook\.com/.test(h)) return 'facebook';
+      if (/tiktok\.com/.test(h)) return 'tiktok';
+      return '';
+    };
+    document.addEventListener('click', e => {
+      const a = e.target.closest && e.target.closest('a[href],[data-order],[data-flav]'); if (!a) return;
+      const k = kind(a); if (k) hit('web/' + site + '/click/' + k, true);
+    }, true);
+  })();
+
   render();
   setInterval(() => { const el = document.querySelector('.today'); if (el) el.outerHTML = sec.today(); }, 60000);
 })();

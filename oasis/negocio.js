@@ -9,6 +9,7 @@
    ============================================================ */
 window.NEGOCIO = {
   id: 'oasis',
+  metricas: { codigo: 'maemuki' },   // GoatCounter: visitas y toques en botones (vacío = no medir)
   demo: true,                       // true = muestra la franja de "borrador" y las etiquetas amarillas
   nombre: 'Oasis Helados con Queso',
   idiomas: ['es', 'en'],
