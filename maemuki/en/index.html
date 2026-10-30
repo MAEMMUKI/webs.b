@@ -283,6 +283,19 @@ footer i{font-style:normal;color:var(--soft)}
 .rv{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
 .rv.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}html{scroll-behavior:auto}}
+.client{background:var(--dark);color:#f3f0ff;border-radius:var(--r);padding:clamp(26px,4vw,48px);display:grid;gap:28px;align-items:center;position:relative;overflow:hidden}
+@media(min-width:860px){.client{grid-template-columns:auto 1fr}}
+.client::before{content:"";position:absolute;width:420px;height:420px;left:-120px;top:-140px;background:radial-gradient(circle,rgba(201,164,92,.35),transparent 65%);pointer-events:none}
+.client .cl-logo{position:relative;width:min(220px,58vw);aspect-ratio:1;justify-self:center}
+.client .cl-logo img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 18px 30px rgba(0,0,0,.5))}
+.client .cl-tag{display:inline-flex;gap:8px;align-items:center;font:700 12px var(--body);letter-spacing:.14em;text-transform:uppercase;color:#e8cd8a}
+.client .cl-tag i{width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 4px rgba(198,255,77,.2);animation:clp 1.8s infinite}
+@keyframes clp{50%{box-shadow:0 0 0 8px rgba(198,255,77,0)}}
+.client h3{font-family:var(--display);font-size:clamp(26px,3.4vw,38px);line-height:1.1;margin:10px 0 12px}
+.client p{color:#c9c4e0;max-width:620px}
+.client .cl-facts{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0 22px}
+.client .cl-facts span{border:1px solid rgba(232,205,138,.35);color:#f1e6c8;border-radius:999px;padding:7px 14px;font-size:14px}
+.client a.cl-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#e8cd8a,#c9a45c);color:#1a1408;font-weight:700;text-decoration:none;border-radius:999px;padding:13px 22px}
 </style>
 </head>
 <body>
@@ -324,6 +337,21 @@ footer i{font-style:normal;color:var(--soft)}
         </div>
       </div>
       <p class="phone-note">Tap a question: this is how your business would answer on WhatsApp, any time.</p>
+    </div>
+  </div></section>
+
+  <!-- CLIENTS -->
+  <section id="clientes"><div class="wrap">
+    <div class="head c rv"><span class="eyebrow">Clients</span><h2>Companies that already trust us</h2></div>
+    <div class="client rv">
+      <div class="cl-logo"><img src="../clientes/lagranjita.png" alt="La Granjita logo, artisan cold cuts since 1992" width="360" height="360" loading="lazy"></div>
+      <div>
+        <span class="cl-tag"><i></i>Project in progress</span>
+        <h3>La Granjita · Arequipa, Peru</h3>
+        <p>A large cold-cuts and sausage company in Peru with more than 30 years in business. They trusted Maemuki to start a big project: launching on the web in a more formal way and taking their brand to the next level.</p>
+        <div class="cl-facts"><span>Cold cuts since 1992</span><span>70+ employees</span><span>Own plant in Arequipa</span></div>
+        <a class="cl-btn" href="../../lagranjita/" target="_blank" rel="noopener">See the progress →</a>
+      </div>
     </div>
   </div></section>
 
