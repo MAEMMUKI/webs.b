@@ -19,7 +19,7 @@
       openNow:'Abierto ahora', closedNow:'Cerrado ahora', opensAt:'Abre a las', opensTomorrow:'abre mañana a las', closesAt:'Cierra a las', today:'Hoy', everyDay:'Todos los días',
       flipHint:'Toca una copa para ver qué lleva', turn:'Voltear', pairWith:'Combínalo con', orderThis:'Pídelo por WhatsApp',
       seeAll:'Ver todas en Google', leaveReview:'Déjanos tu reseña', reviewsOn:'reseñas en Google', soon:'Próximamente', notifyMe:'Avísame cuando abra',
-      follow:'Síguenos', hoursT:'Horario', contact:'Contacto', rights:'Todos los derechos reservados.', flavors:'Nuestros sabores', howOrder:'¿Cómo quieres pedir?', orderItem:'Pedir', waSub:'Directo con nosotros · respuesta rápida', appsQ:'¿Prefieres delivery por app?', callQ:'¿Prefieres llamar?', orderThis2:'Pedir esta', flavHint:'Toca un sabor ✨', flavTipDef:'Pídelo con queso rallado encima, como en Ecuador.', viewMenu:'Ver el menú',
+      follow:'Síguenos', hoursT:'Horario', contact:'Contacto', rights:'Todos los derechos reservados.', madeBy:'Diseño web por', flavors:'Nuestros sabores', howOrder:'¿Cómo quieres pedir?', orderItem:'Pedir', waSub:'Directo con nosotros · respuesta rápida', appsQ:'¿Prefieres delivery por app?', callQ:'¿Prefieres llamar?', orderThis2:'Pedir esta', flavHint:'Toca un sabor ✨', flavTipDef:'Pídelo con queso rallado encima, como en Ecuador.', viewMenu:'Ver el menú',
       home:'Inicio', about:'Nosotros', readStory:'Leer la historia completa', explore:'Sigue explorando', exploreT:'¿Qué quieres ver?', go:'Ver',
       pg_menu:'Helados con queso, copas, waffles, café y más.', pg_nosotros:'La historia detrás de cada copa.', pg_visitanos:'Te esperamos con una copa lista.',
       ex_menu:'Copas, desayunos, panes y café, con precios.', ex_nosotros:'Cómo un sueño migrante se convirtió en Oasis.', ex_visitanos:'Dirección, horario, mapa y WhatsApp.',
@@ -29,7 +29,7 @@
       openNow:'Open now', closedNow:'Closed now', opensAt:'Opens at', opensTomorrow:'opens tomorrow at', closesAt:'Closes at', today:'Today', everyDay:'Every day',
       flipHint:'Tap a cup to see what’s inside', turn:'Flip', pairWith:'Pair it with', orderThis:'Order on WhatsApp',
       seeAll:'See all on Google', leaveReview:'Leave us a review', reviewsOn:'reviews on Google', soon:'Coming soon', notifyMe:'Tell me when it opens',
-      follow:'Follow us', hoursT:'Hours', contact:'Contact', rights:'All rights reserved.', flavors:'Our flavors', howOrder:'How would you like to order?', orderItem:'Order', waSub:'Straight to us · quick reply', appsQ:'Prefer delivery through an app?', callQ:'Rather call?', orderThis2:'Order this', flavHint:'Tap a flavor ✨', flavTipDef:'Get it topped with grated cheese, Ecuadorian style.', viewMenu:'See the menu',
+      follow:'Follow us', hoursT:'Hours', contact:'Contact', rights:'All rights reserved.', madeBy:'Web design by', flavors:'Our flavors', howOrder:'How would you like to order?', orderItem:'Order', waSub:'Straight to us · quick reply', appsQ:'Prefer delivery through an app?', callQ:'Rather call?', orderThis2:'Order this', flavHint:'Tap a flavor ✨', flavTipDef:'Get it topped with grated cheese, Ecuadorian style.', viewMenu:'See the menu',
       home:'Home', about:'About us', readStory:'Read the full story', explore:'Keep exploring', exploreT:'What would you like to see?', go:'See',
       pg_menu:'Ice cream with cheese, cups, waffles, coffee and more.', pg_nosotros:'The story behind every cup.', pg_visitanos:'We’ll have a cup ready for you.',
       ex_menu:'Cups, breakfast, bread and coffee, with prices.', ex_nosotros:'How an immigrant’s dream became Oasis.', ex_visitanos:'Address, hours, map and WhatsApp.',
@@ -402,7 +402,7 @@
       </div>
       <div><h3>${esc(N.nombre)}</h3>${NAV.map(([v,k])=>`<p><a href="#${v}">${t(k)}</a></p>`).join('')}</div>
       <div><h3>${t('hoursT')}</h3><p>${esc(hoursText(main.horario))}</p><p>${esc(main.direccion||'')}</p></div>
-      <p class="copy">© ${new Date().getFullYear()} ${esc(N.nombre)}. ${t('rights')}${N.creditos ? ' · ' + N.creditos : ''}</p>
+      <div class="copy"><span>© ${new Date().getFullYear()} ${esc(N.nombre)}. ${t('rights')}</span>${N.creditos !== false ? `<a class="mk-credit" href="https://maemmuki.github.io/webs.b/maemuki/" target="_blank" rel="noopener"><img src="../maemuki/icon.png" alt="" width="30" height="30">${t('madeBy')} <b>Maemuki</b></a>` : ''}</div>
     </div></footer>`;
   };
 
@@ -633,6 +633,7 @@
       if (a.dataset.flav) return 'sabor-' + a.dataset.flav;
       const h = a.getAttribute('href') || '';
       if (h.startsWith('tel:')) return 'llamar';
+      if (/maemuki\//.test(h)) return 'maemuki';
       if (/wa\.me/.test(h)) return 'whatsapp';
       if (/maps\/dir|maps\?q|google\.com\/maps/.test(h)) return 'como-llegar';
       if (/writereview/.test(h)) return 'dejar-resena';

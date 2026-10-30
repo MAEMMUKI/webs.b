@@ -237,7 +237,11 @@ footer a:hover{color:#fff}
 .social{display:flex;gap:10px;flex-wrap:wrap}
 .social a{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);color:#fff}
 .social svg{width:20px;height:20px}
-.copy{border-top:1px solid rgba(255,255,255,.1);padding-top:18px;font-size:13px;grid-column:1/-1}
+.copy{border-top:1px solid rgba(255,255,255,.1);padding-top:18px;font-size:13px;grid-column:1/-1;display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;justify-content:space-between}
+.mk-credit{display:inline-flex;align-items:center;gap:10px;padding:6px 16px 6px 6px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:inherit;text-decoration:none;font-size:15px;transition:background .2s,transform .2s}
+.mk-credit:hover{background:rgba(255,255,255,.16);transform:translateY(-1px)}
+.mk-credit img{width:30px;height:30px;border-radius:50%;background:#fdf8eb;object-fit:cover}
+.mk-credit b{font-weight:700}
 
 /* Barra fija en el celular */
 .dock{position:fixed;left:0;right:0;bottom:0;z-index:40;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px max(12px,env(safe-area-inset-left,0px)) calc(10px + env(safe-area-inset-bottom,0px));background:rgba(251,248,241,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line)}

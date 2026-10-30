@@ -297,6 +297,30 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
   .recipes .rec{min-height:280px}
   .chap{padding:22px 20px 24px}
 }
+/* pestañas */
+[data-views][hidden]{display:none!important}
+.nav a[aria-current="page"]::after{transform:scaleX(1)}
+.nav a[aria-current="page"]{color:var(--gold-hi)}
+.drawer nav a[aria-current="page"]{color:var(--gold-hi)}
+.view-top{padding-top:8px}
+.teaser{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.tz{display:grid;gap:36px;align-items:center}
+@media(min-width:900px){.tz{grid-template-columns:.9fr 1.1fr;gap:64px}}
+.tz-ph{margin:0;position:relative;background:#fff;padding:12px 12px 44px;border:1px solid var(--line);box-shadow:0 30px 50px -30px rgba(60,40,15,.5);transform:rotate(-2deg);max-width:440px;justify-self:center}
+.tz-ph img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.tz-ph::after{content:"Desde 1992";position:absolute;left:0;right:0;bottom:12px;text-align:center;font-family:var(--display);font-style:italic;color:var(--ink-soft)}
+.tz h2{font-size:clamp(30px,4vw,46px);margin:12px 0 16px}
+.tz p{color:var(--ink-soft);font-size:18px;margin-bottom:26px;max-width:560px}
+.tz-b2b{background:var(--coal);color:#efe6d6;padding-block:64px}
+.tz-b2b .wrap{display:flex;flex-wrap:wrap;gap:24px 40px;align-items:center;justify-content:space-between}
+.tz-b2b h2{font-size:clamp(26px,3.2vw,36px);margin:10px 0 8px;max-width:640px}
+.tz-b2b p{color:#cfc3ae}
+.tz-b2b .k2{color:var(--gold)}
+.fb{align-items:center}
+.mk-credit{display:inline-flex;align-items:center;gap:10px;padding:6px 16px 6px 6px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid #3a332c;color:#e9e1d2!important;text-decoration:none;font-size:15px;transition:background .2s,border-color .2s}
+.mk-credit:hover{background:rgba(201,164,92,.12);border-color:var(--gold-lo)}
+.mk-credit img{width:30px;height:30px;border-radius:50%;background:#fdf8eb;object-fit:cover}
+.mk-credit b{color:#fff}
 </style>
 </head>
 <body>
@@ -310,7 +334,7 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
 <header class="head"><div class="wrap">
   <a class="brand" href="#inicio" aria-label="La Granjita, inicio"><img src="logo-sm.png" alt="" width="66" height="66"><span><b>La Granjita</b><small>Embutidos artesanales</small></span></a>
   <nav class="nav" aria-label="Principal">
-    <a href="#productos">Productos</a><a href="#historia">Historia</a><a href="#calidad">Calidad</a><a href="#recetas">Recetas</a><a href="#contacto">Contacto</a>
+    <a href="#inicio">Inicio</a><a href="#productos">Productos</a><a href="#historia">Historia</a><a href="#recetas">Recetas</a><a href="#negocios">Negocios</a><a href="#contacto">Contacto</a>
   </nav>
   <a class="btn btn-gold cta" href="#negocios">Cotizar</a>
   <button class="menu-btn" type="button" id="menuBtn" aria-label="Abrir menú" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
@@ -319,13 +343,13 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
 <div class="drawer" id="drawer" aria-hidden="true">
   <nav aria-label="Menú">
     <button class="x" type="button" id="drawerX" aria-label="Cerrar menú">×</button>
-    <a href="#productos">Productos</a><a href="#historia">Historia</a><a href="#calidad">Calidad</a><a href="#recetas">Recetas</a><a href="#negocios">Para negocios</a><a href="#contacto">Contacto</a>
+    <a href="#inicio">Inicio</a><a href="#productos">Productos</a><a href="#historia">Historia</a><a href="#recetas">Recetas</a><a href="#negocios">Para negocios</a><a href="#contacto">Contacto</a>
   </nav>
 </div>
 
 <main id="inicio">
   <!-- HÉROE -->
-  <section class="hero"><div class="hero-vid" aria-hidden="true"><video id="heroVideo" src="portada.mp4?v=1" poster="portada.jpg" autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture disableremoteplayback></video></div><div class="wrap">
+  <section class="hero" data-views="inicio"><div class="hero-vid" aria-hidden="true"><video id="heroVideo" src="portada.mp4?v=1" poster="portada.jpg" autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture disableremoteplayback></video></div><div class="wrap">
     <div>
       <span class="kicker">Desde 1992 · Arequipa</span>
       <h1>Tradición que se <em class="gold">siente</em> en cada mesa</h1>
@@ -344,15 +368,31 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
   </div><div class="edge" aria-hidden="true"></div></section>
 
   <!-- PRODUCTOS -->
-  <section id="productos"><div class="wrap">
+  <section id="productos" data-views="inicio productos"><div class="wrap">
     <div class="sh c rv"><span class="k2">Nuestros productos</span><h2>Sabor de casa, calidad de planta</h2><div class="orn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.2H22l-6.2 4.5 2.4 7.3L12 16.5 5.8 21l2.4-7.3L2 9.2h7.6z"/></svg></div><p>Elige una línea para ver sus productos. <span class="pend">Fotos referenciales</span></p></div>
     <div class="lines rv" id="lines" role="group" aria-label="Líneas de producto"></div>
     <div class="grid" id="grid"></div>
   </div></section>
 
-  <!-- NOSOTROS -->
+  <!-- AVANCE DE LA HISTORIA (solo en inicio) -->
+  <section class="teaser" data-views="inicio"><div class="wrap tz">
+    <figure class="tz-ph rv"><img src="fotos/salchichas.jpg?v=2" alt="Salchichas La Granjita sobre tabla de madera" loading="lazy" width="960" height="720"></figure>
+    <div class="rv">
+      <span class="k2">Nuestra historia</span>
+      <h2>Una familia, una granja y un joven de 19 años</h2>
+      <p>Todo empezó en Mollendo, en la granja de papá. Cuando el maestro embutidor se fue sin avisar, Rafael, con apenas 19 años, tomó la planta en sus manos. Más de 30 años después, ese sueño da trabajo a más de 70 personas y llega a las mesas de todo el sur del Perú.</p>
+      <a class="btn btn-dark" href="#historia">Conoce nuestra historia <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div></section>
+
+  <!-- AVANCE NEGOCIOS (solo en inicio) -->
+  <section class="tz-b2b" data-views="inicio"><div class="wrap">
+    <div><span class="k2">Para negocios</span><h2>¿Tienes una tienda, un restaurante o eres distribuidor?</h2><p>Lleva La Granjita a tu negocio con precios competitivos y condiciones claras.</p></div>
+    <a class="btn btn-gold" href="#negocios">Pide tu cotización <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div></section>
+
   <!-- HISTORIA -->
-  <section class="story" id="historia"><div class="wrap">
+  <section class="story" id="historia" data-views="historia"><div class="wrap">
     <div class="sh c rv"><span class="k2">Nuestra historia</span><h2>Antes de ser una marca, fuimos una familia</h2><div class="orn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-8.5-5.2-8.5-11.3A4.8 4.8 0 0 1 12 6.6a4.8 4.8 0 0 1 8.5 3.1C20.5 15.8 12 21 12 21z"/></svg></div></div>
     <div class="story-intro">
       <p class="big rv">En Mollendo, entre gallinas, chanchos y madrugadas de trabajo, una familia soñó con llevar a la mesa de todos el sabor de lo hecho en casa. Esta es la historia de cómo un joven de 19 años convirtió ese sueño en La Granjita.</p>
@@ -369,7 +409,7 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
     <span class="src">Historia basada en la entrevista de la serie <a href="https://novuz.blog/2026/04/03/serie-sonadores-que-cumplen-rafael-chang-padilla/" target="_blank" rel="noopener">“Soñadores que cumplen”, nOVUz (2026)</a>.</span>
   </div></section>
 
-  <section class="dark" id="nosotros"><div class="wrap about">
+  <section class="dark" id="nosotros" data-views="historia"><div class="wrap about">
     <div class="txt rv">
       <span class="k2">Nuestra historia</span>
       <h2 style="font-size:clamp(34px,4.8vw,54px);margin:14px 0 22px">De Mollendo a todo el sur del Perú</h2>
@@ -391,7 +431,7 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
   </div></section>
 
   <!-- CALIDAD -->
-  <section id="calidad"><div class="wrap">
+  <section id="calidad" data-views="historia"><div class="wrap">
     <div class="sh c rv"><span class="k2">Calidad e inocuidad</span><h2>Del campo a tu mesa, con cuidado en cada paso</h2></div>
     <div class="steps rv">
       <div class="step"><span class="n">01</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/></svg><h3>Carne seleccionada</h3><p>Trabajamos con proveedores de confianza y recibimos cada lote con control de temperatura.</p></div>
@@ -403,13 +443,13 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
   </div></section>
 
   <!-- RECETAS -->
-  <section style="background:var(--cream2)" id="recetas"><div class="wrap">
+  <section style="background:var(--cream2)" id="recetas" data-views="recetas"><div class="wrap">
     <div class="sh rv"><span class="k2">Ideas para tu mesa</span><h2>Recetas con La Granjita</h2><p>Toca una receta para ver los ingredientes y la preparación.</p></div>
     <div class="recipes" id="recipes"></div>
   </div></section>
 
   <!-- NEGOCIOS -->
-  <section class="dark" id="negocios"><div class="wrap b2b">
+  <section class="dark" id="negocios" data-views="negocios"><div class="wrap b2b">
     <div class="rv">
       <span class="k2">Para negocios</span>
       <h2 style="font-size:clamp(34px,4.8vw,54px);margin:14px 0 18px">Lleva La Granjita a tu negocio</h2>
@@ -439,7 +479,7 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
   </div></section>
 
   <!-- CONTACTO -->
-  <section id="contacto"><div class="wrap">
+  <section id="contacto" data-views="contacto"><div class="wrap">
     <div class="sh rv"><span class="k2">Contacto</span><h2>Visítanos o escríbenos</h2></div>
     <div class="contact">
       <div class="cards rv">
@@ -464,9 +504,9 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
     <div><h4>Empresa</h4><ul><li><a href="#historia">Historia</a></li><li><a href="#calidad">Calidad</a></li><li><a href="#contacto">Trabaja con nosotros</a></li></ul></div>
     <div><h4>Productos</h4><ul id="ftLines"></ul></div>
     <div><h4>Atención</h4><ul><li><a href="#negocios">Distribuidores</a></li><li><a href="tel:+51936285614">936 285 614</a></li><li><a href="#contacto">Cerro Colorado, Arequipa</a></li></ul>
-      <a class="reclamo" id="reclamaciones" href="#" title="Enlace por configurar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h11l3 3v15H5z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>Libro de reclamaciones</a></div>
+      <a class="reclamo" id="reclamaciones" href="#reclamaciones" title="Enlace por configurar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h11l3 3v15H5z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>Libro de reclamaciones</a></div>
   </div>
-  <div class="fb"><span>© <span id="yr"></span> Fábrica de Embutidos La Granjita E.I.R.L. · RUC 20411506615</span><span>Diseño web: Maemuki</span></div>
+  <div class="fb"><span>© <span id="yr"></span> Fábrica de Embutidos La Granjita E.I.R.L. · RUC 20411506615</span><a class="mk-credit" href="https://maemmuki.github.io/webs.b/maemuki/" target="_blank" rel="noopener"><img src="../maemuki/icon.png" alt="" width="30" height="30">Diseño web por <b>Maemuki</b></a></div>
 </div></footer>
 
 <a class="wa" id="waFloat" href="#negocios" aria-label="Escríbenos por WhatsApp" hidden><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg></a>
@@ -585,12 +625,29 @@ const wa = msg => CONFIG.whatsapp ? 'https://wa.me/' + CONFIG.whatsapp.replace(/
   nums.forEach(n => io2.observe(n));
 })();
 
-/* sección activa en el menú */
+/* pestañas: cada botón del menú muestra su propia vista */
 (() => {
-  const links = [...document.querySelectorAll('.nav a')];
-  const secs = links.map(a => document.querySelector(a.getAttribute('href')));
-  const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) { const i = secs.indexOf(x.target); links.forEach((a,j) => a.setAttribute('aria-current', i === j)); } }), {rootMargin:'-45% 0px -50% 0px'});
-  secs.forEach(s => s && io.observe(s));
+  const VIEWS = ['inicio','productos','historia','recetas','negocios','contacto'];
+  const ALIAS = {calidad:'historia', nosotros:'historia'};
+  const secs = [...document.querySelectorAll('[data-views]')];
+  const links = [...document.querySelectorAll('.nav a, .drawer nav a')];
+  let current = null;
+  function route(){
+    const h = decodeURIComponent(location.hash.slice(1));
+    let v = h || 'inicio', target = null;
+    if (ALIAS[v]) { target = v; v = ALIAS[v]; }
+    if (!VIEWS.includes(v)) return; // anclas que no son pestañas (ej. libro de reclamaciones)
+    secs.forEach(sec => sec.hidden = !sec.dataset.views.split(' ').includes(v));
+    links.forEach(a => a.getAttribute('href') === '#' + v ? a.setAttribute('aria-current','page') : a.removeAttribute('aria-current'));
+    document.body.dataset.view = v;
+    const el = target && document.getElementById(target);
+    if (el) el.scrollIntoView({behavior:'instant', block:'start'});
+    else if (current !== null || h) window.scrollTo({top:0, behavior:'instant'});
+    current = v;
+    document.querySelectorAll('[data-views]:not([hidden]) .rv').forEach(e => { const r = e.getBoundingClientRect(); if (r.top < innerHeight) e.classList.add('in'); });
+  }
+  addEventListener('hashchange', route);
+  route();
 })();
 $('yr').textContent = new Date().getFullYear();
 

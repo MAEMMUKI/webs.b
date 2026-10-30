@@ -17,7 +17,6 @@ window.NEGOCIO = {
   tituloPestana: { es: 'Oasis · Helados con queso en Union City', en: 'Oasis · Ecuadorian ice cream with cheese in Union City' },
   descripcion: { es: 'Helado con queso ecuatoriano, pan recién hecho y café en Union City, NJ.', en: 'Ecuadorian ice cream with cheese, fresh bread and coffee in Union City, NJ.' },
   lema: { es: 'Helado con queso ecuatoriano, pan recién hecho y café. Para compartir en familia.', en: 'Ecuadorian ice cream with cheese, fresh bread and coffee. Made for sharing.' },
-  creditos: 'Diseño: Maemuki',
 
   logo: 'https://vibe.filesafe.space/1782778390814352848/attachments/730d8d57-4f76-46d0-aed8-57bbdd2b4ad2.png',
 
