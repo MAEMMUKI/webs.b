@@ -246,6 +246,34 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
 @media(max-width:979px){.hero-vid video{object-position:50% 50%;-webkit-mask-image:radial-gradient(ellipse 95% 70% at 50% 45%,#000 30%,rgba(0,0,0,.5) 60%,transparent 88%);mask-image:radial-gradient(ellipse 95% 70% at 50% 45%,#000 30%,rgba(0,0,0,.5) 60%,transparent 88%)}
   .hero-vid::after{background:linear-gradient(0deg,var(--coal) 0%,rgba(20,18,16,.55) 30%,rgba(20,18,16,.6) 70%,rgba(20,18,16,.8) 100%)}}
 .hero h1,.hero p.lead,.hero .kicker{text-shadow:0 2px 18px rgba(0,0,0,.55)}
+/* historia */
+.story{background:radial-gradient(ellipse at 15% 0%,#fffaf0 0%,var(--cream) 55%),var(--cream);position:relative;overflow:hidden}
+.story::before{content:"";position:absolute;inset:0;opacity:.5;pointer-events:none;background:radial-gradient(circle at 85% 20%,rgba(201,164,92,.16),transparent 40%),radial-gradient(circle at 10% 90%,rgba(142,43,34,.07),transparent 40%)}
+.story .wrap{position:relative;max-width:1060px}
+.story-intro{display:grid;gap:36px;align-items:center;margin-bottom:64px}
+@media(min-width:900px){.story-intro{grid-template-columns:1.05fr .95fr}}
+.story-intro .big{font-family:var(--display);font-size:clamp(24px,3vw,32px);line-height:1.4;color:var(--ink)}
+.story-intro .big::first-letter{float:left;font-size:3.3em;line-height:.82;padding:6px 10px 0 0;color:var(--gold-lo);font-weight:800}
+.photo-frame{position:relative;aspect-ratio:4/5;max-width:400px;justify-self:center;width:100%;background:var(--paper);padding:14px 14px 56px;box-shadow:0 30px 50px -30px rgba(60,40,15,.5);transform:rotate(-2deg);border:1px solid var(--line)}
+.photo-frame .ph-in{width:100%;height:100%;display:grid;place-items:center;text-align:center;background:linear-gradient(160deg,#2a231c,#141210);color:#cdbd9c;font-size:14px;padding:20px;gap:10px;align-content:center}
+.photo-frame .ph-in img{width:46%;opacity:.9}
+.photo-frame figcaption{position:absolute;left:0;right:0;bottom:16px;text-align:center;font-family:var(--display);font-style:italic;color:var(--ink-soft);font-size:17px}
+.photo-frame::after{content:"";position:absolute;top:-12px;left:50%;width:110px;height:28px;transform:translateX(-50%) rotate(3deg);background:rgba(232,205,138,.55)}
+.chapters{position:relative;display:grid;gap:22px}
+@media(min-width:900px){.chapters{grid-template-columns:1fr 1fr;gap:26px 34px}}
+.chap{background:rgba(255,250,241,.85);border:1px solid var(--line);border-radius:4px;padding:28px 28px 30px;position:relative}
+.chap .num{font-family:var(--display);font-style:italic;color:var(--gold);font-size:15px;letter-spacing:.06em}
+.chap h3{font-family:var(--display);font-size:clamp(24px,2.6vw,30px);margin:6px 0 12px;line-height:1.15}
+.chap p{color:var(--ink-soft);font-size:16.5px}
+.chap p+p{margin-top:10px}
+.chap.wide{grid-column:1/-1;background:var(--coal);color:#efe6d6;border-color:var(--coal)}
+.chap.wide h3{color:#fff}.chap.wide p{color:#cfc3ae}.chap.wide .num{color:var(--gold-hi)}
+.advice{margin:56px auto 0;max-width:760px;text-align:center}
+.advice small{display:block;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-lo);font-weight:700;margin-bottom:14px}
+.advice p{font-family:var(--display);font-style:italic;font-size:clamp(26px,3.6vw,40px);line-height:1.25;color:var(--ink)}
+.advice .sig{margin-top:16px;font-family:var(--body);font-style:normal;font-size:15px;color:var(--ink-soft)}
+.src{display:block;text-align:center;margin-top:28px;font-size:12px;color:var(--ink-soft)}
+.src a{color:var(--gold-lo)}
 </style>
 </head>
 <body>
@@ -259,7 +287,7 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
 <header class="head"><div class="wrap">
   <a class="brand" href="#inicio" aria-label="La Granjita, inicio"><img src="logo-sm.png" alt="" width="66" height="66"><span><b>La Granjita</b><small>Embutidos artesanales</small></span></a>
   <nav class="nav" aria-label="Principal">
-    <a href="#productos">Productos</a><a href="#nosotros">Nosotros</a><a href="#calidad">Calidad</a><a href="#recetas">Recetas</a><a href="#contacto">Contacto</a>
+    <a href="#productos">Productos</a><a href="#historia">Historia</a><a href="#calidad">Calidad</a><a href="#recetas">Recetas</a><a href="#contacto">Contacto</a>
   </nav>
   <a class="btn btn-gold cta" href="#negocios">Cotizar</a>
   <button class="menu-btn" type="button" id="menuBtn" aria-label="Abrir menú" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
@@ -268,7 +296,7 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
 <div class="drawer" id="drawer" aria-hidden="true">
   <nav aria-label="Menú">
     <button class="x" type="button" id="drawerX" aria-label="Cerrar menú">×</button>
-    <a href="#productos">Productos</a><a href="#nosotros">Nosotros</a><a href="#calidad">Calidad</a><a href="#recetas">Recetas</a><a href="#negocios">Para negocios</a><a href="#contacto">Contacto</a>
+    <a href="#productos">Productos</a><a href="#historia">Historia</a><a href="#calidad">Calidad</a><a href="#recetas">Recetas</a><a href="#negocios">Para negocios</a><a href="#contacto">Contacto</a>
   </nav>
 </div>
 
@@ -285,7 +313,7 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
       </div>
       <div class="stats">
         <div><b data-count="34">34</b><span>años de tradición</span></div>
-        <div><b data-count="1500" data-suffix="+">1500+</b><span>toneladas al año <i class="pend">por confirmar</i></span></div>
+        <div><b data-count="1800">1800</b><span>toneladas al año</span></div>
         <div><b data-count="2000" data-suffix=" m²">2000 m²</b><span>de planta</span></div>
       </div>
     </div>
@@ -300,13 +328,31 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
   </div></section>
 
   <!-- NOSOTROS -->
+  <!-- HISTORIA -->
+  <section class="story" id="historia"><div class="wrap">
+    <div class="sh c rv"><span class="k2">Nuestra historia</span><h2>Antes de ser una marca, fuimos una familia</h2><div class="orn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-8.5-5.2-8.5-11.3A4.8 4.8 0 0 1 12 6.6a4.8 4.8 0 0 1 8.5 3.1C20.5 15.8 12 21 12 21z"/></svg></div></div>
+    <div class="story-intro">
+      <p class="big rv">En Mollendo, entre gallinas, chanchos y madrugadas de trabajo, una familia soñó con llevar a la mesa de todos el sabor de lo hecho en casa. Esta es la historia de cómo un joven de 19 años convirtió ese sueño en La Granjita.</p>
+      <figure class="photo-frame rv"><div class="ph-in"><img src="logo-badge.png" alt="" width="180" height="180"><span>Aquí va una foto de Don Rafael con su familia o su equipo</span><span class="pend">foto por confirmar</span></div><figcaption>La familia Chang</figcaption></figure>
+    </div>
+    <div class="chapters">
+      <article class="chap rv"><span class="num">I · El comienzo</span><h3>La granja de papá</h3><p>El papá de Rafael criaba aves y cerdos en su granja. Un día decidió dar un paso más: montar una pequeña planta artesanal para hacer embutidos con lo mejor de casa.</p></article>
+      <article class="chap rv"><span class="num">II · 19 años</span><h3>Cuando todo dependía de él</h3><p>El maestro embutidor se fue sin avisar y nunca volvió. Pasaron nueve meses y su papá le pidió a Rafael, con apenas 19 años, que pusiera la planta en marcha.</p><p>Aprendió cada proceso con sus propias manos y se puso una meta: producir más, y hacerlo bien.</p></article>
+      <article class="chap rv"><span class="num">III · El camino</span><h3>Mollendo – Arequipa, tres veces por semana</h3><p>Viajaba para comprar la materia prima y entregar los pedidos. En cada viaje confirmaba lo mismo: Arequipa quería más de su sabor.</p></article>
+      <article class="chap rv"><span class="num">IV · Las caídas</span><h3>Caer y volver a empezar</h3><p>Hubo compras que salieron mal, ventas que no alcanzaron y noches pensando en venderlo todo. Pero siempre aparecía una solución, y Rafael le daba al negocio una oportunidad más.</p><p>Aprendió a confiar con cuidado y a trabajar solo en lo que conoce bien. Y a su lado, siempre, Yamili, su esposa, con un apoyo incondicional.</p></article>
+      <article class="chap wide rv"><span class="num">V · El sueño cumplido</span><h3>2003: nuestra propia fábrica en Arequipa</h3><p>Durante años soñó con un terreno y una fábrica propia en Arequipa. En 2003 ese sueño se hizo realidad. Hoy, con más de 70 colaboradores y unas 150 toneladas de embutidos al mes, seguimos trabajando con los mismos valores del primer día: integridad, no engañar a nadie y acompañar a nuestro equipo hasta el final. Porque para nosotros, las personas son lo más valioso que tenemos.</p></article>
+    </div>
+    <div class="advice rv"><small>Su consejo para los que sueñan</small><p>Da el primer paso, por pequeño que sea, y actúa.</p><div class="sig">Rafael Chang Padilla, gerente de La Granjita</div></div>
+    <span class="src">Historia basada en la entrevista de la serie <a href="https://novuz.blog/2026/04/03/serie-sonadores-que-cumplen-rafael-chang-padilla/" target="_blank" rel="noopener">“Soñadores que cumplen”, nOVUz (2026)</a>.</span>
+  </div></section>
+
   <section class="dark" id="nosotros"><div class="wrap about">
     <div class="txt rv">
       <span class="k2">Nuestra historia</span>
       <h2 style="font-size:clamp(34px,4.8vw,54px);margin:14px 0 22px">De Mollendo a todo el sur del Perú</h2>
       <p>Somos una empresa <b style="color:#fff">100% arequipeña</b> dedicada a la producción y comercialización de productos alimenticios con alto valor nutritivo, bajo estándares de calidad elevados.</p>
-      <p>La Granjita nació en 1992 en Mollendo como un pequeño taller familiar de embutidos. Con trabajo constante y recetas que se fueron perfeccionando año tras año, en 2002 dio el gran paso: una planta propia en Arequipa.</p>
-      <p>Hoy, con más de 70 colaboradores, seguimos haciendo lo que mejor sabemos: embutidos con sabor de verdad, a precios justos, llevados directamente a nuestros clientes para cuidar la frescura en cada entrega.</p>
+      <p>La Granjita nació en 1992 en Mollendo como un pequeño taller familiar de embutidos. Con trabajo constante y recetas que se fueron perfeccionando año tras año, en 2003 dio el gran paso: una planta propia en Arequipa.</p>
+      <p>Hoy, con más de 70 colaboradores, seguimos haciendo lo que mejor sabemos: embutidos con sabor de verdad, a precios justos. Los encuentras en nuestra tienda de Mollendo y en supermercados y tiendas de todo el sur del Perú.</p>
       <p class="quote">“Hacemos embutidos como en casa, con la seguridad de una planta moderna.” <span class="pend" style="font-style:normal">frase por confirmar</span></p>
       <div class="mv">
         <div><h3>Misión</h3><p>Satisfacer las necesidades de nuestros clientes y consumidores elaborando embutidos y productos cárnicos de calidad.</p></div>
@@ -315,8 +361,8 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
     </div>
     <div class="timeline rv">
       <div class="tl"><b>1992</b><h3>Nace en Mollendo</h3><p>Un taller familiar con recetas propias y mucho cariño por el buen sabor.</p></div>
-      <div class="tl"><b>2002</b><h3>Planta en Arequipa</h3><p>Una planta moderna en un terreno de 2,000 m², con espacio para seguir creciendo.</p></div>
-      <div class="tl"><b>Hoy</b><h3>Más de 70 colaboradores</h3><p>Producción diaria, despacho directo y clientes en todo el sur del país.</p></div>
+      <div class="tl"><b>2003</b><h3>Planta en Arequipa</h3><p>Una planta moderna en un terreno de 2,000 m², con espacio para seguir creciendo.</p></div>
+      <div class="tl"><b>Hoy</b><h3>Más de 70 colaboradores</h3><p>150 toneladas al mes, una tienda propia en Mollendo y presencia en supermercados y tiendas del sur.</p></div>
       <div class="tl"><b>Mañana</b><h3>Nuevos mercados</h3><p>Ampliar la planta, sumar productos y llevar nuestro sabor más lejos.</p></div>
     </div>
   </div></section>
@@ -328,7 +374,7 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
       <div class="step"><span class="n">01</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/></svg><h3>Carne seleccionada</h3><p>Trabajamos con proveedores de confianza y recibimos cada lote con control de temperatura.</p></div>
       <div class="step"><span class="n">02</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 8l7-5 7 5"/><path d="M5 21h14"/></svg><h3>Recetas propias</h3><p>Fórmulas que perfeccionamos desde 1992, pesadas con precisión para un sabor siempre igual.</p></div>
       <div class="step"><span class="n">03</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c3 4 5 6.5 5 10a5 5 0 0 1-10 0c0-3.5 2-6 5-10z"/></svg><h3>Cocción controlada</h3><p>Horneado y enfriado con tiempos y temperaturas medidos para cuidar textura e inocuidad.</p></div>
-      <div class="step"><span class="n">04</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v10H3zM14 10h4l3 3v4h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><h3>Cadena de frío</h3><p>Almacenamos en cámara y despachamos directamente para que llegue fresco a cada cliente.</p></div>
+      <div class="step"><span class="n">04</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v10H3zM14 10h4l3 3v4h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><h3>Cadena de frío</h3><p>Almacenamos en cámara y cuidamos el frío hasta que llega a cada tienda y supermercado.</p></div>
     </div>
     <p class="rv" style="text-align:center;margin-top:24px;color:var(--ink-soft)">Certificaciones y registros sanitarios: <span class="pend">por confirmar</span></p>
   </div></section>
@@ -344,11 +390,11 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
     <div class="rv">
       <span class="k2">Para negocios</span>
       <h2 style="font-size:clamp(34px,4.8vw,54px);margin:14px 0 18px">Lleva La Granjita a tu negocio</h2>
-      <p style="color:#cfc3ae">Bodegas, minimarkets, restaurantes, sangucherías, hoteles y distribuidores: te atendemos con precios de fábrica y despacho directo.</p>
+      <p style="color:#cfc3ae">Supermercados, bodegas, minimarkets, restaurantes y distribuidores: trabajemos juntos para llevar La Granjita a más mesas.</p>
       <div class="perks">
         <div class="perk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v4H3zM5 7v14h14V7"/><path d="M9 11h6"/></svg><div><h3>Presentaciones para negocio</h3><p>Formatos de 2.5 kg pensados para cocina y venta al peso.</p></div></div>
-        <div class="perk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v10H3zM14 10h4l3 3v4h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><div><h3>Despacho directo</h3><p>Nosotros mismos llevamos tu pedido, cuidando el almacenamiento y el transporte.</p></div></div>
-        <div class="perk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><div><h3>Precios de fábrica</h3><p>Sin intermediarios: precios competitivos y estables para tu negocio.</p></div></div>
+        <div class="perk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v10H3zM14 10h4l3 3v4h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><div><h3>Red de distribuidores</h3><p>Llegamos a supermercados y tiendas del sur del Perú a través de nuestros distribuidores.</p></div></div>
+        <div class="perk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><div><h3>Precios competitivos</h3><p>Precios estables y condiciones claras para que tu negocio crezca con nosotros.</p></div></div>
       </div>
     </div>
     <form class="form rv" id="quote">
@@ -375,6 +421,8 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
     <div class="contact">
       <div class="cards rv">
         <div class="ccard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg><div><h3>Planta</h3><p>Jr. Huánuco F-3, Semi Rural Pachacútec, Cerro Colorado, Arequipa</p><p><a href="https://www.google.com/maps/search/?api=1&amp;query=Embutidos%20La%20Granjita&amp;query_place_id=ChIJ_z4iBIQ1QpERy1j_ojn96Rw" target="_blank" rel="noopener" style="color:var(--gold-lo);font-weight:700;font-size:14px;letter-spacing:.06em;text-transform:uppercase">Cómo llegar →</a></p></div></div>
+        <div class="ccard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9M3 9v11h18V9M3 9h18M9 20v-6h6v6"/></svg><div><h3>Tienda en Mollendo</h3><p>Nuestro punto de venta directo <span class="pend">dirección por confirmar</span></p></div></div>
+        <div class="ccard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 0 1 6 0v2"/></svg><div><h3>Dónde comprar</h3><p>En supermercados y tiendas del sur del Perú, a través de nuestros distribuidores.</p></div></div>
         <div class="ccard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 3.5l3 .5 1.3 4-2 1.6a12 12 0 0 0 5.5 5.5l1.6-2 4 1.3.5 3a2 2 0 0 1-2.1 2.1A17 17 0 0 1 4.5 5.6 2 2 0 0 1 6.6 3.5z"/></svg><div><h3>Teléfonos</h3><p><a href="tel:+51936285614">936 285 614</a> <span class="pend">por confirmar</span></p></div></div>
         <div class="ccard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><div><h3>Horario de atención</h3><p>Lunes a viernes 8:00 a.m. – 5:00 p.m.<br>Sábados 8:00 a.m. – 12:00 p.m. <span class="pend">por confirmar</span></p></div></div>
         <div class="social">
@@ -390,7 +438,7 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
 <footer><div class="wrap">
   <div class="ft">
     <div class="ft-brand"><img src="logo-badge.png" alt="La Granjita" width="110" height="110"><p>Embutidos artesanales desde 1992. Hechos en Arequipa con recetas propias.</p></div>
-    <div><h4>Empresa</h4><ul><li><a href="#nosotros">Nosotros</a></li><li><a href="#calidad">Calidad</a></li><li><a href="#contacto">Trabaja con nosotros</a></li></ul></div>
+    <div><h4>Empresa</h4><ul><li><a href="#historia">Historia</a></li><li><a href="#calidad">Calidad</a></li><li><a href="#contacto">Trabaja con nosotros</a></li></ul></div>
     <div><h4>Productos</h4><ul id="ftLines"></ul></div>
     <div><h4>Atención</h4><ul><li><a href="#negocios">Distribuidores</a></li><li><a href="tel:+51936285614">936 285 614</a></li><li><a href="#contacto">Cerro Colorado, Arequipa</a></li></ul>
       <a class="reclamo" id="reclamaciones" href="#" title="Enlace por configurar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h11l3 3v15H5z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>Libro de reclamaciones</a></div>
