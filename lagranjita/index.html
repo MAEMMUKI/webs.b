@@ -78,7 +78,7 @@ p{margin:0}
 
 /* héroe */
 .hero{position:relative;background:radial-gradient(ellipse at 70% 40%,#2b241c 0%,var(--coal) 62%);color:#f4ecdc;overflow:hidden;isolation:isolate}
-.hero::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.35;background:repeating-linear-gradient(90deg,rgba(255,255,255,.018) 0 2px,transparent 2px 9px),repeating-linear-gradient(0deg,rgba(0,0,0,.25) 0 1px,transparent 1px 26px)}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.12;background:repeating-linear-gradient(90deg,rgba(255,255,255,.018) 0 2px,transparent 2px 9px),repeating-linear-gradient(0deg,rgba(0,0,0,.25) 0 1px,transparent 1px 26px)}
 .hero .wrap{display:grid;gap:40px;align-items:center;padding-block:72px 96px}
 @media(min-width:980px){.hero .wrap{grid-template-columns:1.1fr .9fr;padding-block:96px 120px}}
 .kicker{display:inline-flex;align-items:center;gap:12px;font-size:12px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
@@ -237,6 +237,15 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
 /* títulos pequeños en Montserrat: Playfair en tamaño chico hace que la "e" parezca "c" */
 .step h3,.prod h3,.mv h3,.form h3,dialog.recipe .dh h3{font-family:var(--body);font-weight:700;letter-spacing:-.01em}
 .step h3{font-size:20px}.prod h3{font-size:20px}.mv h3{font-size:18px}
+/* video de portada: fondo tipo nube que se funde con la pantalla */
+.hero-vid{position:absolute;inset:0;z-index:-2;pointer-events:none}
+.hero-vid video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 50%;filter:brightness(.78) saturate(1.08);
+  -webkit-mask-image:radial-gradient(ellipse 78% 72% at 62% 48%,#000 30%,rgba(0,0,0,.55) 58%,transparent 82%);mask-image:radial-gradient(ellipse 78% 72% at 62% 48%,#000 30%,rgba(0,0,0,.55) 58%,transparent 82%)}
+.hero-vid::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,18,16,.88) 0%,rgba(20,18,16,.62) 38%,rgba(20,18,16,.2) 68%,rgba(20,18,16,.45) 100%),linear-gradient(0deg,var(--coal) 0%,transparent 22%,transparent 82%,rgba(20,18,16,.7) 100%)}
+.hero-vid video::-webkit-media-controls,.hero-vid video::-webkit-media-controls-start-playback-button{display:none!important;-webkit-appearance:none}
+@media(max-width:979px){.hero-vid video{object-position:50% 50%;-webkit-mask-image:radial-gradient(ellipse 95% 70% at 50% 45%,#000 30%,rgba(0,0,0,.5) 60%,transparent 88%);mask-image:radial-gradient(ellipse 95% 70% at 50% 45%,#000 30%,rgba(0,0,0,.5) 60%,transparent 88%)}
+  .hero-vid::after{background:linear-gradient(0deg,var(--coal) 0%,rgba(20,18,16,.55) 30%,rgba(20,18,16,.6) 70%,rgba(20,18,16,.8) 100%)}}
+.hero h1,.hero p.lead,.hero .kicker{text-shadow:0 2px 18px rgba(0,0,0,.55)}
 </style>
 </head>
 <body>
@@ -265,7 +274,7 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
 
 <main id="inicio">
   <!-- HÉROE -->
-  <section class="hero"><div class="wrap">
+  <section class="hero"><div class="hero-vid" aria-hidden="true"><video id="heroVideo" src="portada.mp4?v=1" poster="portada.jpg" autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture disableremoteplayback></video></div><div class="wrap">
     <div>
       <span class="kicker">Desde 1992 · Arequipa</span>
       <h1>Tradición que se <em class="gold">siente</em> en cada mesa</h1>
@@ -513,6 +522,16 @@ const wa = msg => CONFIG.whatsapp ? 'https://wa.me/' + CONFIG.whatsapp.replace(/
   secs.forEach(s => s && io.observe(s));
 })();
 $('yr').textContent = new Date().getFullYear();
+
+/* video de portada: forzar reproducción en iPhone */
+(() => {
+  const v = $('heroVideo'); if (!v) return;
+  if (reduce) { v.removeAttribute('autoplay'); v.pause(); return; }
+  const go = () => { v.muted = true; v.playsInline = true; const p = v.play(); if (p && p.catch) p.catch(() => {}); };
+  go();
+  ['touchstart','click','scroll'].forEach(e => addEventListener(e, () => { if (v.paused) go(); }, {once:true, passive:true}));
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && v.paused) go(); });
+})();
 </script>
 </body>
 </html>
