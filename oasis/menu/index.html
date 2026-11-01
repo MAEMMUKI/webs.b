@@ -71,8 +71,26 @@ section{padding-top:26px}
 .it .price{font-size:15px;white-space:normal}
 .it small{color:var(--soft);font-size:14px}
 
-.flavs{display:flex;flex-wrap:wrap;gap:8px}
-.flavs span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 13px;font-size:14px;font-weight:500}
+.flavs{display:flex;flex-wrap:wrap;gap:10px}
+.flav-chip{position:relative;display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 15px 8px 9px;font:inherit;font-size:15px;color:var(--ink);cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s;-webkit-tap-highlight-color:transparent}
+.flav-chip i{width:18px;height:18px;border-radius:50%;background:var(--fc);box-shadow:inset 0 -3px 0 rgba(0,0,0,.12),0 0 0 2px #fff,0 0 0 3px color-mix(in srgb,var(--fc) 45%,transparent)}
+.flav-chip.pop{animation:gomita .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes gomita{0%{transform:scale(1)}30%{transform:scale(.92)}60%{transform:scale(1.07)}100%{transform:scale(1)}}
+.flav-p{position:absolute;left:22px;top:50%;width:21px;height:21px;margin:-10px 0 0 -10px;pointer-events:none;z-index:3;opacity:0;animation:vuela .9s cubic-bezier(.2,.7,.3,1) forwards}
+.flav-p svg{display:block;filter:drop-shadow(0 2px 2px rgba(0,0,0,.15))}
+@keyframes vuela{0%{opacity:0;transform:translate(0,0) scale(.4) rotate(0)}20%{opacity:1}70%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1) rotate(var(--r))}}
+.flav-tip{margin:12px 0 0;font-size:15px;color:var(--soft);min-height:1.5em}
+.flav-tip.show{animation:tipin .35s ease}
+@keyframes tipin{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.winter{background:linear-gradient(160deg,#fff7ea,#fdeedd);border:1px solid #f0d9b8;border-radius:22px;padding:18px 16px;margin-bottom:14px}
+.winter .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--sun);color:#3a2a06;border-radius:999px;padding:4px 10px;margin-bottom:8px}
+.winter p{margin:0 0 12px;color:var(--soft);font-size:15px}
+.winter ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.winter li{display:flex;justify-content:space-between;gap:10px;background:#fff;border-radius:14px;padding:10px 14px;font-weight:600}
+.winter li span{font-weight:500;font-size:13px;color:var(--soft)}
+.breads{display:flex;flex-wrap:wrap;gap:6px}
+.breads span{font-size:13px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px}
+.sub{font-family:var(--serif);font-size:19px;margin:18px 0 10px}
 .note{margin:14px 0 0;font-size:13px;color:var(--soft);text-align:center}
 
 /* barra de pedido */
@@ -85,6 +103,39 @@ section{padding-top:26px}
 .foot{text-align:center;font-size:12px;color:var(--soft);padding:28px 0 8px}
 .foot a{text-decoration:none;font-weight:600}
 
+.fav,.it,.winter li{cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .15s,background .15s}
+.fav:active,.it:active,.winter li:active{transform:scale(.985)}
+@media(hover:hover){.it:hover,.winter li:hover{background:#fffaf0}}
+.it::after{content:"›";color:#b8ad98;font-size:22px;line-height:1;flex:none}
+.fav .more{font-size:14px;font-weight:600;color:var(--brand);margin-top:4px}
+html.locked{overflow:hidden}
+.sheet-ov{position:fixed;inset:0;z-index:50;background:rgba(20,26,18,0);display:flex;align-items:flex-end;justify-content:center;transition:background .25s}
+.sheet-ov.open{background:rgba(20,26,18,.55)}
+.sheet{position:relative;background:var(--bg);width:100%;max-width:560px;max-height:92vh;overflow:auto;border-radius:26px 26px 0 0;transform:translateY(100%);transition:transform .3s cubic-bezier(.2,.8,.2,1);padding-bottom:env(safe-area-inset-bottom,0px)}
+.sheet-ov.open .sheet{transform:none}
+@media(min-width:700px){.sheet-ov{align-items:center}.sheet{border-radius:26px;max-height:88vh}}
+.sheet-x{position:absolute;right:12px;top:12px;z-index:2;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.9);font-size:26px;line-height:1;cursor:pointer;color:var(--ink);box-shadow:0 4px 12px -6px rgba(0,0,0,.4)}
+.sheet-ph{aspect-ratio:4/3;display:grid;place-items:center;overflow:hidden}
+.sheet-ph img{width:100%;height:100%;object-fit:cover}
+.sheet-ph img.cut{width:84%;height:90%;object-fit:contain;filter:drop-shadow(0 20px 20px rgba(0,0,0,.25))}
+.big-emoji{font-size:110px;filter:drop-shadow(0 14px 16px rgba(0,0,0,.18))}
+.sheet-bd{padding:20px 18px 22px;display:grid;gap:12px}
+.sheet-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.sheet-top h2{font-size:28px}
+.sheet-price{font-weight:700;color:var(--brand);font-size:19px}
+.sheet-price.ask{font-size:14px;font-weight:600;color:var(--soft)}
+.sheet-desc{margin:0;color:var(--soft);font-size:16px}
+.sheet-bd h3{font-family:var(--sans);font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);margin-top:2px}
+.sheet-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.sheet-list li{display:flex;gap:10px;align-items:flex-start;font-size:16px}
+.sheet-list li::before{content:"✓";flex:none;width:22px;height:22px;border-radius:50%;background:#e4efdc;color:var(--brand);font-weight:700;font-size:13px;display:grid;place-items:center;margin-top:1px}
+.pair{display:flex;gap:12px;align-items:center;background:linear-gradient(120deg,#fff4dc,#fdf0e2);border:1px solid #f0d9b8;border-radius:18px;padding:14px}
+.pair-ic{font-size:28px}
+.pair b{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#8a6a20}
+.pair p{margin:2px 0 0;font-size:16px;font-weight:600}
+.sheet-note{margin:0;font-size:14px;color:var(--soft)}
+.sheet-wa{display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border-radius:999px;background:#25d366;color:#fff;text-decoration:none;font-weight:700;font-size:16px}
+.sheet-wa svg{width:20px;height:20px}
 .expired-ov{position:fixed;inset:0;z-index:99;display:grid;place-items:center;padding:20px;background:rgba(20,24,18,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .expired-card{background:#fffdf8;max-width:400px;border-radius:24px;padding:30px 24px;text-align:center;display:grid;gap:10px}
 .expired-card a{justify-self:center;background:var(--brand);color:#fff;text-decoration:none;font-weight:600;padding:13px 22px;border-radius:999px}
@@ -93,18 +144,19 @@ section{padding-top:26px}
 <body>
 <div id="app"></div>
 
-<script src="../negocio.js?v=202611011545"></script>
+<script src="../negocio.js?v=202611011700"></script>
+<script src="../../plantilla/sabores.js?v=202611011630"></script>
 <script>
 (() => {
-  const N = window.NEGOCIO, M = N.menu, C = N.contacto || {};
+  const N = window.NEGOCIO, M = N.menu, C = N.contacto || {}, SAB = window.MaemukiSabores;
   const KEY = 'oasis-menu-lang';
   let lang = (() => { try { return localStorage.getItem(KEY) } catch(e) { return null } })() || ((navigator.language||'').startsWith('en') ? 'en' : 'es');
   const L = v => v == null ? '' : (typeof v === 'string' ? v : (v[lang] ?? v.es ?? ''));
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const norm = s => L(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').trim();
   const T = {
-    es:{menu:'Menú', favs:'Los favoritos', favsS:'Lo más pedido', flavors:'Sabores de helado', wa:'Pedir por WhatsApp', web:'Ver la web', sample:'Menú de muestra · se desactiva en', expT:'Este menú de muestra ya expiró', expP:'Fue una propuesta de prueba por 30 días.', expB:'Activarlo con Maemuki', made:'Diseño por', items:'opciones'},
-    en:{menu:'Menu', favs:'House favorites', favsS:'Most ordered', flavors:'Ice cream flavors', wa:'Order on WhatsApp', web:'See website', sample:'Sample menu · turns off in', expT:'This sample menu has expired', expP:'It was a 30-day trial proposal.', expB:'Activate it with Maemuki', made:'Design by', items:'options'}
+    es:{menu:'Menú', favs:'Los favoritos', favsS:'Lo más pedido', flavors:'Sabores de helado', wa:'Pedir por WhatsApp', web:'Ver la web', sample:'Menú de muestra · se desactiva en', expT:'Este menú de muestra ya expiró', expP:'Fue una propuesta de prueba por 30 días.', expB:'Activarlo con Maemuki', made:'Diseño por', items:'opciones', winter:'Invierno', winterT:'Platos calientes y desayunos', winterNew:'Nuevo · platos de invierno', askPrice:'precio en tienda', bread:'Pan ecuatoriano del día', breakfast:'Desayunos · desde las 6 AM', tapFlav:'Toca un sabor ✨', flavTipDef:'Pídelo con queso rallado encima, como en Ecuador.', seeMore:'Ver detalle', brings:'Qué trae', pairs:'Va rico con', custom:'¿Lo quieres sin queso, con otro sabor o tienes alguna alergia? Escríbenos y te lo preparamos a tu gusto.', orderThis:'Pedir este por WhatsApp', close:'Cerrar', orderMsg:'Hola Oasis, quiero pedir:'},
+    en:{menu:'Menu', favs:'House favorites', favsS:'Most ordered', flavors:'Ice cream flavors', wa:'Order on WhatsApp', web:'See website', sample:'Sample menu · turns off in', expT:'This sample menu has expired', expP:'It was a 30-day trial proposal.', expB:'Activate it with Maemuki', made:'Design by', items:'options', winter:'Winter', winterT:'Hot plates & breakfast', winterNew:'New · winter plates', askPrice:'price in store', bread:'Today’s Ecuadorian bread', breakfast:'Breakfast · from 6 AM', tapFlav:'Tap a flavor ✨', flavTipDef:'Get it topped with grated cheese, Ecuadorian style.', seeMore:'See details', brings:'What’s inside', pairs:'Goes great with', custom:'Want it without cheese, with another flavor, or have an allergy? Message us and we’ll make it your way.', orderThis:'Order this on WhatsApp', close:'Close', orderMsg:'Hi Oasis, I’d like to order:'}
   };
   const t = k => T[lang][k];
 
@@ -118,11 +170,22 @@ section{padding-top:26px}
   const cdText = () => { const ms = Math.max(0, venceMs - Date.now()), d = Math.floor(ms/864e5), h = Math.floor(ms/36e5)%24, m = Math.floor(ms/6e4)%60; return `${d}d ${String(h).padStart(2,'0')}h ${String(m).padStart(2,'0')}m`; };
   const slug = s => norm(s).replace(/[^a-z0-9]+/g,'-');
 
+  // Cada producto se registra para poder abrir su ficha al tocarlo
+  let REG = [];
+  const esName = n => typeof n === 'string' ? n : (n?.es || '');
+  const reg = o => { REG.push(o); return REG.length - 1; };
+  const EMOJI = {copas:'🍨', conos:'🍦', waffles:'🧇', platos:'🍲', cafe:'☕', invierno:'🥣', desayuno:'🍳', fav:'🍨'};
+  const emojiFor = name => { const n = norm(name); return n.startsWith('copa') ? EMOJI.copas : n.startsWith('cono') ? EMOJI.conos : n.startsWith('waffle') ? EMOJI.waffles : n.startsWith('platos') ? EMOJI.platos : n.startsWith('cafe') ? EMOJI.cafe : '🍽️'; };
+  const tap = i => ` role="button" tabindex="0" data-i="${i}" aria-haspopup="dialog"`;
+
   function render(){
+    REG = [];
     document.documentElement.lang = lang;
     document.title = `${t('menu')} · ${N.nombre}`;
     const favs = N.favoritos?.productos || [];
-    const cats = M.categorias || [];
+    const D = N.desayuno;
+    // "Platos ecuatorianos" ya sale completo en la sección de invierno: no repetirlo
+    const cats = (M.categorias || []).filter(c => !(D && norm(c.nombre).startsWith('platos ecuatorianos')));
     const waMsg = L(C.mensajeWhatsapp) || 'Hola';
     const waHref = C.whatsapp ? `https://wa.me/${C.whatsapp}?text=${encodeURIComponent(waMsg)}` : (C.telefono ? 'tel:' + C.telefono.replace(/[^\d+]/g,'') : '../');
     document.getElementById('app').innerHTML = `
@@ -135,6 +198,7 @@ section{padding-top:26px}
       </header>
       <nav class="cats" aria-label="${t('menu')}"><div class="wrap">
         <a href="#favoritos" class="on">${t('favs')}</a>
+        ${D ? `<a href="#invierno">❄️ ${t('winter')}</a>` : ''}
         ${cats.map(c => `<a href="#${slug(c.nombre)}">${esc(L(c.nombre))}</a>`).join('')}
         ${M.sabores ? `<a href="#sabores">${t('flavors')}</a>` : ''}
       </div></nav>
@@ -142,28 +206,39 @@ section{padding-top:26px}
         <section id="favoritos">
           <div class="sh"><h2>${t('favs')}</h2><span>${t('favsS')}</span></div>
           <div class="favs">${favs.map(p => `
-            <article class="fav">
+            <article class="fav"${tap(reg({nombre:p.nombre, precio:p.precio, desc:p.corto, lleva:(p.lleva && (p.lleva[lang]||p.lleva.es)) || null, foto:p.foto ? {src:p.foto, cut:true} : null, c1:p.color1, c2:p.color2, emoji:'🍨', combina:p.combina}))}>
               <div class="ph" style="background:linear-gradient(160deg,${p.color1||'#f3ecdf'},${p.color2||'#e6dccb'})">${p.foto ? `<img src="${esc(p.foto)}" alt="${esc(L(p.nombre))}" loading="lazy">` : ''}</div>
               <div class="bd">
                 <div class="row"><h3>${esc(L(p.nombre))}</h3><span class="price">${esc(L(p.precio))}</span></div>
                 ${p.corto ? `<p>${esc(L(p.corto))}</p>` : ''}
                 ${p.lleva ? `<div class="chips">${(p.lleva[lang]||p.lleva.es||[]).map(x => `<span>${esc(x)}</span>`).join('')}</div>` : ''}
+                <span class="more">${t('seeMore')} ›</span>
               </div>
             </article>`).join('')}
           </div>
         </section>
+        ${D ? `<section id="invierno">
+          <div class="sh"><h2>${t('winterT')}</h2></div>
+          ${D.temporada ? `<div class="winter"><span class="tag">❄️ ${t('winterNew')}</span>${N.novedad ? `<p>${esc(L(N.novedad.texto))}</p>` : ''}
+            <ul>${D.temporada.map(x => `<li${tap(reg({nombre:x, precio:null, desc:{es:'Plato caliente de temporada, hecho en casa para los días fríos.', en:'Seasonal hot plate, home-made for cold days.'}, emoji:'🥣', c1:'#fff1dc', c2:'#f6c98f', nosplit:true}))}>${esc(L(x))}<span>${t('askPrice')} ›</span></li>`).join('')}</ul></div>` : ''}
+          <h3 class="sub">${t('breakfast')}</h3>
+          <div class="list">${(D.platos||[]).map(i => { const ph = photoFor(i.nombre); return `
+            <div class="it"${tap(reg({nombre:i.nombre, precio:i.precio, desc:i.desc, foto:ph, emoji:'🍳', c1:'#fff1dc', c2:'#f6c98f'}))}>${ph ? `<div class="th"><img class="${ph.cut ? 'cut' : ''}" src="${esc(ph.src)}" alt="" loading="lazy"></div>` : ''}
+              <div class="tx"><div class="nm"><b>${esc(L(i.nombre))}</b><span class="price">${esc(L(i.precio))}</span></div>${i.desc ? `<small>${esc(L(i.desc))}</small>` : ''}</div></div>`; }).join('')}</div>
+          ${D.panes ? `<h3 class="sub">${t('bread')}</h3><div class="breads">${D.panes.map(x => `<span>${esc(L(x))}</span>`).join('')}</div>` : ''}
+        </section>` : ''}
         ${cats.map(c => `
           <section id="${slug(c.nombre)}">
             <div class="sh"><h2>${esc(L(c.nombre))}</h2><span>${c.items.length} ${t('items')}</span></div>
             <div class="list">${c.items.map(i => { const ph = photoFor(i.nombre); return `
-              <div class="it${ph ? ' has' : ''}">
+              <div class="it${ph ? ' has' : ''}"${tap(reg({nombre:i.nombre, precio:i.precio, desc:i.desc, foto:ph, emoji:emojiFor(c.nombre), c1:'#f3ecdf', c2:'#e6dccb'}))}>
                 ${ph ? `<div class="th"><img class="${ph.cut ? 'cut' : ''}" src="${esc(ph.src)}" alt="" loading="lazy"></div>` : ''}
                 <div class="tx"><div class="nm"><b>${esc(L(i.nombre))}</b><span class="price">${esc(L(i.precio))}</span></div>
                 ${i.desc ? `<small>${esc(L(i.desc))}</small>` : ''}</div>
               </div>`; }).join('')}
             </div>
           </section>`).join('')}
-        ${M.sabores ? `<section id="sabores"><div class="sh"><h2>${t('flavors')}</h2></div><div class="flavs">${M.sabores.map(s => `<span>${esc(L(s))}</span>`).join('')}</div></section>` : ''}
+        ${M.sabores ? `<section id="sabores"><div class="sh"><h2>${t('flavors')}</h2></div><div class="flavs">${M.sabores.map(s => { const es = typeof s === 'string' ? s : s.es; const f = SAB ? SAB.flavorOf(es) : {k:'gen', c:'#e9c46a'}; return `<button type="button" class="flav-chip" data-flav="${esc(f.k)}" data-es="${esc(es)}" style="--fc:${f.c}"><i aria-hidden="true"></i>${esc(L(s))}</button>`; }).join('')}</div><p class="flav-tip" id="flavTip" aria-live="polite">${t('tapFlav')}</p></section>` : ''}
         ${M.nota ? `<p class="note">${esc(L(M.nota))}</p>` : ''}
         <p class="foot">${t('made')} <a href="https://maemmuki.github.io/webs.b/maemuki/" target="_blank" rel="noopener">Maemuki</a></p>
       </main>
@@ -173,7 +248,68 @@ section{padding-top:26px}
       </div></div>`;
     document.querySelectorAll('.lang button').forEach(b => b.onclick = () => { lang = b.dataset.l; try { localStorage.setItem(KEY, lang) } catch(e) {} render(); });
     watchCats();
+    document.querySelectorAll('[data-i]').forEach(el => {
+      el.addEventListener('click', () => openItem(+el.dataset.i));
+      el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openItem(+el.dataset.i); } });
+    });
+    // sabores: mismas partículas que la web
+    const tip = document.getElementById('flavTip');
+    document.querySelectorAll('.flav-chip').forEach(b => { let last = 0;
+      b.addEventListener('click', () => { if (Date.now() - last < 500) return; last = Date.now(); if (SAB) SAB.burst(b);
+        if (tip) { const TT = (M.saboresTips || {})[b.dataset.es]; tip.innerHTML = `<b>${esc(b.textContent)}</b> · ${esc(TT ? L(TT) : t('flavTipDef'))}`; tip.classList.remove('show'); void tip.offsetWidth; tip.classList.add('show'); } });
+    });
   }
+
+  // Ficha de un producto (se abre al tocarlo)
+  function bringsOf(o){
+    if (o.lleva && o.lleva.length) return o.lleva;
+    if (o.nosplit) return null;
+    const d = L(o.desc).replace(/\.$/, '');
+    const parts = d.split(/,\s*/).map(x => x.trim()).filter(Boolean);
+    return parts.length >= 2 ? parts.map(x => x.charAt(0).toUpperCase() + x.slice(1)) : null;
+  }
+  let lastFocus = null;
+  function openItem(i){
+    const o = REG[i]; if (!o) return; lastFocus = document.activeElement;
+    const name = L(o.nombre), brings = bringsOf(o);
+    const combo = o.combina || (M.combina || {})[esName(o.nombre)];
+    const waTxt = `${t('orderMsg')} ${name}`;
+    const waHref = C.whatsapp ? `https://wa.me/${C.whatsapp}?text=${encodeURIComponent(waTxt)}` : '../';
+    closeItem(true);
+    const ov = document.createElement('div'); ov.className = 'sheet-ov'; ov.innerHTML = `
+      <div class="sheet" role="dialog" aria-modal="true" aria-label="${esc(name)}">
+        <button type="button" class="sheet-x" aria-label="${t('close')}">×</button>
+        <div class="sheet-ph" style="background:linear-gradient(160deg,${o.c1||'#f3ecdf'},${o.c2||'#e6dccb'})">${o.foto ? `<img class="${o.foto.cut ? 'cut' : ''}" src="${esc(o.foto.src)}" alt="${esc(name)}">` : `<span class="big-emoji" aria-hidden="true">${o.emoji || '🍽️'}</span>`}</div>
+        <div class="sheet-bd">
+          <div class="sheet-top"><h2>${esc(name)}</h2>${o.precio ? `<span class="sheet-price">${esc(L(o.precio))}</span>` : `<span class="sheet-price ask">${t('askPrice')}</span>`}</div>
+          ${o.desc && !(brings && !o.lleva) ? `<p class="sheet-desc">${esc(L(o.desc))}</p>` : ''}
+          ${brings ? `<h3>${t('brings')}</h3><ul class="sheet-list">${brings.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
+          ${combo ? `<div class="pair"><span class="pair-ic" aria-hidden="true">☕</span><div><b>${t('pairs')}</b><p>${esc(L(combo))}</p></div></div>` : ''}
+          <p class="sheet-note">${t('custom')}</p>
+          <a class="sheet-wa" href="${esc(waHref)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>${t('orderThis')}</a>
+        </div>
+      </div>`;
+    document.body.appendChild(ov); document.documentElement.classList.add('locked');
+    requestAnimationFrame(() => ov.classList.add('open'));
+    ov.addEventListener('click', e => { if (e.target === ov) closeItem(); });
+    ov.querySelector('.sheet-x').onclick = () => closeItem();
+    ov.querySelector('.sheet-wa').addEventListener('click', () => hit(`web/${N.id}/menu-solo/click/pedir-${slug(esName(o.nombre))}`, true));
+    // deslizar hacia abajo para cerrar (celular)
+    const sh = ov.querySelector('.sheet'); let y0 = null;
+    sh.addEventListener('touchstart', e => { y0 = sh.scrollTop <= 0 ? e.touches[0].clientY : null; }, {passive:true});
+    sh.addEventListener('touchend', e => { if (y0 !== null && e.changedTouches[0].clientY - y0 > 90) closeItem(); y0 = null; }, {passive:true});
+    try { history.pushState({ficha:1}, ''); } catch(e) {}
+    ov.querySelector('.sheet-x').focus();
+    hit(`web/${N.id}/menu-solo/ver/${slug(esName(o.nombre))}`, true);
+  }
+  function closeItem(silent){
+    const ov = document.querySelector('.sheet-ov'); if (!ov) return;
+    ov.remove(); document.documentElement.classList.remove('locked');
+    if (!silent && history.state && history.state.ficha) { try { history.back(); } catch(e) {} }
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  addEventListener('popstate', () => { const ov = document.querySelector('.sheet-ov'); if (ov) { ov.remove(); document.documentElement.classList.remove('locked'); } });
+  addEventListener('keydown', e => { if (e.key === 'Escape') closeItem(); });
 
   // resalta la categoría visible en la barra de arriba
   let io;
