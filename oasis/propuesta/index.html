@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Oasis × Maemuki · Propuesta</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#1d3a21">
+<style>
+/* Visor de la propuesta para la tarjeta NFC: diapositivas una debajo de otra, rápido en el celular */
+*{box-sizing:border-box}
+body{margin:0;background:#1d3a21;color:#f4ead7;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+header{text-align:center;padding:26px 16px 14px}
+header h1{margin:0;font-size:22px;font-weight:700}
+header p{margin:6px 0 0;font-size:14px;opacity:.75}
+main{max-width:1100px;margin:0 auto;padding:0 12px;display:grid;gap:12px}
+main img{display:block;width:100%;height:auto;border-radius:10px;box-shadow:0 14px 28px -16px rgba(0,0,0,.6);background:#2f5d34;aspect-ratio:16/9}
+.hint{text-align:center;font-size:13px;opacity:.6;margin:2px 0 6px}
+.bar{position:fixed;left:0;right:0;bottom:0;display:flex;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:rgba(29,58,33,.95);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-top:1px solid rgba(255,255,255,.12)}
+.bar a{flex:1;display:flex;align-items:center;justify-content:center;min-height:50px;border-radius:999px;text-decoration:none;font-weight:700;font-size:15px}
+.bar .dl{background:#e9c46a;color:#2a1f05}
+.bar .mk{background:#fff;color:#1d3a21}
+footer{text-align:center;font-size:12px;opacity:.55;padding:22px 0 6px}
+@media(min-width:800px){main{gap:20px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Oasis × Maemuki</h1>
+  <p>Una propuesta hecha a la medida de Oasis · para Jaime Chacha</p>
+</header>
+<p class="hint">Desliza hacia abajo para ver toda la propuesta ↓ · gira el celular para verla más grande</p>
+<main id="slides"></main>
+<footer>Maemuki · Grow with us</footer>
+<div class="bar">
+  <a class="dl" href="Oasis-x-Maemuki-Propuesta.pdf" download>Descargar PDF</a>
+  <a class="mk" href="https://maemmuki.github.io/webs.b/maemuki/" target="_blank" rel="noopener">Conoce Maemuki</a>
+</div>
+<script>
+(function(){
+  var m = document.getElementById('slides'), n = 14;
+  for (var i = 1; i <= n; i++) {
+    var img = document.createElement('img'), k = (i < 10 ? '0' : '') + i;
+    img.src = 'diapositiva-' + k + '.jpg'; img.alt = 'Diapositiva ' + i + ' de ' + n;
+    img.width = 1600; img.height = 900; if (i > 2) img.loading = 'lazy';
+    m.appendChild(img);
+  }
+  // métricas: saber cuándo y cuántas veces abren la propuesta
+  if (!/^(localhost|127\.|$)/.test(location.hostname)) {
+    try { new Image().src = 'https://maemuki.goatcounter.com/count?p=' + encodeURIComponent('/propuestas/oasis') + '&t=' + encodeURIComponent(document.title) + '&r=' + encodeURIComponent(document.referrer) + '&rnd=' + Math.random().toString(36).slice(2); } catch(e) {}
+    document.querySelector('.dl').addEventListener('click', function(){ try { new Image().src = 'https://maemuki.goatcounter.com/count?p=propuestas/oasis/descargar-pdf&e=true&rnd=' + Math.random(); } catch(e) {} });
+  }
+})();
+</script>
+</body>
+</html>
