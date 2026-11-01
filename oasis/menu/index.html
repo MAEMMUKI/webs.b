@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Menú · Oasis Helados con Queso</title>
+<meta name="description" content="Menú de Oasis Helados con Queso & Coffee: copas, conos, waffles, platos ecuatorianos y café, con precios.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#1d3a21">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Outfit:wght@400;500;600;700&display=swap">
+<style>
+/* Menú solo-lectura de Oasis para las monedas NFC: rápido, fotos grandes, precios claros */
+:root{--ink:#1f2a1c;--soft:#5b6655;--brand:#2f5d34;--deep:#1d3a21;--bg:#fbf8f1;--sand:#f3ecdf;--line:#e6dccb;--sun:#e9c46a;
+  --serif:"Fraunces",Georgia,serif;--sans:"Outfit",system-ui,sans-serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;padding-bottom:calc(92px + env(safe-area-inset-bottom,0px))}
+img{display:block;max-width:100%}
+h1,h2,h3{font-family:var(--serif);margin:0;line-height:1.1}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding-inline:16px}
+
+.sample{background:var(--deep);color:#f4ead7;font-size:12px;text-align:center;padding:6px 12px;display:flex;flex-wrap:wrap;gap:2px 10px;justify-content:center;align-items:center}
+.sample .cd{font-variant-numeric:tabular-nums;font-weight:600;color:var(--sun)}
+
+.top{background:var(--brand);color:#fff;padding:22px 0 26px;text-align:center;position:relative}
+.top .lang{position:absolute;right:12px;top:12px;display:flex;background:rgba(255,255,255,.14);border-radius:999px;padding:3px}
+.top .lang button{font:600 12px var(--sans);color:#fff;background:none;border:0;padding:6px 11px;border-radius:999px;cursor:pointer}
+.top .lang button[aria-pressed="true"]{background:#fff;color:var(--deep)}
+.top img.logo{height:62px;width:auto;margin:0 auto 8px;filter:brightness(0) invert(1)}
+.top h1{font-size:30px}
+.top p{margin:4px 0 0;opacity:.85;font-size:14px}
+
+.cats{position:sticky;top:0;z-index:20;background:rgba(251,248,241,.96);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.cats .wrap{display:flex;gap:8px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
+.cats .wrap::-webkit-scrollbar{display:none}
+.cats a{flex:none;text-decoration:none;font-weight:600;font-size:14px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;white-space:nowrap}
+.cats a.on{background:var(--brand);border-color:var(--brand);color:#fff}
+
+section{padding-top:26px}
+.sh{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:14px}
+.sh h2{font-size:26px}
+.sh span{font-size:13px;color:var(--soft)}
+
+/* favoritos con fotos grandes */
+.favs{display:grid;gap:14px}
+.fav{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 14px 30px -24px rgba(30,50,25,.45)}
+.fav .ph{aspect-ratio:4/3;display:grid;place-items:center;position:relative;overflow:hidden}
+.fav .ph img{width:86%;height:92%;object-fit:contain;filter:drop-shadow(0 18px 18px rgba(0,0,0,.22))}
+.fav .ph img.cover{width:100%;height:100%;object-fit:cover;filter:none}
+.fav .bd{padding:14px 16px 16px;display:grid;gap:6px}
+.fav .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.fav h3{font-size:22px}
+.price{font-weight:700;color:var(--brand);white-space:nowrap;font-size:17px}
+.fav p{margin:0;color:var(--soft);font-size:15px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.chips span{font-size:12px;background:var(--sand);border-radius:999px;padding:4px 10px}
+
+/* lista de cada categoría */
+.list{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.it{display:flex;gap:14px;align-items:center;padding:14px 16px;border-top:1px solid var(--line)}
+.it:first-child{border-top:0}
+.it .tx{flex:1;min-width:0;display:grid;gap:2px}
+.it .nm{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:2px 12px}
+.it .th{flex:none;width:72px;height:72px;border-radius:14px;overflow:hidden;background:var(--sand);display:grid;place-items:center}
+.it .th img{width:100%;height:100%;object-fit:cover}
+.it .th img.cut{object-fit:contain;padding:4px}
+.it b{font-weight:600;font-size:16px}
+.it .price{font-size:15px;white-space:normal}
+.it small{color:var(--soft);font-size:14px}
+
+.flavs{display:flex;flex-wrap:wrap;gap:8px}
+.flavs span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 13px;font-size:14px;font-weight:500}
+.note{margin:14px 0 0;font-size:13px;color:var(--soft);text-align:center}
+
+/* barra de pedido */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(251,248,241,.97);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px))}
+.bar .wrap{display:flex;gap:8px;padding:0}
+.bar a{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;border-radius:999px;text-decoration:none;font-weight:600;font-size:15px}
+.bar .wa{background:#25d366;color:#fff;flex:1.5}
+.bar .web{background:#fff;border:1px solid var(--line)}
+.bar svg{width:20px;height:20px}
+.foot{text-align:center;font-size:12px;color:var(--soft);padding:28px 0 8px}
+.foot a{text-decoration:none;font-weight:600}
+
+.expired-ov{position:fixed;inset:0;z-index:99;display:grid;place-items:center;padding:20px;background:rgba(20,24,18,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.expired-card{background:#fffdf8;max-width:400px;border-radius:24px;padding:30px 24px;text-align:center;display:grid;gap:10px}
+.expired-card a{justify-self:center;background:var(--brand);color:#fff;text-decoration:none;font-weight:600;padding:13px 22px;border-radius:999px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script src="../negocio.js?v=202611011545"></script>
+<script>
+(() => {
+  const N = window.NEGOCIO, M = N.menu, C = N.contacto || {};
+  const KEY = 'oasis-menu-lang';
+  let lang = (() => { try { return localStorage.getItem(KEY) } catch(e) { return null } })() || ((navigator.language||'').startsWith('en') ? 'en' : 'es');
+  const L = v => v == null ? '' : (typeof v === 'string' ? v : (v[lang] ?? v.es ?? ''));
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const norm = s => L(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').trim();
+  const T = {
+    es:{menu:'Menú', favs:'Los favoritos', favsS:'Lo más pedido', flavors:'Sabores de helado', wa:'Pedir por WhatsApp', web:'Ver la web', sample:'Menú de muestra · se desactiva en', expT:'Este menú de muestra ya expiró', expP:'Fue una propuesta de prueba por 30 días.', expB:'Activarlo con Maemuki', made:'Diseño por', items:'opciones'},
+    en:{menu:'Menu', favs:'House favorites', favsS:'Most ordered', flavors:'Ice cream flavors', wa:'Order on WhatsApp', web:'See website', sample:'Sample menu · turns off in', expT:'This sample menu has expired', expP:'It was a 30-day trial proposal.', expB:'Activate it with Maemuki', made:'Design by', items:'options'}
+  };
+  const t = k => T[lang][k];
+
+  // fotos disponibles por nombre de producto
+  const PHOTOS = {};
+  (N.favoritos?.productos || []).forEach(p => { if (p.foto) PHOTOS[norm(p.nombre)] = {src:p.foto, cut:true}; });
+  if (N.desayuno?.videoPoster) PHOTOS['colada morada'] = {src:'../' + N.desayuno.videoPoster, cut:false};
+  const photoFor = nombre => PHOTOS[norm(nombre)];
+
+  const venceMs = N.vence ? Date.parse(N.vence) : NaN;
+  const cdText = () => { const ms = Math.max(0, venceMs - Date.now()), d = Math.floor(ms/864e5), h = Math.floor(ms/36e5)%24, m = Math.floor(ms/6e4)%60; return `${d}d ${String(h).padStart(2,'0')}h ${String(m).padStart(2,'0')}m`; };
+  const slug = s => norm(s).replace(/[^a-z0-9]+/g,'-');
+
+  function render(){
+    document.documentElement.lang = lang;
+    document.title = `${t('menu')} · ${N.nombre}`;
+    const favs = N.favoritos?.productos || [];
+    const cats = M.categorias || [];
+    const waMsg = L(C.mensajeWhatsapp) || 'Hola';
+    const waHref = C.whatsapp ? `https://wa.me/${C.whatsapp}?text=${encodeURIComponent(waMsg)}` : (C.telefono ? 'tel:' + C.telefono.replace(/[^\d+]/g,'') : '../');
+    document.getElementById('app').innerHTML = `
+      ${N.demo && !isNaN(venceMs) ? `<div class="sample">${t('sample')} <span class="cd">${cdText()}</span></div>` : ''}
+      <header class="top">
+        <div class="lang" role="group" aria-label="Idioma / Language"><button type="button" data-l="es" aria-pressed="${lang==='es'}">ES</button><button type="button" data-l="en" aria-pressed="${lang==='en'}">EN</button></div>
+        ${N.logo ? `<img class="logo" src="${esc(N.logo)}" alt="${esc(N.nombre)}">` : ''}
+        <h1>${t('menu')}</h1>
+        <p>${esc(L(N.lema))}</p>
+      </header>
+      <nav class="cats" aria-label="${t('menu')}"><div class="wrap">
+        <a href="#favoritos" class="on">${t('favs')}</a>
+        ${cats.map(c => `<a href="#${slug(c.nombre)}">${esc(L(c.nombre))}</a>`).join('')}
+        ${M.sabores ? `<a href="#sabores">${t('flavors')}</a>` : ''}
+      </div></nav>
+      <main class="wrap">
+        <section id="favoritos">
+          <div class="sh"><h2>${t('favs')}</h2><span>${t('favsS')}</span></div>
+          <div class="favs">${favs.map(p => `
+            <article class="fav">
+              <div class="ph" style="background:linear-gradient(160deg,${p.color1||'#f3ecdf'},${p.color2||'#e6dccb'})">${p.foto ? `<img src="${esc(p.foto)}" alt="${esc(L(p.nombre))}" loading="lazy">` : ''}</div>
+              <div class="bd">
+                <div class="row"><h3>${esc(L(p.nombre))}</h3><span class="price">${esc(L(p.precio))}</span></div>
+                ${p.corto ? `<p>${esc(L(p.corto))}</p>` : ''}
+                ${p.lleva ? `<div class="chips">${(p.lleva[lang]||p.lleva.es||[]).map(x => `<span>${esc(x)}</span>`).join('')}</div>` : ''}
+              </div>
+            </article>`).join('')}
+          </div>
+        </section>
+        ${cats.map(c => `
+          <section id="${slug(c.nombre)}">
+            <div class="sh"><h2>${esc(L(c.nombre))}</h2><span>${c.items.length} ${t('items')}</span></div>
+            <div class="list">${c.items.map(i => { const ph = photoFor(i.nombre); return `
+              <div class="it${ph ? ' has' : ''}">
+                ${ph ? `<div class="th"><img class="${ph.cut ? 'cut' : ''}" src="${esc(ph.src)}" alt="" loading="lazy"></div>` : ''}
+                <div class="tx"><div class="nm"><b>${esc(L(i.nombre))}</b><span class="price">${esc(L(i.precio))}</span></div>
+                ${i.desc ? `<small>${esc(L(i.desc))}</small>` : ''}</div>
+              </div>`; }).join('')}
+            </div>
+          </section>`).join('')}
+        ${M.sabores ? `<section id="sabores"><div class="sh"><h2>${t('flavors')}</h2></div><div class="flavs">${M.sabores.map(s => `<span>${esc(L(s))}</span>`).join('')}</div></section>` : ''}
+        ${M.nota ? `<p class="note">${esc(L(M.nota))}</p>` : ''}
+        <p class="foot">${t('made')} <a href="https://maemmuki.github.io/webs.b/maemuki/" target="_blank" rel="noopener">Maemuki</a></p>
+      </main>
+      <div class="bar"><div class="wrap">
+        <a class="wa" href="${esc(waHref)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>${t('wa')}</a>
+        <a class="web" href="../">${t('web')}</a>
+      </div></div>`;
+    document.querySelectorAll('.lang button').forEach(b => b.onclick = () => { lang = b.dataset.l; try { localStorage.setItem(KEY, lang) } catch(e) {} render(); });
+    watchCats();
+  }
+
+  // resalta la categoría visible en la barra de arriba
+  let io;
+  function watchCats(){
+    if (io) io.disconnect();
+    const links = [...document.querySelectorAll('.cats a')];
+    io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { links.forEach(a => { const on = a.getAttribute('href') === '#' + e.target.id; a.classList.toggle('on', on); if (on) { const bar = a.parentElement; bar.scrollTo({left: a.offsetLeft - (bar.clientWidth - a.offsetWidth) / 2, behavior:'smooth'}); } }); } }), {rootMargin:'-30% 0px -65% 0px'});
+    document.querySelectorAll('main section[id]').forEach(s => io.observe(s));
+  }
+
+  // cuenta regresiva y bloqueo al vencer (igual que la web de muestra)
+  function tick(){
+    if (!N.demo || isNaN(venceMs)) return;
+    if (Date.now() >= venceMs) {
+      if (!document.querySelector('.expired-ov')) {
+        const ov = document.createElement('div'); ov.className = 'expired-ov';
+        ov.innerHTML = `<div class="expired-card"><div style="font-size:40px">⏳</div><h2>${t('expT')}</h2><p style="margin:0;color:#5b6655">${t('expP')}</p><a href="https://maemmuki.github.io/webs.b/maemuki/#contacto">${t('expB')}</a></div>`;
+        document.body.appendChild(ov); document.documentElement.style.overflow = 'hidden';
+      }
+      return;
+    }
+    const el = document.querySelector('.sample .cd'); if (el) el.textContent = cdText();
+  }
+
+  // métricas (GoatCounter): visitas al menú y toques en WhatsApp
+  function hit(p, ev){
+    const code = String(N.metricas?.codigo || '').replace(/[^a-z0-9-]/g,''); if (!code || /^(localhost|127\.|$)/.test(location.hostname)) return;
+    try { const u = `https://${code}.goatcounter.com/count?p=${encodeURIComponent(p)}&t=${encodeURIComponent(document.title)}${ev ? '&e=true' : '&r=' + encodeURIComponent(document.referrer)}&rnd=${Math.random().toString(36).slice(2)}`; if (ev && navigator.sendBeacon && navigator.sendBeacon(u)) return; new Image().src = u; } catch(e) {}
+  }
+
+  render();
+  tick(); setInterval(tick, 30000);
+  const mesa = (new URLSearchParams(location.search).get('m') || '').replace(/\D/g,'');
+  hit(`/web/${N.id}/menu-solo${mesa ? '/mesa-' + mesa : ''}`);
+  document.addEventListener('click', e => { const a = e.target.closest('.bar a'); if (a) hit(`web/${N.id}/menu-solo/click/${a.classList.contains('wa') ? 'whatsapp' : 'ver-web'}`, true); });
+})();
+</script>
+</body>
+</html>
