@@ -41,7 +41,7 @@ footer{text-align:center;font-size:12px;opacity:.55;padding:22px 0 6px}
   var m = document.getElementById('slides'), n = 14;
   for (var i = 1; i <= n; i++) {
     var img = document.createElement('img'), k = (i < 10 ? '0' : '') + i;
-    img.src = 'diapositiva-' + k + '.jpg'; img.alt = 'Diapositiva ' + i + ' de ' + n;
+    img.src = 'diapositiva-' + k + '.jpg?v=2'; img.alt = 'Diapositiva ' + i + ' de ' + n;
     img.width = 1600; img.height = 900; if (i > 2) img.loading = 'lazy';
     m.appendChild(img);
   }
