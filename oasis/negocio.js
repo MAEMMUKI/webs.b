@@ -11,6 +11,7 @@ window.NEGOCIO = {
   id: 'oasis',
   metricas: { codigo: 'maemuki' },   // GoatCounter: visitas y toques en botones (vacío = no medir)
   demo: true,                       // true = muestra la franja de "borrador" y las etiquetas amarillas
+  vence: '2026-12-01T23:59:00-05:00', // cuenta regresiva de la muestra: al llegar la fecha la página se bloquea (borra esta línea al contratar)
   nombre: 'Oasis Helados con Queso',
   idiomas: ['es', 'en'],
   zonaHoraria: 'America/New_York',

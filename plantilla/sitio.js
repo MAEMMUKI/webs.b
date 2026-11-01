@@ -24,7 +24,7 @@
       pg_menu:'Helados con queso, copas, waffles, café y más.', pg_nosotros:'La historia detrás de cada copa.', pg_visitanos:'Te esperamos con una copa lista.',
       ex_menu:'Copas, desayunos, panes y café, con precios.', ex_nosotros:'Cómo un sueño migrante se convirtió en Oasis.', ex_visitanos:'Dirección, horario, mapa y WhatsApp.',
       close:'Cerrar',
-      demo:'Borrador de propuesta para', demo2:'· no es la página oficial', pend:'por confirmar', reviewPh:'Aquí va una reseña real de Google, elegida con el dueño.'},
+      demo:'Borrador de propuesta para', demo2:'· no es la página oficial', sample:'Página de muestra · no es la versión final', endsIn:'Se desactiva en', expT:'Esta página de muestra ya expiró', expP:'Fue una propuesta de prueba por 30 días. Para activarla de forma permanente, escríbenos.', expB:'Activarla con Maemuki', pend:'por confirmar', reviewPh:'Aquí va una reseña real de Google, elegida con el dueño.'},
     en:{menu:'Menu', favs:'Favorites', story:'Our story', visit:'Visit us', reviews:'Reviews', order:'Order', call:'Call', directions:'Directions', whatsapp:'WhatsApp',
       openNow:'Open now', closedNow:'Closed now', opensAt:'Opens at', opensTomorrow:'opens tomorrow at', closesAt:'Closes at', today:'Today', everyDay:'Every day',
       flipHint:'Tap a cup to see what’s inside', turn:'Flip', pairWith:'Pair it with', orderThis:'Order on WhatsApp',
@@ -34,7 +34,7 @@
       pg_menu:'Ice cream with cheese, cups, waffles, coffee and more.', pg_nosotros:'The story behind every cup.', pg_visitanos:'We’ll have a cup ready for you.',
       ex_menu:'Cups, breakfast, bread and coffee, with prices.', ex_nosotros:'How an immigrant’s dream became Oasis.', ex_visitanos:'Address, hours, map and WhatsApp.',
       close:'Close',
-      demo:'Draft proposal for', demo2:'· not the official website', pend:'to confirm', reviewPh:'A real Google review goes here, chosen with the owner.'}
+      demo:'Draft proposal for', demo2:'· not the official website', sample:'Sample page · not the final version', endsIn:'Turns off in', expT:'This sample page has expired', expP:'It was a 30-day trial proposal. To keep it for good, message us.', expB:'Activate it with Maemuki', pend:'to confirm', reviewPh:'A real Google review goes here, chosen with the owner.'}
   };
   const t = k => (T[lang] && T[lang][k]) || T.es[k] || k;
   const L = v => v == null ? '' : (typeof v === 'object' && !Array.isArray(v) ? (v[lang] ?? v.es ?? '') : v);
@@ -105,7 +105,28 @@
   const main = N.locales && N.locales[0] || {};
   const sec = {};
 
-  sec.demo = () => N.demo ? `<div class="demo">${t('demo')} ${esc(N.nombre)} ${t('demo2')}</div>` : '';
+  // Franja de borrador; si N.vence existe, muestra cuenta regresiva y al vencer bloquea la página
+  const venceMs = N.vence ? Date.parse(N.vence) : NaN;
+  const cdText = () => { const ms = Math.max(0, venceMs - Date.now()); const d = Math.floor(ms/864e5), h = Math.floor(ms/36e5)%24, m = Math.floor(ms/6e4)%60, s2 = Math.floor(ms/1e3)%60, p = n => String(n).padStart(2,'0');
+    return `<span class="cd-u"><b>${d}</b>d</span><span class="cd-u"><b>${p(h)}</b>h</span><span class="cd-u"><b>${p(m)}</b>m</span><span class="cd-u"><b>${p(s2)}</b>s</span>`; };
+  sec.demo = () => {
+    if (!N.demo) return '';
+    if (isNaN(venceMs)) return `<div class="demo">${t('demo')} ${esc(N.nombre)} ${t('demo2')}</div>`;
+    return `<div class="demo cd-bar"><span class="cd-l">⏳ ${t('sample')}</span><span class="cd-r">${t('endsIn')} <span class="cd" aria-live="off">${cdText()}</span></span></div>`;
+  };
+  function tickCountdown(){
+    if (isNaN(venceMs) || !N.demo) return;
+    if (Date.now() >= venceMs) {
+      if (!document.querySelector('.expired-ov')) {
+        const ov = document.createElement('div'); ov.className = 'expired-ov'; ov.setAttribute('role','dialog'); ov.setAttribute('aria-modal','true');
+        ov.innerHTML = `<div class="expired-card"><div class="expired-ic">⏳</div><h2>${t('expT')}</h2><p>${t('expP')}</p><a class="btn" href="https://maemmuki.github.io/webs.b/maemuki/#contacto">${t('expB')}</a><small>Maemuki · Grow with us</small></div>`;
+        document.body.appendChild(ov); document.documentElement.style.overflow = 'hidden';
+      }
+      return;
+    }
+    document.querySelectorAll('.cd').forEach(el => el.innerHTML = cdText());
+  }
+  if (!isNaN(venceMs) && N.demo) { setInterval(tickCountdown, 1000); setTimeout(tickCountdown, 0); }
 
   sec.header = () => `
   <header class="top" id="top"><div class="wrap">
@@ -297,14 +318,14 @@
   const flavorOf = es => { const n = norm(es); const f = FLAVS.find(([k])=>n.includes(k)); return f ? {k:f[0], c:f[1]} : {k:'gen', c:'var(--sun)'}; };
   const PART = {
     fresa:'<path d="M10 18c-4-2-7-6-6-10 1-2 3-3 6-3s5 1 6 3c1 4-2 8-6 10z" fill="#e0566f"/><path d="M6 5c1-2 3-2 4-1 1-1 3-1 4 1-2 1-6 1-8 0z" fill="#3f9a4a"/><g fill="#ffd6dd"><circle cx="8" cy="10" r=".8"/><circle cx="12" cy="10" r=".8"/><circle cx="10" cy="13" r=".8"/></g>',
-    coco:'<rect x="5" y="8" width="10" height="4" rx="2" fill="#fff" stroke="#cdbf9f" stroke-width="1" transform="rotate(-20 10 10)"/>',
+    coco:'<path d="M2.5 9.5a7.5 7.5 0 0 0 15 0z" fill="#7b4a29"/><path d="M5 12.6l1.2-.6M7.6 15l.6-1.1M12.4 15l-.6-1.1M15 12.6l-1.2-.6M10 16.4v-1.2" stroke="#a8754a" stroke-width=".8" stroke-linecap="round"/><ellipse cx="10" cy="9.5" rx="7.5" ry="3" fill="#fffaf0" stroke="#5c341b" stroke-width=".8"/><ellipse cx="10" cy="9.7" rx="5.1" ry="1.8" fill="#efe4cc"/>',
     chocolate:'<rect x="5" y="5" width="10" height="10" rx="2" fill="#6b3f26"/><path d="M7 8h6M7 12h6" stroke="#8a5537" stroke-width="1"/>',
     vainilla:'<g fill="#f3e2b0" stroke="#e2c47a" stroke-width=".6"><circle cx="10" cy="5.5" r="3"/><circle cx="14.3" cy="8.6" r="3"/><circle cx="12.7" cy="13.6" r="3"/><circle cx="7.3" cy="13.6" r="3"/><circle cx="5.7" cy="8.6" r="3"/></g><circle cx="10" cy="10" r="2" fill="#f5b942"/>',
     mango:'<rect x="5" y="5" width="10" height="10" rx="2.5" fill="#f5a623"/><rect x="7" y="7" width="3" height="3" rx="1" fill="#ffd27a"/>',
     cafe:'<ellipse cx="10" cy="10" rx="5" ry="7" fill="#7a5236" transform="rotate(25 10 10)"/><path d="M8 4c3 4-1 8 2 12" stroke="#4a2f1d" stroke-width="1.2" fill="none" transform="rotate(25 10 10)"/>',
     cookies:'<circle cx="10" cy="10" r="6" fill="#3b3b3b"/><circle cx="8" cy="8" r="1.2" fill="#f4f1ea"/><circle cx="12" cy="11" r="1" fill="#f4f1ea"/><circle cx="9" cy="12.5" r=".8" fill="#f4f1ea"/>',
     caramelo:'<path d="M10 3c3 5 5 7 5 10a5 5 0 0 1-10 0c0-3 2-5 5-10z" fill="#d08a2e"/><ellipse cx="8.3" cy="12" rx="1.2" ry="2" fill="#f2c27a"/>',
-    ron:'<ellipse cx="10" cy="10" rx="4" ry="5.5" fill="#6d3b5c" transform="rotate(-15 10 10)"/><path d="M8 8c1 1 3 1 4 0M8 12c1 1 3 1 4 0" stroke="#4a2440" stroke-width=".9" fill="none"/>',
+    ron:'<path d="M3.2 8.6c-.4-2.4 1.6-3.8 3.6-3.1 1.6-1.4 4.2-.4 4.1 1.9 1.5 1.3.6 4-1.4 4.1-1 1.5-3.6 1.4-4.3-.2-1.6-.2-2.4-1.4-2-2.7z" fill="#5b2840"/><path d="M5 7.4c.9.6 2 .5 2.8-.2M5.6 9.6c1 .4 2.2.2 2.9-.6M8.6 6.6c.6.7.7 1.6.3 2.4" stroke="#36142a" stroke-width=".7" fill="none" stroke-linecap="round"/><ellipse cx="6" cy="6.6" rx="1" ry=".55" fill="#a8627f" opacity=".75"/><path d="M9.6 13.2c-.2-2 1.5-3.2 3.1-2.6 1.4-1.1 3.6-.2 3.5 1.7 1.2 1.1.4 3.4-1.2 3.4-.9 1.2-3.1 1.1-3.7-.2-1.3-.2-2-1.2-1.7-2.3z" fill="#6a3049"/><path d="M11.2 12.4c.8.5 1.7.4 2.4-.2M11.7 14.2c.9.3 1.9.1 2.5-.5" stroke="#3d1830" stroke-width=".7" fill="none" stroke-linecap="round"/><ellipse cx="12" cy="11.6" rx=".9" ry=".5" fill="#b06e8a" opacity=".7"/>',
     mora:'<g fill="#5b2a6e"><circle cx="8" cy="8" r="2.6"/><circle cx="12" cy="8" r="2.6"/><circle cx="10" cy="11.5" r="2.6"/><circle cx="7" cy="12" r="2.3"/><circle cx="13" cy="12" r="2.3"/><circle cx="10" cy="15" r="2.2"/></g><path d="M9 4l1 2 1-2" stroke="#3f9a4a" stroke-width="1.2" fill="none"/>',
     maracuya:'<circle cx="10" cy="10" r="6.5" fill="#f2c230"/><g fill="#3b2a12"><circle cx="8" cy="8" r=".9"/><circle cx="12" cy="9" r=".9"/><circle cx="9" cy="12" r=".9"/><circle cx="12.5" cy="12.5" r=".8"/></g>',
     chicle:'<circle cx="10" cy="10" r="6" fill="#f49ac1" fill-opacity=".35" stroke="#f49ac1" stroke-width="1.4"/><circle cx="8" cy="8" r="1.4" fill="#fff" fill-opacity=".9"/>',
