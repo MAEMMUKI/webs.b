@@ -218,7 +218,7 @@ window.NEGOCIO = {
       'Yogurt con pan de yuca': { es: 'un café con leche', en: 'a coffee with milk' },
       'Chocolate con tostis': { es: 'un pan de queso extra', en: 'an extra cheese bread' },
       'Sánduche integral': { es: 'ya viene con batido o milkshake', en: 'it already comes with a smoothie or milkshake' },
-      'Encebollado': { es: 'un café pasado o un té de hierba luisa', en: 'a drip coffee or a lemon verbena tea' },
+      'Encebollado': { es: 'una Coca-Cola bien fría', en: 'an ice-cold Coca-Cola' },
       'Corviche': { es: 'un café americano', en: 'an Americano' },
       'Arroz con pollo': { es: 'un té de horchata', en: 'a horchata tea' },
       'Empanadas de carne y de pollo': { es: 'una colada morada', en: 'a colada morada' },
