@@ -336,6 +336,15 @@ footer i{font-style:normal;color:var(--soft)}
   .trial .em{font-size:34px}
   .trial h3{font-size:21px}
 }
+/* slogan */
+.slogan-band{padding-block:72px 64px;text-align:center}
+.slogan-band .sl{font-family:var(--display);font-weight:600;font-size:clamp(30px,5.4vw,58px);letter-spacing:.18em;text-transform:uppercase;color:var(--ink);line-height:1.1;display:inline-flex;align-items:center;gap:clamp(12px,2.4vw,28px);margin:0}
+.slogan-band .sl::before,.slogan-band .sl::after{content:"";width:clamp(24px,6vw,70px);height:2px;background:var(--ink);opacity:.85}
+.slogan-band p{margin-top:16px;color:var(--soft);font-size:clamp(16px,2vw,19px)}
+.slogan-band p b{color:var(--acc)}
+footer .brand-sl{display:flex;align-items:center;gap:14px}
+footer .tag{font-family:var(--display);font-weight:600;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink)}
+@media(max-width:600px){.slogan-band{padding-block:52px 44px}.slogan-band .sl{letter-spacing:.12em}}
 </style>
 </head>
 <body>
@@ -506,10 +515,11 @@ footer i{font-style:normal;color:var(--soft)}
       </form>
     </div>
   </div></section>
+<section class="slogan-band" aria-label="Slogan"><div class="wrap rv"><h2 class="sl">Grow with us</h2><p><b>Let’s grow together.</b> Your business grows, and we grow with you.</p></div></section>
 </main>
 
 <footer><div class="wrap">
-  <a class="brand" href="#inicio" aria-label="Maemuki, home"><img src="../logo-sm.png" alt="Maemuki" width="200" height="166"></a>
+  <div class="brand-sl"><a class="brand" href="#inicio" aria-label="Maemuki, home"><img src="../logo-sm.png" alt="Maemuki" width="200" height="166"></a><span class="tag">Grow with us</span></div>
   <span><i>Maemuki</i> (前向き) means “looking forward”.</span>
   <span>© <span id="yr"></span> Maemuki · New Jersey</span>
 </div></footer>
