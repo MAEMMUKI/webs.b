@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Facturas Maemuki</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Sora:wght@600;700;800&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Generador de facturas de Maemuki: formulario a la izquierda, factura lista para imprimir a la derecha */
+:root{--bg:#f4efe2;--paper:#ffffff;--ink:#1a1820;--soft:#5d5968;--line:#e6dfcc;--acc:#5b3fe0;--lime:#c6ff4d;--dark:#14122a;
+  --sans:"Figtree",system-ui,sans-serif;--display:"Sora",var(--sans);--mono:"JetBrains Mono",ui-monospace,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.45}
+.app{display:grid;grid-template-columns:minmax(0,430px) minmax(0,1fr);gap:24px;max-width:1280px;margin:0 auto;padding:24px max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px))}
+@media(max-width:980px){.app{grid-template-columns:1fr}}
+.panel{display:grid;gap:14px;align-content:start}
+.panel h1{font-family:var(--display);font-size:22px;margin:0}
+.panel p.help{margin:0;color:var(--soft);font-size:14px}
+fieldset{border:1px solid var(--line);border-radius:14px;padding:12px 14px 14px;margin:0;background:var(--paper);display:grid;gap:10px}
+legend{font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);padding:0 6px}
+label{display:grid;gap:4px;font-size:13px;font-weight:600;color:var(--soft)}
+input,textarea,select{font:inherit;font-size:15px;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:9px;padding:9px 10px;width:100%}
+textarea{resize:vertical;min-height:60px}
+input:focus,textarea:focus,select:focus,button:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.item{display:grid;grid-template-columns:1fr 64px 92px 34px;gap:6px;align-items:end}
+.item label span{display:none}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+button{font:inherit;font-weight:600;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px 16px;cursor:pointer}
+button.primary{background:var(--dark);color:#fff;border-color:var(--dark)}
+button.ghost{background:transparent}
+button.x{padding:0;width:34px;height:40px;border-radius:9px;color:#b23}
+.note{font-size:13px;color:var(--soft);background:#fff8d9;border:1px solid #efdf9b;border-radius:10px;padding:9px 11px}
+
+/* La factura */
+.sheet-wrap{overflow-x:auto}
+.inv{background:var(--paper);width:100%;max-width:820px;min-width:640px;margin:0 auto;padding:46px 50px;border-radius:6px;box-shadow:0 20px 50px -30px rgba(20,18,42,.45);display:grid;gap:26px}
+.inv-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+.inv-top img{height:78px;width:auto}
+.inv-title{text-align:right}
+.inv-title h2{font-family:var(--display);font-size:30px;margin:0;letter-spacing:-.01em}
+.inv-title h2 small{display:block;font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
+.inv-meta{display:grid;grid-template-columns:auto auto;gap:3px 14px;justify-content:end;margin-top:10px;font-size:13px}
+.inv-meta dt{color:var(--soft)}
+.inv-meta dd{margin:0;font-family:var(--mono);text-align:right}
+.parties{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.party h3{margin:0 0 6px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc)}
+.party p{margin:0;font-size:14px;white-space:pre-line}
+.party b{font-size:15px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);text-align:left;padding:8px 6px;border-bottom:2px solid var(--ink)}
+td{padding:10px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.totals{display:grid;justify-content:end}
+.totals div{display:grid;grid-template-columns:180px 140px;gap:10px;padding:4px 6px;font-size:14px}
+.totals div span:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.totals .grand{border-top:2px solid var(--ink);margin-top:4px;padding-top:10px;font-weight:800;font-size:18px;font-family:var(--display)}
+.foot{display:grid;grid-template-columns:1fr 1fr;gap:24px;font-size:13px;color:var(--soft)}
+.foot h4{margin:0 0 4px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+.foot p{margin:0;white-space:pre-line}
+.thanks{text-align:center;font-size:13px;color:var(--soft);border-top:1px solid var(--line);padding-top:14px}
+.thanks b{color:var(--ink)}
+
+@media print{
+  @page{size:Letter;margin:12mm}
+  body{background:#fff}
+  .panel{display:none}
+  .app{display:block;padding:0}
+  .inv{box-shadow:none;max-width:none;min-width:0;padding:0}
+  .sheet-wrap{overflow:visible}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <form class="panel" id="f" autocomplete="off">
+    <h1>Facturas Maemuki</h1>
+    <p class="help">Llena los datos y la factura de la derecha se actualiza sola. Para enviarla, toca <b>Guardar como PDF</b> y en la ventana elige "Guardar como PDF". Lo que escribes se guarda solo en este navegador.</p>
+    <div class="btns">
+      <button type="button" class="primary" id="print">Guardar como PDF</button>
+      <button type="button" id="newInv">Nueva factura</button>
+      <button type="button" class="ghost" id="example">Ver ejemplo</button>
+    </div>
+
+    <fieldset><legend>Factura</legend>
+      <div class="two">
+        <label>Número<input id="num" name="num"></label>
+        <label>Moneda<select id="cur" name="cur"><option value="USD">USD (dólares)</option><option value="PEN">PEN (soles)</option></select></label>
+      </div>
+      <div class="two">
+        <label>Fecha<input type="date" id="date" name="date"></label>
+        <label>Vence<input type="date" id="due" name="due"></label>
+      </div>
+    </fieldset>
+
+    <fieldset><legend>De (tus datos)</legend>
+      <label>Tu nombre legal<input id="fromName" name="fromName" placeholder="Nombre y apellido como en tu ID"></label>
+      <label>Nombre comercial<input id="fromDba" name="fromDba" placeholder="Maemuki"></label>
+      <label>Dirección<textarea id="fromAddr" name="fromAddr" placeholder="Calle, ciudad, NJ, código postal, USA"></textarea></label>
+      <div class="two">
+        <label>EIN<input id="fromEin" name="fromEin" placeholder="XX-XXXXXXX"></label>
+        <label>WhatsApp<input id="fromPhone" name="fromPhone"></label>
+      </div>
+      <label>Correo<input id="fromMail" name="fromMail"></label>
+    </fieldset>
+
+    <fieldset><legend>Para (cliente)</legend>
+      <label>Empresa<input id="toName" name="toName"></label>
+      <div class="two">
+        <label>RUC / Tax ID<input id="toTax" name="toTax"></label>
+        <label>País<input id="toCountry" name="toCountry"></label>
+      </div>
+      <label>Dirección<textarea id="toAddr" name="toAddr"></textarea></label>
+      <label>Atención a<input id="toAttn" name="toAttn" placeholder="Nombre del contacto"></label>
+    </fieldset>
+
+    <fieldset><legend>Servicios</legend>
+      <div id="items"></div>
+      <div class="btns"><button type="button" id="addItem">+ Agregar línea</button></div>
+      <label>Descuento (monto)<input type="number" step="0.01" min="0" id="disc" name="disc" value="0"></label>
+    </fieldset>
+
+    <fieldset><legend>Pago y notas</legend>
+      <label>Cómo pagar<textarea id="payInfo" name="payInfo"></textarea></label>
+      <label>Notas<textarea id="notes" name="notes"></textarea></label>
+    </fieldset>
+    <p class="note">Nunca pongas tu número de Seguro Social (SSN) en una factura. Usa tu EIN, que es gratis en irs.gov.</p>
+  </form>
+
+  <div class="sheet-wrap"><article class="inv" id="inv" aria-label="Vista de la factura"></article></div>
+</div>
+
+<script>
+(() => {
+  const KEY = 'maemuki-factura-v1';
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const today = () => new Date().toISOString().slice(0,10);
+  const plus = (d, n) => { const x = new Date(d + 'T12:00:00'); x.setDate(x.getDate() + n); return x.toISOString().slice(0,10); };
+  const FIELDS = ['num','cur','date','due','fromName','fromDba','fromAddr','fromEin','fromPhone','fromMail','toName','toTax','toCountry','toAddr','toAttn','disc','payInfo','notes'];
+
+  const EXAMPLE = {
+    num:'MAE-2026-001', cur:'USD', date:today(), due:plus(today(), 7),
+    fromName:'', fromDba:'Maemuki', fromAddr:'New Jersey, USA', fromEin:'', fromPhone:'+1 (201) 838-8390', fromMail:'',
+    toName:'Fábrica de Embutidos La Granjita E.I.R.L.', toTax:'RUC 20411506615', toCountry:'Perú', toAddr:'Cerro Colorado, Arequipa', toAttn:'Rafael Chang Padilla',
+    disc:0,
+    items:[{d:'Diseño y desarrollo de página web · 1er pago (50%)\nWebsite design and development · 1st installment', q:1, p:200}],
+    payInfo:'Transferencia internacional, Wise o PayPal.\nDatos de la cuenta: (completa aquí)',
+    notes:'Servicio prestado desde los Estados Unidos.\nService provided from the United States.\nPrecios netos: no incluyen impuestos ni retenciones del país del cliente.'
+  };
+  let S;
+  try { S = JSON.parse(localStorage.getItem(KEY)) || null; } catch(e) { S = null; }
+  if (!S) S = JSON.parse(JSON.stringify(EXAMPLE));
+
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} };
+  const money = n => { const v = Number(n) || 0; try { return new Intl.NumberFormat(S.cur === 'PEN' ? 'es-PE' : 'en-US', {style:'currency', currency:S.cur || 'USD'}).format(v); } catch(e) { return v.toFixed(2); } };
+  const fmtDate = d => { if (!d) return ''; const x = new Date(d + 'T12:00:00'); return x.toLocaleDateString('es-PE', {day:'2-digit', month:'short', year:'numeric'}); };
+
+  function fill(){
+    FIELDS.forEach(k => { if ($(k)) $(k).value = S[k] ?? ''; });
+    renderItems(); renderInv();
+  }
+  function renderItems(){
+    $('items').innerHTML = S.items.map((it, i) => `
+      <div class="item">
+        <label>Descripción<textarea id="d${i}" data-i="${i}" data-k="d" rows="2">${esc(it.d)}</textarea></label>
+        <label>Cant.<input id="q${i}" data-i="${i}" data-k="q" type="number" min="0" step="1" value="${esc(it.q)}"></label>
+        <label>Precio<input id="p${i}" data-i="${i}" data-k="p" type="number" min="0" step="0.01" value="${esc(it.p)}"></label>
+        <button type="button" class="x" data-del="${i}" aria-label="Quitar línea ${i+1}">✕</button>
+      </div>`).join('');
+  }
+  function renderInv(){
+    const sub = S.items.reduce((a, it) => a + (Number(it.q)||0) * (Number(it.p)||0), 0);
+    const disc = Number(S.disc) || 0, total = Math.max(0, sub - disc);
+    const from = [S.fromName && `<b>${esc(S.fromName)}</b>`, S.fromDba && (S.fromName ? `DBA ${esc(S.fromDba)}` : `<b>${esc(S.fromDba)}</b>`), esc(S.fromAddr), S.fromEin && `EIN ${esc(S.fromEin)}`, esc(S.fromPhone), esc(S.fromMail)].filter(Boolean).join('\n');
+    const to = [`<b>${esc(S.toName)}</b>`, esc(S.toTax), esc(S.toAddr), esc(S.toCountry), S.toAttn && `Atención: ${esc(S.toAttn)}`].filter(Boolean).join('\n');
+    $('inv').innerHTML = `
+      <div class="inv-top">
+        <img src="../logo.png" alt="Maemuki">
+        <div class="inv-title"><h2><small>Factura · Invoice</small>${esc(S.num)}</h2>
+          <dl class="inv-meta"><dt>Fecha / Date</dt><dd>${fmtDate(S.date)}</dd><dt>Vence / Due</dt><dd>${fmtDate(S.due)}</dd><dt>Moneda</dt><dd>${esc(S.cur)}</dd></dl></div>
+      </div>
+      <div class="parties">
+        <div class="party"><h3>De / From</h3><p>${from}</p></div>
+        <div class="party"><h3>Para / Bill to</h3><p>${to}</p></div>
+      </div>
+      <table>
+        <thead><tr><th>Descripción / Description</th><th class="n">Cant.</th><th class="n">Precio</th><th class="n">Total</th></tr></thead>
+        <tbody>${S.items.map(it => `<tr><td style="white-space:pre-line">${esc(it.d)}</td><td class="n">${esc(it.q)}</td><td class="n">${money(it.p)}</td><td class="n">${money((Number(it.q)||0)*(Number(it.p)||0))}</td></tr>`).join('')}</tbody>
+      </table>
+      <div class="totals">
+        <div><span>Subtotal</span><span>${money(sub)}</span></div>
+        ${disc ? `<div><span>Descuento</span><span>− ${money(disc)}</span></div>` : ''}
+        <div class="grand"><span>Total a pagar</span><span>${money(total)}</span></div>
+      </div>
+      <div class="foot">
+        <div><h4>Cómo pagar / Payment</h4><p>${esc(S.payInfo)}</p></div>
+        <div><h4>Notas / Notes</h4><p>${esc(S.notes)}</p></div>
+      </div>
+      <p class="thanks"><b>Gracias por confiar en Maemuki.</b> Grow with us.</p>`;
+  }
+
+  $('f').addEventListener('input', e => {
+    const t = e.target;
+    if (t.dataset.k) { const it = S.items[t.dataset.i]; it[t.dataset.k] = t.dataset.k === 'd' ? t.value : Number(t.value); }
+    else if (FIELDS.includes(t.id)) S[t.id] = t.id === 'disc' ? Number(t.value) : t.value;
+    save(); renderInv();
+  });
+  $('items').addEventListener('click', e => { const b = e.target.closest('[data-del]'); if (!b) return; S.items.splice(+b.dataset.del, 1); if (!S.items.length) S.items.push({d:'', q:1, p:0}); save(); renderItems(); renderInv(); });
+  $('addItem').onclick = () => { S.items.push({d:'', q:1, p:0}); save(); renderItems(); renderInv(); $('d' + (S.items.length-1)).focus(); };
+  $('print').onclick = () => window.print();
+  $('example').onclick = () => { const keep = {fromName:S.fromName, fromEin:S.fromEin, fromMail:S.fromMail, fromAddr:S.fromAddr}; S = JSON.parse(JSON.stringify(EXAMPLE)); Object.assign(S, Object.fromEntries(Object.entries(keep).filter(([,v]) => v))); save(); fill(); };
+  // Nueva factura: conserva tus datos, sube el número y limpia cliente y servicios
+  $('newInv').onclick = () => {
+    const m = String(S.num || '').match(/^(.*?)(\d+)$/);
+    S.num = m ? m[1] + String(Number(m[2]) + 1).padStart(m[2].length, '0') : 'MAE-' + new Date().getFullYear() + '-001';
+    S.date = today(); S.due = plus(today(), 7);
+    Object.assign(S, {toName:'', toTax:'', toCountry:'', toAddr:'', toAttn:'', disc:0, items:[{d:'', q:1, p:0}]});
+    save(); fill(); $('toName').focus();
+  };
+  fill();
+})();
+</script>
+</body>
+</html>
