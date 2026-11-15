@@ -225,6 +225,39 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
 .reclamo svg{width:22px;height:22px}
 .fb{border-top:1px solid #26221d;margin-top:48px;padding-block:22px calc(22px + env(safe-area-inset-bottom,0px));display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between;font-size:12px}
 
+/* carrusel */
+.car{background:var(--coal);padding:56px 0 64px}
+.car .sh h2{color:#f4ecdc}.car .sh p{color:#b9ab93}
+.car-box{position:relative;max-width:1100px;margin:0 auto}
+.car-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;gap:16px;padding:6px 20px 10px;scrollbar-width:none}
+.car-track::-webkit-scrollbar{display:none}
+.car-slide{flex:0 0 min(78%,520px);scroll-snap-align:center;position:relative;margin:0;border-radius:6px;overflow:hidden;aspect-ratio:4/3;background:var(--coal2);box-shadow:0 20px 40px -24px rgba(0,0,0,.8)}
+.car-slide img{width:100%;height:100%;object-fit:cover;display:block}
+.car-slide figcaption{position:absolute;left:0;right:0;bottom:0;padding:34px 18px 14px;background:linear-gradient(transparent,rgba(10,8,6,.85));color:#f4ecdc;font-family:var(--display);font-size:20px}
+.car-btn{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;border:1px solid var(--gold);background:rgba(20,18,16,.75);color:var(--gold-hi);display:grid;place-items:center;cursor:pointer;z-index:2}
+.car-btn svg{width:20px;height:20px}.car-prev{left:8px}.car-next{right:8px}
+.car-dots{display:flex;justify-content:center;gap:8px;margin-top:16px}
+.car-dots button{width:9px;height:9px;border-radius:50%;border:0;background:#5a4f42;padding:0;cursor:pointer}
+.car-dots button[aria-current=true]{background:var(--gold);width:24px;border-radius:5px}
+@media(max-width:640px){.car-btn{display:none}.car-slide{flex-basis:86%}}
+/* catálogo completo */
+.cat-tools{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin:8px 0 18px}
+.cat-tools input{font:inherit;font-size:16px;flex:1;min-width:220px;max-width:420px;padding:12px 16px;border:1px solid var(--line);border-radius:999px;background:var(--paper)}
+.cat-note{font-size:13.5px;color:var(--ink-soft)}
+.cat-fam{border:1px solid var(--line);background:var(--paper);border-radius:6px;margin-bottom:10px}
+.cat-fam summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;padding:16px 20px;font-family:var(--display);font-size:21px}
+.cat-fam summary::-webkit-details-marker{display:none}
+.cat-fam summary span{font-family:var(--body);font-size:13px;color:var(--ink-soft)}
+.cat-fam[open] summary{border-bottom:1px solid var(--line)}
+.cat-row{display:grid;grid-template-columns:1fr auto;gap:8px 16px;align-items:center;padding:12px 20px;border-bottom:1px dashed var(--line)}
+.cat-row:last-child{border-bottom:0}
+.cat-row b{font-weight:600;font-size:15.5px}
+.sizes{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.sizes span{font-size:12.5px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;background:#fff}
+.sizes span.b2b{border-color:var(--gold);background:#fbf3e2}
+.cat-ask{font-size:13px;font-weight:600;color:var(--gold-lo);text-decoration:none;white-space:nowrap;border:1px solid var(--gold);border-radius:999px;padding:7px 12px}
+.cat-empty{padding:18px;color:var(--ink-soft)}
+@media(max-width:560px){.cat-row{padding:12px 14px}.cat-ask{padding:7px 10px}.cat-ask .lg-t{display:none}.stats span{letter-spacing:.06em;font-size:10px}}
 /* whatsapp flotante */
 .wa{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:50;width:60px;height:60px;border-radius:50%;background:#25d366;color:#fff;display:grid;place-items:center;box-shadow:0 14px 28px -10px rgba(37,211,102,.8)}
 .wa svg{width:30px;height:30px}
@@ -360,18 +393,37 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
       </div>
       <div class="stats">
         <div><b data-count="34">34</b><span>años de tradición</span></div>
-        <div><b data-count="1800">1800</b><span>toneladas al año</span></div>
-        <div><b data-count="2000" data-suffix=" m²">2000 m²</b><span>de planta</span></div>
+        <div><b data-count="70" data-prefix="+">+70</b><span>colaboradores</span></div>
+        <div><b data-count="90" data-prefix="+">+90</b><span>presentaciones</span></div>
       </div>
     </div>
     <div class="badge-wrap"><span class="ring" aria-hidden="true"></span><img src="logo-badge.png" alt="Logo de La Granjita, embutidos artesanales desde 1992" width="360" height="360"></div>
   </div><div class="edge" aria-hidden="true"></div></section>
+
+  <!-- CARRUSEL -->
+  <section class="car" data-views="inicio" aria-roledescription="carrusel" aria-label="Galería de productos"><div class="wrap">
+    <div class="sh c rv"><span class="k2">Galería</span><h2>Nuestros embutidos en la mesa</h2></div>
+  </div>
+    <div class="car-box">
+      <button class="car-btn car-prev" type="button" aria-label="Foto anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+      <div class="car-track" id="carTrack" tabindex="0"></div>
+      <button class="car-btn car-next" type="button" aria-label="Foto siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+    </div>
+    <div class="car-dots" id="carDots" role="group" aria-label="Elegir foto"></div>
+  </section>
 
   <!-- PRODUCTOS -->
   <section id="productos" data-views="inicio productos"><div class="wrap">
     <div class="sh c rv"><span class="k2">Nuestros productos</span><h2>Sabor de casa, calidad de planta</h2><div class="orn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.2H22l-6.2 4.5 2.4 7.3L12 16.5 5.8 21l2.4-7.3L2 9.2h7.6z"/></svg></div><p>Elige una línea para ver sus productos. <span class="pend">Fotos referenciales</span></p></div>
     <div class="lines rv" id="lines" role="group" aria-label="Líneas de producto"></div>
     <div class="grid" id="grid"></div>
+  </div></section>
+
+  <!-- CATÁLOGO COMPLETO -->
+  <section id="catalogo" data-views="productos" style="padding-top:0"><div class="wrap">
+    <div class="sh c rv"><span class="k2">Catálogo completo</span><h2>Todas nuestras presentaciones</h2><p>Busca tu producto y pídelo por WhatsApp. Las presentaciones marcadas en dorado son para negocios, restaurantes y food service.</p></div>
+    <div class="cat-tools"><input type="search" id="catSearch" placeholder="Buscar: jamón, chorizo, hot dog…" aria-label="Buscar producto"><span class="cat-note" id="catCount"></span></div>
+    <div id="catList"></div>
   </div></section>
 
   <!-- AVANCE DE LA HISTORIA (solo en inicio) -->
@@ -403,7 +455,7 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
       <article class="chap rv"><span class="num">II · 19 años</span><h3>Cuando todo dependía de él</h3><p>El maestro embutidor se fue sin avisar y nunca volvió. Pasaron nueve meses y su papá le pidió a Rafael, con apenas 19 años, que pusiera la planta en marcha.</p><p>Aprendió cada proceso con sus propias manos y se puso una meta: producir más, y hacerlo bien.</p></article>
       <article class="chap rv"><span class="num">III · El camino</span><h3>Mollendo – Arequipa, tres veces por semana</h3><p>Viajaba para comprar la materia prima y entregar los pedidos. En cada viaje confirmaba lo mismo: Arequipa quería más de su sabor.</p></article>
       <article class="chap rv"><span class="num">IV · Las caídas</span><h3>Caer y volver a empezar</h3><p>Hubo compras que salieron mal, ventas que no alcanzaron y noches pensando en venderlo todo. Pero siempre aparecía una solución, y Rafael le daba al negocio una oportunidad más.</p><p>Aprendió a confiar con cuidado y a trabajar solo en lo que conoce bien. Y a su lado, siempre, Yamili, su esposa, con un apoyo incondicional.</p></article>
-      <article class="chap wide rv"><span class="num">V · El sueño cumplido</span><h3>2003: nuestra propia fábrica en Arequipa</h3><p>Durante años soñó con un terreno y una fábrica propia en Arequipa. En 2003 ese sueño se hizo realidad. Hoy, con más de 70 colaboradores y unas 150 toneladas de embutidos al mes, seguimos trabajando con los mismos valores del primer día: integridad, no engañar a nadie y acompañar a nuestro equipo hasta el final. Porque para nosotros, las personas son lo más valioso que tenemos.</p></article>
+      <article class="chap wide rv"><span class="num">V · El sueño cumplido</span><h3>2003: nuestra propia fábrica en Arequipa</h3><p>Durante años soñó con un terreno y una fábrica propia en Arequipa. En 2003 ese sueño se hizo realidad. Hoy, con más de 70 colaboradores, seguimos trabajando con los mismos valores del primer día: integridad, no engañar a nadie y acompañar a nuestro equipo hasta el final. Porque para nosotros, las personas son lo más valioso que tenemos.</p></article>
     </div>
     <div class="advice rv"><small>Su consejo para los que sueñan</small><p>Da el primer paso, por pequeño que sea, y actúa.</p><div class="sig">Rafael Chang Padilla, gerente de La Granjita</div></div>
     <span class="src">Historia basada en la entrevista de la serie <a href="https://novuz.blog/2026/04/03/serie-sonadores-que-cumplen-rafael-chang-padilla/" target="_blank" rel="noopener">“Soñadores que cumplen”, nOVUz (2026)</a>.</span>
@@ -424,8 +476,8 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
     </div>
     <div class="timeline rv">
       <div class="tl"><b>1992</b><h3>Nace en Mollendo</h3><p>Un taller familiar con recetas propias y mucho cariño por el buen sabor.</p></div>
-      <div class="tl"><b>2003</b><h3>Planta en Arequipa</h3><p>Una planta moderna en un terreno de 2,000 m², con espacio para seguir creciendo.</p></div>
-      <div class="tl"><b>Hoy</b><h3>Más de 70 colaboradores</h3><p>150 toneladas al mes, una tienda propia en Mollendo y presencia en supermercados y tiendas del sur.</p></div>
+      <div class="tl"><b>2003</b><h3>Planta en Arequipa</h3><p>Una planta moderna y propia en Arequipa, con espacio para seguir creciendo.</p></div>
+      <div class="tl"><b>Hoy</b><h3>Más de 70 colaboradores</h3><p>Más de 90 presentaciones, una tienda propia en Mollendo y presencia en supermercados y tiendas del sur.</p></div>
       <div class="tl"><b>Mañana</b><h3>Nuevos mercados</h3><p>Ampliar la planta, sumar productos y llevar nuestro sabor más lejos.</p></div>
     </div>
   </div></section>
@@ -486,7 +538,7 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
         <div class="ccard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg><div><h3>Planta</h3><p>HCXC+3GW, Cerro Colorado 04014, Arequipa, Perú</p><p><a href="https://www.google.com/maps/search/?api=1&amp;query=HCXC%2B3GW%2C%20Cerro%20Colorado%2004014%2C%20Peru" target="_blank" rel="noopener" style="color:var(--gold-lo);font-weight:700;font-size:14px;letter-spacing:.06em;text-transform:uppercase">Cómo llegar →</a></p></div></div>
         <div class="ccard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9M3 9v11h18V9M3 9h18M9 20v-6h6v6"/></svg><div><h3>Tienda en Mollendo</h3><p>Nuestro punto de venta directo <span class="pend">dirección por confirmar</span></p></div></div>
         <div class="ccard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 0 1 6 0v2"/></svg><div><h3>Dónde comprar</h3><p>En supermercados y tiendas del sur del Perú, a través de nuestros distribuidores.</p></div></div>
-        <div class="ccard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 3.5l3 .5 1.3 4-2 1.6a12 12 0 0 0 5.5 5.5l1.6-2 4 1.3.5 3a2 2 0 0 1-2.1 2.1A17 17 0 0 1 4.5 5.6 2 2 0 0 1 6.6 3.5z"/></svg><div><h3>Teléfonos</h3><p><a href="tel:+51936285614">936 285 614</a> <span class="pend">por confirmar</span></p></div></div>
+        <div class="ccard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 3.5l3 .5 1.3 4-2 1.6a12 12 0 0 0 5.5 5.5l1.6-2 4 1.3.5 3a2 2 0 0 1-2.1 2.1A17 17 0 0 1 4.5 5.6 2 2 0 0 1 6.6 3.5z"/></svg><div><h3>Teléfonos</h3><p><a href="tel:+51936285614">+51 936 285 614</a></p></div></div>
         <div class="ccard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><div><h3>Horario de atención</h3><p>Lunes a viernes 8:00 a.m. – 5:00 p.m.<br>Sábados 8:00 a.m. – 12:00 p.m. <span class="pend">por confirmar</span></p></div></div>
         <div class="social">
           <a href="https://www.instagram.com/lagranjita.peru/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg>Instagram</a>
@@ -515,7 +567,7 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
 /* ===== CAMBIA AQUÍ =====
    whatsapp: número con código de país, solo dígitos (Perú: 51 + número). Vacío = el formulario no abre WhatsApp.
    PRODUCTOS y RECETAS: lista de ejemplo; reemplázala con la real. "foto" puede ser el nombre de un archivo en esta carpeta. */
-const CONFIG = { whatsapp: '51936285614' };  // número que publican en Instagram (2022) — confirmar
+const CONFIG = { whatsapp: '51936285614' };  // confirmado por el cliente (nov 2026)
 
 const LINES = [['todos','Todos'],['salchichas','Salchichas y chorizos'],['fiambres','Fiambres'],['jamones','Jamones ahumados'],['hamburguesas','Hamburguesas'],['crudos','Productos crudos'],['especiales','Especialidades']];
 const ICON = {
@@ -537,6 +589,76 @@ const PRODUCTS = [
   {l:'crudos', i:'chorizo', foto:'fotos/productos-crudos.jpg?v=2', t:'Productos crudos', d:'Chorizos y preparaciones crudas para cocinar a tu gusto.', p:'Paquete'},
   {l:'especiales', i:'fiambre', foto:'fotos/pate-pollo.jpg?v=2', t:'Paté con pollo', d:'Cremoso y untable, para el pan del desayuno o un piqueo rápido.', p:'100 g'},
   {l:'especiales', i:'fiambre', foto:'fotos/picadillo-chaufa.jpg?v=2', t:'Picadillo chaufa', d:'Tu arroz chaufa más rico y práctico: ya viene picado y listo para saltear.', p:'Paquete'}
+];
+const CATALOG = [
+  ['Salchichas y hot dogs', [
+    ['Hot dog de pollo', ['100 g (3 und)','200 g (6 und)']],
+    ['Hot dog salchipapero de pollo', ['1 kg (8 und)','1 kg (5 und · 25 cm)','3 kg (25 cm)','4 kg (32 und)']],
+    ['Hot dog ahumado', ['230 g (3 und)','950 g (12 und)']],
+    ['Hot dog salchipapero especial ahumado', ['3 kg']],
+    ['Perro caliente', ['250 g (6 und)','500 g (12 und)','1 kg (24 und)']],
+    ['Super perro', ['1 kg']],
+    ['Panchitos', ['1 kg']],
+    ['Salchicha de pollo', ['1 kg']],
+    ['Salchicha Frankfurt', ['250 g','500 g','1 kg']],
+    ['Salchicha Frankfurt culinaria', ['2 kg']],
+    ['Salchicha arequipeña', ['250 g','1 kg']],
+    ['Salchicha arequipeña New', ['250 g','1 kg']],
+    ['Salchicha arequipeña de mercado', ['250 g','1 kg']]
+  ]],
+  ['Chorizos', [
+    ['Chorizo precocido', ['85 g','500 g (7 und)','850 g']],
+    ['Chorizo argentino finas hierbas', ['850 g']],
+    ['Chorizo argentino', ['1 kg']],
+    ['Chorizo argentino especial', ['1 kg']],
+    ['Chorizo argentino especial precocido', ['1 kg (12 und)']],
+    ['Chorizo argentino de mercado', ['1 kg']],
+    ['Chorizo parrillero', ['1 kg']],
+    ['Chorizo parrillero de res', ['1 kg','Cóctel 1 kg']],
+    ['Chorizo parrillero de res picante', ['1 kg','Cóctel 1 kg']],
+    ['Chorizo ahumado', ['500 g']],
+    ['Chorizo ahumado precocido', ['170 g','420 g']],
+    ['Churro picante', ['70 g','250 g','500 g','1 kg']]
+  ]],
+  ['Jamonadas y fiambres', [
+    ['Jamonada de pollo', ['90 g','200 g']],
+    ['Jamonada especial de pollo', ['200 g','3 kg']],
+    ['Super jamonada de pollo', ['3 kg']],
+    ['Jamonada especial de cerdo', ['3 kg']],
+    ['Jamonada extra', ['3 kg']],
+    ['Jamonada extra / sándwich', ['250 g','3 kg']],
+    ['Mortadela super', ['100 g','200 g']],
+    ['Mortadela extra', ['Por kilo']],
+    ['Mortadela italiana', ['3 kg']],
+    ['Queso de chancho', ['90 g','100 g','200 g','3 kg']],
+    ['Chicharrón de prensa', ['250 g','3 kg']],
+    ['Paté de pollo', ['100 g']]
+  ]],
+  ['Jamones', [
+    ['Jamón inglés', ['500 g','3 kg']],
+    ['Jamón país', ['200 g','500 g','3 kg']],
+    ['Jamón York / pizza', ['250 g','500 g','3 kg']],
+    ['Jamón pizzero', ['3 kg']]
+  ]],
+  ['Tocinos y ahumados', [
+    ['Tocino ahumado', ['70 g','90 g','250 g','500 g','Pieza 3.5–4.5 kg']],
+    ['Tocino ahumado S/P', ['250 g','500 g','Por kilo']],
+    ['Tocino picado', ['70 g']],
+    ['Costilla ahumada', ['250 g','Por kilo (picada)']],
+    ['Salame', ['200 g','500 g','1.5 kg']],
+    ['Pepperoni', ['500 g','1.5 kg']]
+  ]],
+  ['Hamburguesas y milanesas', [
+    ['Hamburguesa casera de res', ['900 g (14 und)']],
+    ['Hamburguesa casera de pollo', ['900 g (14 und)']],
+    ['Hamburguesa premium de pollo', ['1 kg']],
+    ['Hamburguesa precocida de pollo', ['450 g']],
+    ['Hamburguesa precocida de res', ['500 g']],
+    ['Milanesa de filete de pollo', ['500 g','1 kg']]
+  ]],
+  ['Especiales', [
+    ['Picadillo de chaufa', ['200 g']]
+  ]]
 ];
 const RECIPES = [
   {t:'Arroz chaufa con picadillo', m:'20 min · fácil', foto:'fotos/picadillo-chaufa.jpg?v=2', d:'El chaufa de casa, más rápido y más rico.',
@@ -569,6 +691,52 @@ const wa = msg => CONFIG.whatsapp ? 'https://wa.me/' + CONFIG.whatsapp.replace(/
   });
   $('ftLines').innerHTML = LINES.slice(1).map(([k,t]) => `<li><a href="#productos" data-go="${k}">${esc(t)}</a></li>`).join('');
   $('ftLines').addEventListener('click', e => { const a = e.target.closest('[data-go]'); if (a) { const b = lines.querySelector(`[data-l="${a.dataset.go}"]`); b && b.click(); } });
+})();
+
+/* carrusel de fotos */
+(() => {
+  const track = $('carTrack'), dots = $('carDots'); if (!track) return;
+  const slides = PRODUCTS.filter(p => p.foto).map(p => ({src:p.foto, t:p.t}));
+  track.innerHTML = slides.map((s,i) => `<figure class="car-slide" role="group" aria-roledescription="foto" aria-label="${i+1} de ${slides.length}: ${esc(s.t)}"><img src="${esc(s.src)}" alt="${esc(s.t)}" loading="${i<2?'eager':'lazy'}"><figcaption>${esc(s.t)}</figcaption></figure>`).join('');
+  dots.innerHTML = slides.map((s,i) => `<button type="button" aria-label="Foto ${i+1}: ${esc(s.t)}"${i===0?' aria-current="true"':''}></button>`).join('');
+  const items = [...track.children], dbs = [...dots.children];
+  let cur = 0, timer = 0, paused = false;
+  const go = i => { cur = (i + items.length) % items.length; const s = items[cur]; track.scrollTo({left: s.offsetLeft - (track.clientWidth - s.clientWidth)/2, behavior: reduce ? 'auto' : 'smooth'}); };
+  const mark = () => { const mid = track.scrollLeft + track.clientWidth/2; let best = 0, bd = 1e9;
+    items.forEach((s,i) => { const d = Math.abs(s.offsetLeft + s.clientWidth/2 - mid); if (d < bd) { bd = d; best = i; } });
+    cur = best; dbs.forEach((b,i) => b.setAttribute('aria-current', i===best ? 'true' : 'false')); };
+  let st = 0; track.addEventListener('scroll', () => { clearTimeout(st); st = setTimeout(mark, 80); }, {passive:true});
+  const restart = () => { clearInterval(timer); if (!reduce) timer = setInterval(() => { if (!paused && !document.hidden && box.offsetParent) go(cur+1); }, 4500); };
+  document.querySelector('.car-prev').onclick = () => { go(cur-1); restart(); };
+  document.querySelector('.car-next').onclick = () => { go(cur+1); restart(); };
+  dots.addEventListener('click', e => { const b = e.target.closest('button'); if (b) { go(dbs.indexOf(b)); restart(); } });
+  track.addEventListener('keydown', e => { if (e.key==='ArrowRight') { go(cur+1); restart(); } if (e.key==='ArrowLeft') { go(cur-1); restart(); } });
+  const box = track.closest('.car');
+  ['pointerenter','focusin','touchstart'].forEach(ev => box.addEventListener(ev, () => paused = true, {passive:true}));
+  ['pointerleave','focusout'].forEach(ev => box.addEventListener(ev, () => paused = false));
+  box.addEventListener('touchend', () => setTimeout(() => paused = false, 4000), {passive:true});
+  restart();
+})();
+
+/* catálogo completo */
+(() => {
+  const list = $('catList'), q = $('catSearch'); if (!list) return;
+  const big = s => /pieza|(^|\s)(1\.5|2|3|3\.5|4)\s?kg/i.test(s);
+  const norm = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+  const total = CATALOG.reduce((a,[,ps]) => a + ps.reduce((b,[,s]) => b + s.length, 0), 0);
+  const draw = () => {
+    const f = norm(q.value.trim()); let shown = 0;
+    list.innerHTML = CATALOG.map(([fam, ps], fi) => {
+      let rows = ps.filter(([n]) => !f || norm(n).includes(f)); if (f && !rows.length && norm(fam).includes(f)) rows = ps;
+      if (!rows.length) return '';
+      shown += rows.length;
+      return `<details class="cat-fam"${f || fi===0 ? ' open' : ''}><summary>${esc(fam)}<span>${rows.length} producto${rows.length>1?'s':''}</span></summary>${rows.map(([n, s]) => {
+        const link = wa(`Hola La Granjita, quiero información y precio de: ${n}.`);
+        return `<div class="cat-row"><div><b>${esc(n)}</b><div class="sizes">${s.map(x => `<span${big(x)?' class="b2b" title="Presentación para negocios"':''}>${esc(x)}</span>`).join('')}</div></div>${link?`<a class="cat-ask" href="${esc(link)}" target="_blank" rel="noopener">Pedir<span class="lg-t"> por WhatsApp</span></a>`:''}</div>`; }).join('')}</details>`;
+    }).join('') || `<p class="cat-empty">No encontramos "${esc(q.value)}". Escríbenos y te ayudamos.</p>`;
+    $('catCount').textContent = f ? `${shown} resultado${shown===1?'':'s'}` : `${total} presentaciones`;
+  };
+  q.addEventListener('input', draw); draw();
 })();
 
 /* recetas */
@@ -612,12 +780,12 @@ const wa = msg => CONFIG.whatsapp ? 'https://wa.me/' + CONFIG.whatsapp.replace(/
 /* contadores y aparición */
 (() => {
   const els = document.querySelectorAll('.rv');
-  const count = el => { const end = +el.dataset.count, suf = el.dataset.suffix || '', t0 = performance.now(), dur = 1400;
-    const fmt = n => n.toLocaleString('es-PE') + suf;
+  const count = el => { const end = +el.dataset.count, suf = el.dataset.suffix || '', pre = el.dataset.prefix || '', t0 = performance.now(), dur = 1400;
+    const fmt = n => pre + n.toLocaleString('es-PE') + suf;
     const step = t => { const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3); el.textContent = fmt(Math.round(end * e)); if (k < 1) requestAnimationFrame(step); };
     requestAnimationFrame(step); };
   const nums = document.querySelectorAll('[data-count]');
-  nums.forEach(n => n.textContent = (+n.dataset.count).toLocaleString('es-PE') + (n.dataset.suffix || ''));
+  nums.forEach(n => n.textContent = (n.dataset.prefix || '') + (+n.dataset.count).toLocaleString('es-PE') + (n.dataset.suffix || ''));
   if (reduce || !('IntersectionObserver' in window)) { els.forEach(e => e.classList.add('in')); return; }
   const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); } }), {threshold:.12});
   els.forEach(e => io.observe(e));
