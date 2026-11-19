@@ -568,7 +568,7 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
    PRODUCTOS y RECETAS: lista de ejemplo; reemplázala con la real. "foto" puede ser el nombre de un archivo en esta carpeta. */
 const CONFIG = { whatsapp: '51936285614' };  // confirmado por el cliente (nov 2026)
 
-const LINES = [['todos','Todos'],['salchichas','Salchichas y chorizos'],['fiambres','Fiambres'],['jamones','Jamones ahumados'],['hamburguesas','Hamburguesas'],['crudos','Productos crudos'],['especiales','Especialidades']];
+const LINES = [['todos','Todos'],['salchichas','Salchichas y chorizos'],['fiambres','Fiambres'],['jamones','Jamones'],['hamburguesas','Hamburguesas'],['especiales','Especialidades']];
 const ICON = {
   salchicha:'<svg viewBox="0 0 120 80" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M14 46c10-22 82-22 92 0 4 10-6 16-14 10-14-10-50-10-64 0-8 6-18 0-14-10z"/><path d="M10 50l-6 4M110 50l6 4"/><path d="M36 38c8-3 18-4 28-4" opacity=".6"/></svg>',
   fiambre:'<svg viewBox="0 0 120 80" fill="none" stroke="currentColor" stroke-width="3"><circle cx="48" cy="42" r="26"/><circle cx="48" cy="42" r="17" opacity=".6"/><path d="M78 20a26 26 0 0 1 0 44" /><path d="M90 24a26 26 0 0 1 0 36" opacity=".6"/><circle cx="42" cy="36" r="2.5" fill="currentColor"/><circle cx="54" cy="47" r="2" fill="currentColor"/><circle cx="46" cy="50" r="1.6" fill="currentColor"/></svg>',
@@ -578,16 +578,16 @@ const ICON = {
   queso:'<svg viewBox="0 0 120 80" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"><path d="M18 30h84v32H18z"/><path d="M18 30l14-12h84l-14 12M102 62l14-12V18"/><circle cx="40" cy="44" r="3" fill="currentColor"/><circle cx="62" cy="50" r="2.4" fill="currentColor"/><circle cx="80" cy="42" r="3" fill="currentColor"/></svg>'
 };
 const PRODUCTS = [
-  {l:'salchichas', i:'salchicha', foto:'fotos/salchichas.jpg?v=2', t:'Salchichas tipo hot dog', d:'Jugosas y doradas, para el desayuno con huevo, la salchipapa o la lonchera.', p:'Paquete'},
-  {l:'salchichas', i:'salchicha', foto:'fotos/salchicha-blanca.jpg?v=2', t:'Salchicha blanca', d:'Suave y delicada, ideal para el desayuno y para dorar a la plancha.', p:'Paquete'},
-  {l:'salchichas', i:'chorizo', foto:'fotos/chorizo-parrillero.jpg?v=2', t:'Chorizo parrillero', d:'Con el punto justo de especias para la parrilla del domingo.', p:'Paquete'},
-  {l:'fiambres', i:'fiambre', foto:'fotos/jamonada.jpg?v=2', t:'Jamonada', d:'El clásico del pan de cada mañana, en tajadas parejas.', p:'Barra · tajada'},
-  {l:'fiambres', i:'fiambre', foto:'fotos/tabla-fiambres.jpg?v=2', t:'Salame y fiambres para tabla', d:'Para piqueos y reuniones, con quesos y frutas.', p:'Barra · tajada'},
-  {l:'jamones', i:'jamon', foto:'fotos/jamon-ahumado.jpg?v=2', t:'Jamón ahumado', d:'Ahumado lento que le da aroma y sabor profundo; perfecto para el pan con jamón.', p:'Por kilo'},
-  {l:'hamburguesas', i:'burger', foto:'fotos/hamburguesas.jpg?v=2', t:'Hamburguesas', d:'Listas para la plancha o la parrilla, jugosas y bien sazonadas.', p:'Paquete'},
-  {l:'crudos', i:'chorizo', foto:'fotos/productos-crudos.jpg?v=2', t:'Productos crudos', d:'Chorizos y preparaciones crudas para cocinar a tu gusto.', p:'Paquete'},
-  {l:'especiales', i:'fiambre', foto:'fotos/pate-pollo.jpg?v=2', t:'Paté con pollo', d:'Cremoso y untable, para el pan del desayuno o un piqueo rápido.', p:'100 g'},
-  {l:'especiales', i:'fiambre', foto:'fotos/picadillo-chaufa.jpg?v=2', t:'Picadillo chaufa', d:'Tu arroz chaufa más rico y práctico: ya viene picado y listo para saltear.', p:'Paquete'}
+  {l:'salchichas', i:'salchicha', foto:'fotos/salchichas.jpg?v=2', t:'Salchichas ahumadas tipo Frankfurt', d:'Ahumadas y jugosas, para el desayuno con huevo, la salchipapa o la lonchera.', p:'250 g · 500 g · 1 kg'},
+  {l:'salchichas', i:'salchicha', foto:'fotos/salchicha-blanca.jpg?v=2', t:'Salchicha arequipeña', d:'La identidad de La Granjita: nuestra salchicha de la casa, con el sabor tradicional de Arequipa.', p:'250 g · 1 kg'},
+  {l:'salchichas', i:'chorizo', foto:'fotos/chorizo-parrillero.jpg?v=2', t:'Chorizo parrillero', d:'Con el punto justo de especias para la parrilla del domingo.', p:'1 kg'},
+  {l:'salchichas', i:'chorizo', foto:'fotos/productos-crudos.jpg?v=2', t:'Chorizo argentino', d:'Jugoso y sabroso, listo para la parrilla o la sartén.', p:'1 kg'},
+  {l:'fiambres', i:'fiambre', foto:'fotos/jamonada.jpg?v=2', t:'Jamonada de pollo', d:'El clásico del pan de cada mañana, en tajadas parejas.', p:'90 g · 200 g'},
+  {l:'fiambres', i:'fiambre', foto:'fotos/tabla-fiambres.jpg?v=2', t:'Salame', d:'Para piqueos, tablas y reuniones, con quesos y frutas.', p:'200 g · 500 g · 1.5 kg'},
+  {l:'jamones', i:'jamon', foto:'fotos/jamon-ahumado.jpg?v=2', t:'Jamón país', d:'El de siempre para el pan con jamón, en tajadas finas y con sabor de casa.', p:'200 g · 500 g · 3 kg'},
+  {l:'hamburguesas', i:'burger', foto:'fotos/hamburguesas.jpg?v=2', t:'Hamburguesa casera de res', d:'Lista para la plancha o la parrilla, jugosa y bien sazonada. También de pollo.', p:'900 g (14 und)'},
+  {l:'especiales', i:'fiambre', foto:'fotos/pate-pollo.jpg?v=2', t:'Paté de pollo', d:'Cremoso y untable, para el pan del desayuno o un piqueo rápido.', p:'100 g'},
+  {l:'especiales', i:'fiambre', foto:'fotos/picadillo-chaufa.jpg?v=2', t:'Picadillo de chaufa', d:'Tu arroz chaufa más rico y práctico: ya viene picado y listo para saltear.', p:'200 g'}
 ];
 const CATALOG = [
   ['Salchichas y hot dogs', [
@@ -661,13 +661,13 @@ const CATALOG = [
 ];
 const RECIPES = [
   {t:'Arroz chaufa con picadillo', m:'20 min · fácil', foto:'fotos/picadillo-chaufa.jpg?v=2', d:'El chaufa de casa, más rápido y más rico.',
-   ing:['Picadillo chaufa La Granjita','Arroz cocido del día anterior','2 huevos','Cebolla china, sillao y aceite'],
+   ing:['Picadillo de chaufa La Granjita','Arroz cocido del día anterior','2 huevos','Cebolla china, sillao y aceite'],
    pre:['Haz una tortilla delgada con los huevos y córtala en tiras.','Saltea el picadillo a fuego alto hasta que dore.','Agrega el arroz, el sillao y la tortilla; termina con cebolla china.']},
   {t:'Desayuno con salchichas', m:'15 min · fácil', foto:'fotos/salchichas.jpg?v=2', d:'Para empezar el día con fuerza.',
    ing:['Salchichas La Granjita','2 huevos','Pan francés','Sarsa criolla (cebolla, limón, ají)'],
    pre:['Dora las salchichas en una sartén.','Fríe los huevos en la misma sartén.','Sirve con pan caliente y sarsa criolla.']},
   {t:'Tabla de piqueo', m:'10 min · sin cocinar', foto:'fotos/tabla-fiambres.jpg?v=2', d:'Para compartir en reuniones y celebraciones.',
-   ing:['Salame y jamonada en tajadas','Paté con pollo','Queso en cubos','Uvas, tomates cherry y galletas'],
+   ing:['Salame y jamonada en tajadas','Paté de pollo','Queso en cubos','Uvas, tomates cherry y galletas'],
    pre:['Enrolla las tajadas y córtalas en porciones.','Unta el paté en tostadas pequeñas.','Ordena todo en una tabla y sirve.']}
 ];
 
